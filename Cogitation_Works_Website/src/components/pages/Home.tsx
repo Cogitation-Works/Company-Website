@@ -1,4 +1,4 @@
-import "./styles/Home.css";
+import "./styles/home.css";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { HiOutlineRocketLaunch } from "react-icons/hi2";
 import { PiSealCheckBold } from "react-icons/pi";
