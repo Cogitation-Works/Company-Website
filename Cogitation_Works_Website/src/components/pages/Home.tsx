@@ -171,7 +171,7 @@ const Home = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center justify-center">
           <h6 className="text-sm  md:mt-0 text-blue-500 bg-blue-300/20 p-3 text-center rounded-lg  md:text-md md:text-black/50 font-medium">
             Full-Spectrum IT Services & Solutions
           </h6>
