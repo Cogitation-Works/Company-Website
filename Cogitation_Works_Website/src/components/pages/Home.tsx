@@ -185,7 +185,7 @@ const Home = () => {
             Cogitation Works delivers end-to-end IT services and software
             solutions that transform how businesses operate, innovate, and grow.
           </p>
-          <div className="flex flex-row items-center gap-4 mt-4">
+          <div className="flex flex-row items-center gap-4 mt-4 mb-6 md:mb-0">
             <button
               type="button"
               className={`me-4 rounded-md bg-blue-500 px-6 py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-white transition-colors transition-scale duration-200 hover:bg-blue-600 hover:scale-95`}
