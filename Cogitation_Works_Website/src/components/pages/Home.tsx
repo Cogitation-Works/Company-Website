@@ -140,21 +140,21 @@ const reviews = [
     img: "/images/home/james.jpg",
     quote:
       "Cogitation Works transformed our legacy systems into a modern SaaS platform. Their engineering depth is unmatched.",
-    name: "James Chen",
+    name: "Arun Kumar",
     title: "CTO, FinStream Global",
   },
   {
     img: "/images/home/sarah.jpg",
     quote:
       "The AI automation tools they built for us reduced our operational costs by 40% in the first quarter alone.",
-    name: "Sarah Miller",
+    name: "Sara",
     title: "Operations Director, TechFlow Inc.",
   },
   {
     img: "/images/home/david.jpg",
     quote:
       "Responsive, professional, and highly skilled. They truly understand what it means to be a technology partner.",
-    name: "David Oh",
+    name: "Sathya",
     title: "Founder, RetailSync",
   },
 ];

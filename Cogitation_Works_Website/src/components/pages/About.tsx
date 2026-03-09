@@ -208,7 +208,7 @@ const About = () => {
               alt="Our Story"
             />
             <h6 className="text-lg py-3 font-bold text-black/85 bg-white w-full text-center">
-              Vellore Hub
+              Indian Hub
             </h6>
           </div>
         </div>
