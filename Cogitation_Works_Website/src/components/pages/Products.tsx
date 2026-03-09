@@ -72,7 +72,7 @@ const Products = () => {
           designed to streamline your business workflow and drive growth.
         </p>
       </div>
-      <div className="mt-[4%] px-[10%]">
+      <div className="mt-[4%] md:px-[10%] px-[5%]">
         {products.map((product, index) => (
           <div
             className="grid grid-cols-14 lg:h-[350px] h-auto my-10 bg-white lg:rounded-lg rounded-[20px] overflow-hidden"
@@ -105,14 +105,16 @@ const Products = () => {
               <h1 className="text-3xl text-black font-bold mt-4">
                 {product.title}
               </h1>
-              <p className="text-md text-black/80 mt-6 w-[80%]">
+              <p className="md:text-md w-[95%] text-[15px] text-black/80 mt-6 md:w-[80%]">
                 {product.description}
               </p>
               <ul className="list-disc list-inside text-slate-600 mt-4">
                 {product.features.map((feature, index) => (
-                  <li key={index} className="flex items-start">
-                    <FaRegCheckCircle className="text-blue-500 mt-1 me-2" />
-                    <span className="text-slate-500">{feature}</span>
+                  <li key={index} className="flex items-center mt-1">
+                    <FaRegCheckCircle className="text-blue-500 text-3xl md:text-[15px] md:text-normal me-3 md:me-2" />
+                    <span className="text-slate-500 text-sm md:text-[12px] md:text-normal">
+                      {feature}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -125,7 +127,7 @@ const Products = () => {
           <h1 className="lg:text-5xl md:text-4xl text-3xl w-[90%] md:w-[80%] lg:w-full font-extrabold mt-4 text-center text-white">
             Ready to modernize your operations ?
           </h1>
-          <p className="mt-6 text-white/80 font-normal text-lg w-[80%] lg:w-[60%] text-center">
+          <p className="mt-6 text-white/80 font-normal text-lg w-[90%] lg:w-[60%] text-center">
             Join 500+ companies using Cogitation Works to power their daily
             business processes.
           </p>

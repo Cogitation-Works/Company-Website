@@ -1,4 +1,13 @@
+import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+
+const socialLinks = [
+  { name: "LinkedIn", link: "https://www.linkedin.com/in/cogitation-works/" },
+  { name: "Twitter", link: "https://www.instagram.com/cogitation_works/" },
+  { name: "WhatsApp", link: "https://wa.me/919360889434" },
+  { name: "Instagram", link: "https://www.instagram.com/cogitation_works/" },
+  { name: "Email", link: "mailto:info@cogitationworks.com" },
+];
 
 const Footer = () => {
   return (
@@ -49,9 +58,14 @@ const Footer = () => {
         <div className="lg:col-span-2 md:col-span-6 col-span-12">
           <h3 className="text-lg font-bold text-white my-4">Social</h3>
           <ul className="text-white/50 font-normal text-[14px]">
-            {["Linkedin", "Twitter", "Whats app", "Instagram"].map((item) => (
-              <li key={item} className="my-4 cursor-pointer">
-                {item}
+            {socialLinks.map((link) => (
+              <li
+                key={link.name}
+                className="my-4 cursor-pointer hover:text-white transition-colors"
+              >
+                <a href={link.link} target="_blank" rel="noopener noreferrer">
+                  {link.name}
+                </a>
               </li>
             ))}
           </ul>

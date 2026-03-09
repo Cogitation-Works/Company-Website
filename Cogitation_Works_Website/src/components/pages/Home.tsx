@@ -163,7 +163,7 @@ const Home = () => {
   return (
     <div>
       <div
-        className="md:h-[60vh] lg:h-[70vh] h-[62vh] w-full py-8 overflow-hidden rounded-b-[40px]"
+        className="md:h-[60vh] lg:h-[70vh] h-auto w-full py-8 overflow-hidden rounded-b-[40px]"
         style={{
           backgroundImage: `url(${"/images/home/homebg.png"})`,
           backgroundSize: "110%",
@@ -172,31 +172,31 @@ const Home = () => {
         }}
       >
         <div className="flex flex-col items-center justify-center">
-          <h6 className="text-sm  md:mt-0 text-blue-500 bg-blue-300/20 p-3 text-center rounded-lg  md:text-md md:text-black/50 font-medium">
+          <h6 className="text-sm  md:mt-0 text-blue-500 bg-blue-300/20 lg:bg-transparent p-3 text-center rounded-lg  md:text-md lg:text-black/50 font-medium">
             Full-Spectrum IT Services & Solutions
           </h6>
-          <h1 className="text-center text-5xl w-85 mt-8 lg:mt-0 md:text-6xl md:w-[60%] lg:w-full font-bold lg:text-[80px] lg:font-semibold text-black lg:py-4">
+          <h1 className="text-center text-[45px] leading-12 md:leading-none w-85 mt-8 lg:mt-0 md:text-6xl md:w-[60%] lg:w-full font-bold lg:text-[80px] lg:font-semibold text-black lg:py-4">
             We Craft Your Ideas Into
           </h1>
-          <h1 className="text-center text-5xl w-95 font-bold md:text-6xl lg:text-[85px] md:w-[60%] lg:w-full lg:font-semibold text-blue-500">
+          <h1 className="text-center text-[45px] leading-12 md:leading-none w-95 font-bold md:text-6xl lg:text-[85px] md:w-[60%] lg:w-full lg:font-semibold text-blue-500">
             Powerful Digital Products
           </h1>
           <p className=" lg:w-[55%] w-[90%] md:w-[70%] lg:text-[22px] text-sm text-gray-600 py-6 lg:py-4 lg:mt-[40px] text-center">
             Cogitation Works delivers end-to-end IT services and software
             solutions that transform how businesses operate, innovate, and grow.
           </p>
-          <div className="flex flex-row items-center gap-4 mt-4 mb-6 md:mb-0">
+          <div className="flex md:flex-row flex-col items-center gap-4 mt-4 mb-[20%] md:mb-0">
             <button
               type="button"
-              className={`me-4 rounded-md bg-blue-500 px-6 py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-white transition-colors transition-scale duration-200 hover:bg-blue-600 hover:scale-95`}
+              className={`md:me-4 py-3 rounded-md bg-blue-500 w-[230px] md:w-auto md:px-6 md:py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-white transition-colors transition-scale duration-200 hover:bg-blue-600 hover:scale-95`}
             >
               Get Started
             </button>
             <button
               type="button"
-              className={`rounded-md cursor-pointer px-6 py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-black bg-white transition-scale duration-200 hover:bg-black hover:text-white hover:scale-95`}
+              className={`mt-[2%] py-3 md:mt-0 rounded-md cursor-pointer w-[230px] md:w-auto md:px-6 md:py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-black bg-white transition-scale duration-200 hover:bg-black hover:text-white hover:scale-95`}
             >
-              View Portfolio
+              Book a Free Consultation
             </button>
           </div>
         </div>
