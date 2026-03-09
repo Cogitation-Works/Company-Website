@@ -163,7 +163,7 @@ const Home = () => {
   return (
     <div>
       <div
-        className="h-[70vh] w-full py-8 overflow-hidden rounded-b-[40px]"
+        className="md:h-[70vh] h-[60vh] w-full py-8 overflow-hidden rounded-b-[40px]"
         style={{
           backgroundImage: `url(${"/images/home/homebg.png"})`,
           backgroundSize: "110%",
@@ -172,41 +172,41 @@ const Home = () => {
         }}
       >
         <div className="flex flex-col items-center">
-          <h6 className="text-center text-md text-black/50 font-medium">
+          <h6 className="text-sm  md:mt-0 text-blue-500 bg-blue-300/20 p-3 text-center rounded-lg  md:text-md md:text-black/50 font-medium">
             Full-Spectrum IT Services & Solutions
           </h6>
-          <h1 className="text-center text-[80px] font-semibold text-black py-4">
+          <h1 className="text-center text-5xl w-85 mt-8 lg:mt-0 md:text-6xl md:w-[60%] lg:w-full font-bold lg:text-[80px] lg:font-semibold text-black lg:py-4">
             We Craft Your Ideas Into
           </h1>
-          <h1 className="text-center text-[85px]/[0px] font-semibold text-blue-500 py-4">
+          <h1 className="text-center text-5xl w-95 font-bold md:text-6xl lg:text-[85px] md:w-[60%] lg:w-full lg:font-semibold text-blue-500">
             Powerful Digital Products
           </h1>
-          <p className=" w-[55%] text-[22px] text-gray-600 py-4 mt-[40px] text-center">
+          <p className=" lg:w-[55%] w-[90%] md:w-[70%] lg:text-[22px] text-sm text-gray-600 py-6 lg:py-4 lg:mt-[40px] text-center">
             Cogitation Works delivers end-to-end IT services and software
             solutions that transform how businesses operate, innovate, and grow.
           </p>
           <div className="flex flex-row items-center gap-4 mt-4">
             <button
               type="button"
-              className={`me-4 rounded-md bg-blue-500 px-8 py-4 text-lg font-semibold text-white transition-colors transition-scale duration-200 hover:bg-blue-600 hover:scale-95`}
+              className={`me-4 rounded-md bg-blue-500 px-6 py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-white transition-colors transition-scale duration-200 hover:bg-blue-600 hover:scale-95`}
             >
               Get Started
             </button>
             <button
               type="button"
-              className={`rounded-md cursor-pointer px-8 py-4 text-lg font-semibold text-black bg-white transition-scale duration-200 hover:bg-black hover:text-white hover:scale-95`}
+              className={`rounded-md cursor-pointer px-6 py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-black bg-white transition-scale duration-200 hover:bg-black hover:text-white hover:scale-95`}
             >
               View Portfolio
             </button>
           </div>
         </div>
       </div>
-      <div className="mt-[100px] px-8 philosophy-section">
+      <div className="lg:mt-[100px] mt-2 md:mt-10 px-8 philosophy-section">
         <h3 className="text-blue-500 font-semibold text-md uppercase">
           Our Philosophy
         </h3>
         <div className="grid grid-cols-2 gap-4 mt-4">
-          <div className="col-span-1 flex flex-col items-start">
+          <div className="lg:col-span-1 col-span-2 flex flex-col items-start">
             <h2 className="text-5xl font-bold text-black">Who We Are</h2>
             <p className="text-gray-600 mt-4 text-lg w-[90%]">
               Thinking Beyond Technology. We don't just write code; we solve
@@ -219,38 +219,44 @@ const Home = () => {
               </span>
             </button>
           </div>
-          <div className="col-span-1 flex flex-row gap-10">
+          <div className="lg:col-span-1 col-span-2 flex md:flex-row flex-col md:justify-center lg:justify-normal gap-10 mt-10 lg:mt-0">
             {philosophy.map((item) => (
               <div
                 key={item.title}
-                className="flex flex-col items-center text-center justify-content cursor-pointer px-6 py-4 rounded-lg"
+                className="flex md:flex-col flex-row items-center text-center justify-content cursor-pointer px-6 py-4 rounded-lg"
                 style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px" }}
               >
-                <div className="text-4xl text-blue-500 p-6">{item.icon}</div>
+                <div className="md:text-4xl text-5xl text-blue-500 p-6">
+                  {item.icon}
+                </div>
 
-                <h4 className="text-2xl font-bold text-black">{item.title}</h4>
-                <p className="text-gray-500/70 font-medium mt-2 text-md">
-                  {item.description}
-                </p>
+                <div className="flex flex-col md:items-center items-start">
+                  <h4 className="text-2xl font-bold text-black">
+                    {item.title}
+                  </h4>
+                  <p className="text-gray-500/70 font-medium mt-2 text-md">
+                    {item.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div className="mt-[150px] core-section">
-        <div className="flex-col items-center justify-content text-center">
+      <div className="lg:mt-[150px] mt-20 md:mt-[100px] core-section">
+        <div className="flex-col items-center justify-items-center text-center">
           <h1 className="text-4xl font-bold">Core Services</h1>
-          <p className="mt-2 text-slate-500/90 font-medium text-md">
+          <p className="md:mt-2 mt-4 md:w-[100%] w-[90%] text-slate-500/90 font-medium text-md">
             Comprehensive expertise to take your business to the next digital
             level.
           </p>
         </div>
         <div className="mt-8">
-          <div className="grid grid-cols-3 gap-8 px-[110px]">
+          <div className="grid grid-cols-6 gap-8 lg:px-[110px] px-8">
             {coreServices.map((service) => (
               <div
                 key={service.title}
-                className="cursor-pointer flex flex-col justify-center items-start px-6 h-[240px] rounded-lg shadow-lg transition-transform duration-200 hover:scale-105"
+                className="lg:col-span-2 md:h-[240px] py-2 md:py-0 col-span-6 md:col-span-3 cursor-pointer flex md:flex-col md:gap-0 gap-4 flex-row justify-center md:items-start items-center px-6 rounded-lg shadow-lg transition-transform duration-200 hover:scale-105"
                 style={{
                   backgroundImage: `url(${service.bgImg})`,
                   backgroundSize: "cover",
@@ -260,29 +266,31 @@ const Home = () => {
                   backgroundBlendMode: "overlay",
                 }}
               >
-                <div className="text-3xl text-blue-600 bg-white/15 p-2 rounded-md my-4">
+                <div className="md:text-3xl text-2xl text-blue-600 md:bg-white/15 bg-white/90 md:p-2 px-2 py-3 rounded-md my-4 ">
                   {service.icon}
                 </div>
-                <h4 className="text-xl font-semibold text-white mt-4">
-                  {service.title}
-                </h4>
-                <p className="text-white/80 font-normal mt-2 text-sm">
-                  {service.description}
-                </p>
+                <div className="flex flex-col justify-center items-start">
+                  <h4 className="text-xl font-semibold text-white md:mt-4">
+                    {service.title}
+                  </h4>
+                  <p className="text-white/80 font-normal md:mt-2 text-sm line-clamp-2 md:line-clamp-none">
+                    {service.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div className="mt-[110px] px-8 products-section">
+      <div className="lg:mt-[110px] mt-20 md:mt-[80px] px-8 products-section">
         <h3 className="text-blue-500 font-semibold text-md uppercase">
           Off-The-Shelf
         </h3>
-        <div className="flex flex-row items-center justify-between w-full">
-          <h1 className="text-4xl font-extrabold mt-1">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full">
+          <h1 className="text-4xl font-extrabold mt-4 lg:mt-1">
             Ready-to-Deploy Products
           </h1>
-          <p className="mt-4 text-slate-500 font-normal text-md w-[40%]">
+          <p className="mt-4 text-slate-500 font-normal text-md lg:w-[40%] w-[90%]">
             Accelerate your business with our pre-built, battle-tested software
             engines designed for rapid integration.
           </p>
@@ -292,7 +300,7 @@ const Home = () => {
             {products.map((product) => (
               <div
                 key={product.item}
-                className="relative min-h-[200px] overflow-hidden rounded-2xl shadow-lg"
+                className="col-span-4 md:col-span-2 lg:col-span-1 relative min-h-[200px] overflow-hidden rounded-2xl shadow-lg"
               >
                 <div className="absolute inset-0 -z-1 ps-[100px] bg-blue-800 overflow-hidden text-[100px] p-0 m-0">
                   <h1 className="text-nowrap font-bold text-white m-0 p-0 leading-none opacity-70">
@@ -323,15 +331,15 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="mt-[110px] industries-section">
+      <div className="lg:mt-[110px] mt-20 md:mt-[100px] industries-section">
         <h1 className="text-2xl font-extrabold mt-1 text-center">
           Industries We Serve
         </h1>
-        <div className="mt-15 flex flex-row justify-evenly">
+        <div className="md:mt-15 mt-10 grid grid-cols-12 md:gap-10 gap-8 px-4 lg:px-[110px]">
           {industries.map((industry) => (
             <div
               key={industry.title}
-              className="cursor-pointer flex flex-col items-center text-center"
+              className="lg:col-span-2 md:col-span-4 col-span-6 cursor-pointer flex flex-col items-center text-center"
             >
               <div className="text-4xl p-4 rounded-full bg-blue-500 text-white shadow-lg">
                 {industry.icon}
@@ -341,61 +349,68 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <div className="mt-[110px] reviews-section h-[450px] bg-blue-300/20 flex flex-col justify-center">
+      <div className="mt-[110px] reviews-section lg:h-[450px] h-auto bg-blue-300/20 flex flex-col justify-center py-8 lg:py-0">
         <h1 className="text-4xl font-extrabold mt-1 text-center">
           Trusted by Global Leaders
         </h1>
-        <div className="mt-15 px-[160px] flex flex-row gap-12">
-          {reviews.map((review) => (
-            <div className="cursor-pointer bg-white flex flex-1 flex-col justify-center p-6 rounded-lg shadow-md">
-              <div className="flex flex-row">
-                {Array(5)
-                  .fill(0)
-                  .map((_, index) => (
-                    <FaStar key={index} className="text-yellow-400 me-3" />
-                  ))}
-              </div>
-              <div className="text-gray-700 mt-4 text-sm italic">
-                "{review.quote}"
-              </div>
-              <div className="flex flex-row items-center justify-start mt-6 w-full">
-                <div>
-                  <img
-                    src={review.img}
-                    alt={review.name}
-                    className="size-12 rounded-full object-cover"
-                  />
+        <div className="mt-15 overflow-hidden w-full">
+          <div className="scroll-track flex flex-row gap-8 w-max hover:[animation-play-state:paused]">
+            {[...reviews, ...reviews].map((review, i) => (
+              <div
+                key={`${review.name}-${i}`}
+                className="cursor-pointer bg-white flex flex-col justify-center p-6 rounded-lg shadow-md w-[250px] md:w-[350px] lg:w-[300px] shrink-0"
+              >
+                <div className="flex flex-row">
+                  {Array(5)
+                    .fill(0)
+                    .map((_, index) => (
+                      <FaStar key={index} className="text-yellow-400 me-3" />
+                    ))}
                 </div>
-                <div className="ms-4">
-                  <h4 className="text-md font-bold text-black p-0 m-0 leading-none">
-                    {review.name}
-                  </h4>
-                  <p className="text-gray-500 text-sm">{review.title}</p>
+                <div className="text-gray-700 mt-4 text-sm italic">
+                  "{review.quote}"
+                </div>
+                <div className="flex flex-row items-center justify-start mt-6 w-full">
+                  <div>
+                    <img
+                      src={review.img}
+                      alt={review.name}
+                      className="md:size-12 size-16 rounded-full object-cover"
+                    />
+                  </div>
+                  <div className="ms-4">
+                    <h4 className="text-lg font-bold text-black p-0 m-0 leading-none">
+                      {review.name}
+                    </h4>
+                    <p className="text-gray-500 text-xs md:w-[80%] w-[90%] mt-1">
+                      {review.title}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-      <div className="mt-[110px] call-section flex flex-row justify-center items-center gap-12">
-        <div className="h-[350px] w-[65%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
-          <h1 className="text-5xl font-extrabold mt-4 text-center text-white">
+      <div className="mt-[110px] call-section flex flex-row justify-center items-center">
+        <div className="lg:h-[380px] py-10 lg:py-0 w-[90%] lg:w-[65%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
+          <h1 className="lg:text-5xl text-4xl font-bold lg:font-extrabold lg:mt-4 text-center text-white">
             Ready to Build Something Great ?
           </h1>
-          <p className="mt-6 text-white/80 font-normal text-lg w-[60%] text-center">
+          <p className="mt-6 text-white/80 font-normal md:text-lg text-md md:w-[60%] w-[90%] text-center">
             Let's turn your vision into a market-leading digital product. Join
             our 50+ successful clients today.
           </p>
-          <div className="mt-8 flex flex-row items-center gap-6">
+          <div className="mt-8 flex md:flex-row flex-col md:items-center justify-center gap-6">
             <button
               type="button"
-              className={`cursor-pointer me-4 rounded-md bg-white px-10 py-3 text-lg border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
+              className={`cursor-pointer w-[220px] md:w-auto me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
             >
               Get a Free Quote
             </button>
             <button
               type="button"
-              className={`cursor-pointer rounded-md px-10 py-3 text-lg border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black `}
+              className={`cursor-pointer w-[220px] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black `}
             >
               Schedule a Call
             </button>
@@ -407,9 +422,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// Ready to Build Something Great?
-// Let's turn your vision into a market-leading digital product. Join our
-// 50+ successful clients today.
-// Get a Free Quote
-// Schedule a Call

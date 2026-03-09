@@ -1,0 +1,28 @@
+@keyframes scroll-x {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.scroll-track {
+  display: flex;
+  width: max-content;
+  animation: scroll-x 25s linear infinite;
+}
+
+.scroll-track:hover {
+  animation-play-state: paused;
+}
+
+.scroll-track-sm {
+  animation: scroll-x 25s linear infinite;
+}
+
+@media (min-width: 1024px) {
+  .scroll-track-sm {
+    animation: none;
+  }
+}

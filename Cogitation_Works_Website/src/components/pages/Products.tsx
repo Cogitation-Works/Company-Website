@@ -4,67 +4,70 @@ import { FaUsers } from "react-icons/fa";
 import { RiRobot2Line } from "react-icons/ri";
 import { FaRegCheckCircle } from "react-icons/fa";
 
-const Products = () => {
-  const products = [
-    {
-      icon: <FaRegIdCard />,
+const products = [
+  {
+    icon: <FaRegIdCard />,
 
-      img: "/images/product/hrm.png",
-      subtitle: "Workforce Management",
-      title: "HRMS & Payroll",
-      description:
-        "Streamline your workforce management with ease. Eliminate manual entry and reduce errors in your payroll cycles.",
-      features: [
-        "Mobile attendance with GPS tracking",
-        "Automated payroll processing & tax compliance",
-        "Employee self-service portal & leave management",
-      ],
-    },
-    {
-      icon: <MdOutlineInventory2 />,
-      img: "/images/product/inventory.jpg",
-      subtitle: "Supply Chain",
-      title: "Inventory Management",
-      description:
-        "Complete control over your supply chain. Optimize your stock levels and reduce holding costs with intelligent tracking.",
-      features: [
-        "Real-time stock tracking across multiple locations",
-        "Integrated asset management & auditing",
-        "Automated reordering systems with vendor API",
-      ],
-    },
-    {
-      icon: <FaUsers />,
-      img: "/images/product/crm.jpg",
-      subtitle: "Sales Enablement",
-      title: "CRM Solutions",
-      description:
-        "Close deals faster with a unified sales pipeline. Build stronger relationships with data-driven insights.",
-      features: [
-        "Visual sales pipeline and deal forecasting",
-        "Automated follow-ups and lead scoring",
-        "360-degree customer activity history",
-      ],
-    },
-    {
-      icon: <RiRobot2Line />,
-      img: "/images/product/ai.jpg",
-      subtitle: "Future Ready",
-      title: "AI Automations",
-      description:
-        "Scale your operations without adding headcount. Intelligent bots that learn and grow with your business.",
-      features: [
-        "24/7 intelligent chatbots for customer support",
-        "Automated lead nurturing & segmentation",
-        "Predictive analytics for operational efficiency",
-      ],
-    },
-  ];
+    img: "/images/product/hrm.png",
+    subtitle: "Workforce Management",
+    title: "HRMS & Payroll",
+    description:
+      "Streamline your workforce management with ease. Eliminate manual entry and reduce errors in your payroll cycles.",
+    features: [
+      "Mobile attendance with GPS tracking",
+      "Automated payroll processing & tax compliance",
+      "Employee self-service portal & leave management",
+    ],
+  },
+  {
+    icon: <MdOutlineInventory2 />,
+    img: "/images/product/inventory.jpg",
+    subtitle: "Supply Chain",
+    title: "Inventory Management",
+    description:
+      "Complete control over your supply chain. Optimize your stock levels and reduce holding costs with intelligent tracking.",
+    features: [
+      "Real-time stock tracking across multiple locations",
+      "Integrated asset management & auditing",
+      "Automated reordering systems with vendor API",
+    ],
+  },
+  {
+    icon: <FaUsers />,
+    img: "/images/product/crm.jpg",
+    subtitle: "Sales Enablement",
+    title: "CRM Solutions",
+    description:
+      "Close deals faster with a unified sales pipeline. Build stronger relationships with data-driven insights.",
+    features: [
+      "Visual sales pipeline and deal forecasting",
+      "Automated follow-ups and lead scoring",
+      "360-degree customer activity history",
+    ],
+  },
+  {
+    icon: <RiRobot2Line />,
+    img: "/images/product/ai.jpg",
+    subtitle: "Future Ready",
+    title: "AI Automations",
+    description:
+      "Scale your operations without adding headcount. Intelligent bots that learn and grow with your business.",
+    features: [
+      "24/7 intelligent chatbots for customer support",
+      "Automated lead nurturing & segmentation",
+      "Predictive analytics for operational efficiency",
+    ],
+  },
+];
+
+const Products = () => {
   return (
     <div className="pt-[6%]">
       <div className="text-center flex flex-col items-center">
-        <h1 className="text-6xl font-black">Our Products</h1>
-        <p className="w-[70%] mt-10 text-xl text-slate-500/95">
+        <h1 className="lg:text-5xl text-4xl lg:font-black font-bold">
+          Our Products
+        </h1>
+        <p className="lg:w-[70%] w-[90%] lg:mt-6 mt-4 lg:text-xl text-md text-slate-500/95">
           Software Products Built for Modern Operations. Scalable solutions
           designed to streamline your business workflow and drive growth.
         </p>
@@ -72,14 +75,14 @@ const Products = () => {
       <div className="mt-[4%] px-[10%]">
         {products.map((product, index) => (
           <div
-            className="grid grid-cols-14 h-[350px] my-10 bg-white rounded-lg"
+            className="grid grid-cols-14 lg:h-[350px] h-auto my-10 bg-white lg:rounded-lg rounded-[20px] overflow-hidden"
             key={product.title}
             style={{
               boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
             }}
           >
             <div
-              className={` ${index % 2 === 0 || index == 0 ? "order-1" : "order-2"} col-span-4 h-full w-full min-h-0`}
+              className={` ${index % 2 === 0 || index == 0 ? "lg:order-1" : "lg:order-2"} lg:col-span-4 col-span-14 h-full w-full min-h-0`}
             >
               <img
                 className="object-cover h-full w-full"
@@ -88,7 +91,7 @@ const Products = () => {
               />
             </div>
             <div
-              className={` ${index % 2 === 0 || index == 0 ? "order-2" : "order-1"} col-span-10 px-[10%] py-8 flex flex-col items-start justify-center`}
+              className={` ${index % 2 === 0 || index == 0 ? "lg:order-2" : "lg:order-1"} lg:col-span-10 col-span-14 px-[10%] py-8 flex flex-col items-start justify-center`}
             >
               <div className="flex flex-row items-center">
                 <div className="text-blue-500 text-2xl me-2">
@@ -118,24 +121,24 @@ const Products = () => {
         ))}
       </div>
       <div className="mt-[110px] call-section flex flex-row justify-center items-center gap-12">
-        <div className="h-[300px] w-[75%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
-          <h1 className="text-5xl font-extrabold mt-4 text-center text-white">
+        <div className="lg:h-[400px] px-6 py-8 lg:px-0 lg:py-0 lg:w-[75%] w-[90%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
+          <h1 className="lg:text-5xl md:text-4xl text-3xl w-[90%] md:w-[80%] lg:w-full font-extrabold mt-4 text-center text-white">
             Ready to modernize your operations ?
           </h1>
-          <p className="mt-6 text-white/80 font-normal text-lg w-[60%] text-center">
+          <p className="mt-6 text-white/80 font-normal text-lg w-[80%] lg:w-[60%] text-center">
             Join 500+ companies using Cogitation Works to power their daily
             business processes.
           </p>
-          <div className="mt-8 flex flex-row items-center gap-6">
+          <div className="mt-8 flex md:flex-row flex-col md:items-center justify-center gap-6">
             <button
               type="button"
-              className={`cursor-pointer me-4 rounded-md bg-white px-10 py-3 text-lg border-3 border-white font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
+              className={`cursor-pointer w-[250px] md:w-auto me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
             >
               Book a Free Consultation
             </button>
             <button
               type="button"
-              className={`cursor-pointer rounded-md px-10 py-3 text-lg border-3 bg-transparent border-white/50 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black `}
+              className={`cursor-pointer w-[250px] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black `}
             >
               View Documentation
             </button>
@@ -146,31 +149,3 @@ const Products = () => {
   );
 };
 export default Products;
-
-/*
-
- <div
-            key={product.title}
-            className="bg-white shadow-lg rounded-lg p-6 mb-8"
-          >
-            <div className="flex items-center mb-4">
-              <div className="text-4xl text-blue-500 mr-4">{product.icon}</div>
-              <div>
-                <h2 className="text-2xl font-bold">{product.title}</h2>
-                <p className="text-lg text-slate-500">{product.subtitle}</p>
-              </div>
-            </div>
-            <img
-              src={product.img}
-              alt={product.title}
-              className="w-full h-48 object-cover rounded-lg mb-4"
-            />
-            <p className="text-lg text-slate-600 mb-4">{product.description}</p>
-            <ul className="list-disc list-inside text-slate-600">
-              {product.features.map((feature, index) => (
-                <li key={index}>{feature}</li>
-              ))}
-            </ul>
-          </div>
-
-*/
