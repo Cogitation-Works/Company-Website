@@ -163,7 +163,7 @@ const Home = () => {
   return (
     <div>
       <div
-        className="md:h-[70vh] h-[60vh] w-full py-8 overflow-hidden rounded-b-[40px]"
+        className="md:h-[60vh] lg:h-[70vh] h-[62vh] w-full py-8 overflow-hidden rounded-b-[40px]"
         style={{
           backgroundImage: `url(${"/images/home/homebg.png"})`,
           backgroundSize: "110%",
