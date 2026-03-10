@@ -242,7 +242,7 @@ const About = () => {
             Industries We Empower
           </h1>
         </div>
-        <div className="mt-10 grid grid-cols-12 md:gap-10 gap-6 md:px-[10%] px-10">
+        <div className="mt-10 grid grid-cols-12 md:gap-10 gap-6 md:px-[10%] px-5">
           {industries.map((industry) => (
             <div
               key={industry.title}

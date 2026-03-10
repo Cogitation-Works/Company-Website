@@ -346,7 +346,9 @@ const Home = () => {
               <div className="text-4xl p-4 rounded-full bg-blue-500 text-white shadow-lg">
                 {industry.icon}
               </div>
-              <h3 className="mt-4 text-lg font-semibold">{industry.title}</h3>
+              <h3 className="mt-4 md:text-lg text-sm font-semibold">
+                {industry.title}
+              </h3>
             </div>
           ))}
         </div>
