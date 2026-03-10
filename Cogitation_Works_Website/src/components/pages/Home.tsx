@@ -175,10 +175,10 @@ const Home = () => {
           <h6 className="text-sm  md:mt-0 text-blue-500 bg-blue-300/20 lg:bg-transparent p-3 text-center rounded-lg  md:text-md lg:text-black/50 font-medium">
             Full-Spectrum IT Services & Solutions
           </h6>
-          <h1 className="text-center text-[45px] leading-12 md:leading-none w-85 mt-8 lg:mt-0 md:text-6xl md:w-[60%] lg:w-full font-bold lg:text-[80px] lg:font-semibold text-black lg:py-4">
+          <h1 className="text-center text-[45px] leading-12 md:leading-none w-[90%] mt-8 lg:mt-0 md:text-6xl md:w-[60%] lg:w-full font-bold lg:text-[80px] lg:font-semibold text-black lg:py-4">
             We Craft Your Ideas Into
           </h1>
-          <h1 className="text-center text-[45px] leading-12 md:leading-none w-95 font-bold md:text-6xl lg:text-[85px] md:w-[60%] lg:w-full lg:font-semibold text-blue-500">
+          <h1 className="text-center text-[45px] leading-12 md:leading-none w-[95%] font-bold md:text-6xl lg:text-[85px] md:w-[60%] lg:w-full lg:font-semibold text-blue-500">
             Powerful Digital Products
           </h1>
           <p className=" lg:w-[55%] w-[90%] md:w-[70%] lg:text-[22px] text-sm text-gray-600 py-6 lg:py-4 lg:mt-[40px] text-center">

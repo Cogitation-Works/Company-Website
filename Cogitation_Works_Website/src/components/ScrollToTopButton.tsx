@@ -5,20 +5,15 @@ const ScrollToTopButton = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const root = document.getElementById("root");
-    if (!root) return;
     const handleScroll = () => {
-      setVisible(root.scrollTop > 400);
+      setVisible(window.scrollY > 400);
     };
-    root.addEventListener("scroll", handleScroll, { passive: true });
-    return () => root.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToTop = () => {
-    const root = document.getElementById("root");
-    if (root) {
-      root.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
