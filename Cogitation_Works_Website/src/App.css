@@ -9,6 +9,7 @@
 
 .scroll-track {
   display: flex;
+  align-items: center;
   width: max-content;
   animation: scroll-x 25s linear infinite;
 }

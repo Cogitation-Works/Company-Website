@@ -163,7 +163,7 @@ const Home = () => {
   return (
     <div>
       <div
-        className="md:h-[60vh] lg:h-[70vh] h-auto w-full py-8 overflow-hidden rounded-b-[40px]"
+        className="md:min-h-[60vh] lg:min-h-[70vh] h-auto w-full py-8 overflow-hidden rounded-b-[40px]"
         style={{
           backgroundImage: `url(${"/images/home/homebg.png"})`,
           backgroundSize: "110%",
@@ -172,13 +172,13 @@ const Home = () => {
         }}
       >
         <div className="flex flex-col items-center justify-center">
-          <h6 className="text-sm  md:mt-0 text-blue-500 bg-blue-300/20 lg:bg-transparent p-3 text-center rounded-lg  md:text-md lg:text-black/50 font-medium">
+          <h6 className="text-sm  md:mt-0 text-blue-500 bg-blue-300/20 lg:bg-transparent p-3 text-center rounded-lg  md:text-base lg:text-black/50 font-medium">
             Full-Spectrum IT Services & Solutions
           </h6>
-          <h1 className="text-center text-[45px] leading-12 md:leading-none w-[90%] mt-8 lg:mt-0 md:text-6xl md:w-[60%] lg:w-full font-bold lg:text-[80px] lg:font-semibold text-black lg:py-4">
+          <h1 className="text-center text-[45px] leading-12 md:leading-none w-[90%] mt-8 lg:mt-0 md:text-5xl lg:text-6xl md:w-[80%] lg:w-full font-bold lg:text-[80px] lg:font-semibold text-black lg:py-4">
             We Craft Your Ideas Into
           </h1>
-          <h1 className="text-center text-[45px] leading-12 md:leading-none w-[95%] font-bold md:text-6xl lg:text-[85px] md:w-[60%] lg:w-full lg:font-semibold text-blue-500">
+          <h1 className="text-center text-[45px] leading-12 md:leading-none w-[95%] font-bold md:text-5xl lg:text-6xl lg:text-[85px] md:w-[80%] lg:w-full lg:font-semibold text-blue-500">
             Powerful Digital Products
           </h1>
           <p className=" lg:w-[55%] w-[90%] md:w-[70%] lg:text-[22px] text-sm text-gray-600 py-6 lg:py-4 lg:mt-[40px] text-center">
@@ -201,40 +201,42 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="lg:mt-[100px] mt-2 md:mt-10 px-8 philosophy-section">
-        <h3 className="text-blue-500 font-semibold text-md uppercase">
+      <div className="lg:mt-[100px] md:mt-[80px] mt-2 md:mt-10 px-8 philosophy-section">
+        <h3 className="text-blue-500 font-semibold text-base uppercase">
           Our Philosophy
         </h3>
         <div className="grid grid-cols-2 gap-4 mt-4">
           <div className="lg:col-span-1 col-span-2 flex flex-col items-start">
-            <h2 className="text-5xl font-bold text-black">Who We Are</h2>
-            <p className="text-gray-600 mt-4 text-lg w-[90%]">
+            <h2 className="lg:text-5xl text-4xl font-bold text-black">
+              Who We Are
+            </h2>
+            <p className="text-gray-600 mt-4 lg:text-lg text-[15px] md:text-[16px] w-[90%]">
               Thinking Beyond Technology. We don't just write code; we solve
               business problems with engineering excellence.
             </p>
-            <button className="mt-8 cursor-pointer flex items-center flex-row rounded-md bg-blue-500 px-6 py-3 text-white font-semibold hover:bg-blue-600">
+            <button className="lg:mt-8 mt-6 md:text-normal text-sm cursor-pointer flex items-center flex-row rounded-md bg-blue-500 px-6 py-3 text-white font-semibold hover:bg-blue-600">
               Start Your Project
               <span className="ml-2">
                 <FaArrowRightLong />
               </span>
             </button>
           </div>
-          <div className="lg:col-span-1 col-span-2 flex md:flex-row flex-col md:justify-center lg:justify-normal gap-10 mt-10 lg:mt-0">
+          <div className="lg:col-span-1 col-span-2 flex md:flex-row flex-col md:justify-center lg:justify-normal items-center gap-10 mt-10 lg:mt-0">
             {philosophy.map((item) => (
               <div
                 key={item.title}
-                className="flex md:flex-col flex-row items-center text-center justify-content cursor-pointer px-6 py-4 rounded-lg"
+                className="flex md:flex-col flex-row items-center md:w-auto w-[90%] text-center md:justify-content cursor-pointer md:px-6 md:py-4 py-6 justify-center rounded-lg"
                 style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px" }}
               >
-                <div className="md:text-4xl text-5xl text-blue-500 p-6">
+                <div className="md:text-4xl text-5xl text-blue-500 md:p-6 me-6 md:me-0">
                   {item.icon}
                 </div>
 
                 <div className="flex flex-col md:items-center items-start">
-                  <h4 className="text-2xl font-bold text-black">
+                  <h4 className="md:text-2xl text-xl font-bold text-black">
                     {item.title}
                   </h4>
-                  <p className="text-gray-500/70 font-medium mt-2 text-md">
+                  <p className="text-gray-500/70 font-medium md:mt-2  text-base">
                     {item.description}
                   </p>
                 </div>
@@ -245,8 +247,8 @@ const Home = () => {
       </div>
       <div className="lg:mt-[150px] mt-20 md:mt-[100px] core-section">
         <div className="flex-col items-center justify-items-center text-center">
-          <h1 className="text-4xl font-bold">Core Services</h1>
-          <p className="md:mt-2 mt-4 md:w-[100%] w-[90%] text-slate-500/90 font-medium text-md">
+          <h1 className="md:text-4xl text-3xl font-bold">Core Services</h1>
+          <p className="md:mt-2 mt-4 md:w-[100%] w-[85%] text-slate-500/90 font-medium md:text-base text-sm">
             Comprehensive expertise to take your business to the next digital
             level.
           </p>
@@ -266,14 +268,14 @@ const Home = () => {
                   backgroundBlendMode: "overlay",
                 }}
               >
-                <div className="md:text-3xl text-2xl text-blue-600 md:bg-white/15 bg-white/90 md:p-2 px-2 py-3 rounded-md my-4 ">
+                <div className="md:text-3xl text-2xl text-blue-600 md:bg-white/15 bg-white/90 md:p-2 px-[10px] py-3 rounded-md my-4 ">
                   {service.icon}
                 </div>
                 <div className="flex flex-col justify-center items-start">
-                  <h4 className="text-xl font-semibold text-white md:mt-4">
+                  <h4 className="md:text-xl text-lg font-semibold text-white md:mt-4">
                     {service.title}
                   </h4>
-                  <p className="text-white/80 font-normal md:mt-2 text-sm line-clamp-2 md:line-clamp-none">
+                  <p className="text-white/80 font-normal md:mt-2 md:text-sm text-xs line-clamp-2 md:line-clamp-none">
                     {service.description}
                   </p>
                 </div>
@@ -283,14 +285,14 @@ const Home = () => {
         </div>
       </div>
       <div className="lg:mt-[110px] mt-20 md:mt-[80px] px-8 products-section">
-        <h3 className="text-blue-500 font-semibold text-md uppercase">
+        <h3 className="text-blue-500 font-semibold md:text-base uppercase">
           Off-The-Shelf
         </h3>
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full">
-          <h1 className="text-4xl font-extrabold mt-4 lg:mt-1">
+          <h1 className="md:text-4xl text-3xl font-extrabold mt-4 lg:mt-1">
             Ready-to-Deploy Products
           </h1>
-          <p className="mt-4 text-slate-500 font-normal text-md lg:w-[40%] w-[90%]">
+          <p className="mt-4 text-slate-500 font-normal text-sm md:text-base lg:w-[40%] md:w-[90%]">
             Accelerate your business with our pre-built, battle-tested software
             engines designed for rapid integration.
           </p>
@@ -335,7 +337,7 @@ const Home = () => {
         <h1 className="text-2xl font-extrabold mt-1 text-center">
           Industries We Serve
         </h1>
-        <div className="md:mt-15 mt-10 grid grid-cols-12 md:gap-10 gap-8 px-4 lg:px-[110px]">
+        <div className="md:mt-15 mt-10 grid grid-cols-12 md:gap-10 gap-y-8 lg:px-[110px]">
           {industries.map((industry) => (
             <div
               key={industry.title}
@@ -349,8 +351,8 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <div className="mt-[110px] reviews-section lg:h-[450px] h-auto bg-blue-300/20 flex flex-col justify-center py-8 lg:py-0">
-        <h1 className="text-4xl font-extrabold mt-1 text-center">
+      <div className="mt-[110px] reviews-section lg:h-[450px] h-auto bg-blue-300/20 flex flex-col justify-center items-center py-8 lg:py-0">
+        <h1 className="md:text-4xl text-3xl w-[90%] md:w-auto font-extrabold mt-1 text-center">
           Trusted by Global Leaders
         </h1>
         <div className="mt-15 overflow-hidden w-full">
@@ -394,10 +396,10 @@ const Home = () => {
       </div>
       <div className="mt-[110px] call-section flex flex-row justify-center items-center">
         <div className="lg:h-[380px] py-10 lg:py-0 w-[90%] lg:w-[65%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
-          <h1 className="lg:text-5xl text-4xl font-bold lg:font-extrabold lg:mt-4 text-center text-white">
+          <h1 className="lg:text-5xl md:text-4xl text-3xl font-bold lg:font-extrabold lg:mt-4 text-center text-white">
             Ready to Build Something Great ?
           </h1>
-          <p className="mt-6 text-white/80 font-normal md:text-lg text-md md:w-[60%] w-[90%] text-center">
+          <p className="mt-6 text-white/80 font-normal md:text-lg text-base md:w-[60%] w-[90%] text-center">
             Let's turn your vision into a market-leading digital product. Join
             our 50+ successful clients today.
           </p>

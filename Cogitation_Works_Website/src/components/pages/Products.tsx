@@ -67,7 +67,7 @@ const Products = () => {
         <h1 className="lg:text-5xl text-4xl lg:font-black font-bold">
           Our Products
         </h1>
-        <p className="lg:w-[70%] w-[90%] lg:mt-6 mt-4 lg:text-xl text-md text-slate-500/95">
+        <p className="lg:w-[70%] w-[90%] lg:mt-6 mt-4 lg:text-xl text-base text-slate-500/95">
           Software Products Built for Modern Operations. Scalable solutions
           designed to streamline your business workflow and drive growth.
         </p>
@@ -97,7 +97,7 @@ const Products = () => {
                 <div className="text-blue-500 text-2xl me-2">
                   {product.icon}
                 </div>
-                <h5 className="text-md font-semibold text-blue-500">
+                <h5 className="text-base font-semibold text-blue-500">
                   {product.subtitle}
                 </h5>
               </div>
@@ -105,14 +105,14 @@ const Products = () => {
               <h1 className="text-3xl text-black font-bold mt-4">
                 {product.title}
               </h1>
-              <p className="md:text-md w-[95%] text-[15px] text-black/80 mt-6 md:w-[80%]">
+              <p className="md:text-base w-[95%] text-[15px] text-black/80 mt-6 md:w-[80%]">
                 {product.description}
               </p>
               <ul className="list-disc list-inside text-slate-600 mt-4">
                 {product.features.map((feature, index) => (
                   <li key={index} className="flex items-center mt-1">
-                    <FaRegCheckCircle className="text-blue-500 text-3xl md:text-[15px] md:text-normal me-3 md:me-2" />
-                    <span className="text-slate-500 text-sm md:text-[12px] md:text-normal">
+                    <FaRegCheckCircle className="text-blue-500 text-xl md:text-[15px] shrink-0 me-3 md:me-2" />
+                    <span className="text-slate-500 text-sm md:text-md ">
                       {feature}
                     </span>
                   </li>
@@ -124,23 +124,23 @@ const Products = () => {
       </div>
       <div className="mt-[110px] call-section flex flex-row justify-center items-center gap-12">
         <div className="lg:h-[400px] px-6 py-8 lg:px-0 lg:py-0 lg:w-[75%] w-[90%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
-          <h1 className="lg:text-5xl md:text-4xl text-3xl w-[90%] md:w-[80%] lg:w-full font-extrabold mt-4 text-center text-white">
+          <h1 className="lg:text-5xl md:text-4xl text-2xl w-[90%] md:w-[80%] lg:w-full font-extrabold mt-4 text-center text-white">
             Ready to modernize your operations ?
           </h1>
-          <p className="mt-6 text-white/80 font-normal text-lg w-[90%] lg:w-[60%] text-center">
+          <p className="mt-6 text-white/80 font-normal md:text-lg text-[14px] w-[90%] lg:w-[60%] text-center">
             Join 500+ companies using Cogitation Works to power their daily
             business processes.
           </p>
-          <div className="mt-8 flex md:flex-row flex-col md:items-center justify-center gap-6">
+          <div className="mt-8 w-full flex md:flex-row flex-col items-center justify-center gap-6">
             <button
               type="button"
-              className={`cursor-pointer w-[250px] md:w-auto me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
+              className={`cursor-pointer md:w-[250px] w-[80%] md:w-auto md:me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
             >
               Book a Free Consultation
             </button>
             <button
               type="button"
-              className={`cursor-pointer w-[250px] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black `}
+              className={`cursor-pointer md:w-[250px] w-[80%] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black `}
             >
               View Documentation
             </button>

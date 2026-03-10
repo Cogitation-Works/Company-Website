@@ -206,7 +206,7 @@ const Services = () => {
           </div>
         ))}
       </div>
-      <div className="h-[600px] mt-[120px] w-full overflow-hidden relative">
+      <div className="md:h-[600px] h-[500px] mt-[120px] w-full overflow-hidden relative">
         <div className="scroll-track bg-black absolute h-full w-full -z-1">
           {[...Array(2)].map((_, setIndex) =>
             Array.from({ length: 8 }, (_, i) => (
@@ -214,7 +214,7 @@ const Services = () => {
                 key={`${setIndex}-${i}`}
                 src={`/images/services/book${i + 1}.png`}
                 alt={`book${i + 1}`}
-                className="h-full w-[300px] object-contain mx-[2%] shrink-0"
+                className="md:h-full md:w-[300px] h-[90%] w-auto object-contain mx-[2%] shrink-0"
               />
             )),
           )}
@@ -226,13 +226,13 @@ const Services = () => {
             backgroundBlendMode: "overlay",
           }}
         >
-          <h1 className="text-center text-slate-200 md:leading-15 flex flex-col lg:text-[50px] md:text-5xl text-2xl font-bold w-full lg:w-[50%]">
+          <h1 className="text-center text-slate-200 md:leading-12 flex flex-col lg:text-[50px] md:text-4xl text-xl font-bold w-full lg:w-[50%]">
             <span> Ready to go live ?</span>
             <span>Just hit publish — Your</span>
             <span>Website, With Cogitation Works.</span>
           </h1>
           <button
-            className="cursor-pointer bg-blue-600 md:text-3xl text-xl hover:bg-blue-500 text-white font-bold py-2 px-4 md:py-4 md:px-4 rounded-xl mt-[8%] md:mt-[6%] lg:mt-[4%]"
+            className="cursor-pointer bg-blue-600 lg:text-3xl md:text-2xl text-lg hover:bg-blue-500 text-white font-bold py-2 px-4 md:py-4 md:px-4 rounded-xl mt-[8%] md:mt-[6%] lg:mt-[4%]"
             style={{ boxShadow: "0 0 20px 15px rgba(59, 130, 246, 0.6)" }}
           >
             Book Now
@@ -241,8 +241,8 @@ const Services = () => {
       </div>
       <div className="mt-[120px] work-section bg-slate-200/50 py-[8%] md:py-[5%]">
         <div className="flex flex-col items-center justify-center text-center">
-          <h1 className="text-4xl font-bold">How We Work</h1>
-          <p className="mt-4 text-slate-500/90 font-medium text-md w-[90%] md:w-[80%] lg:w-[40%]">
+          <h1 className="md:text-4xl text-3xl font-bold">How We Work</h1>
+          <p className="mt-4 text-slate-500/90 font-medium md:text-base text-sm w-[90%] md:w-[80%] lg:w-[40%]">
             Our structured 6-stage delivery model ensures transparency, quality,
             and timely project completion.
           </p>
@@ -270,10 +270,12 @@ const Services = () => {
         </div>
       </div>
       <div className="md:mt-[120px] mt-[80px] code-section code-section">
-        <div className="flex flex-col items-center justify-center text-center">
-          <h1 className="text-4xl font-bold">Our Core Technology Stack</h1>
+        <div className="flex flex-col items-center justify-center text-center sm:w-[80%] md:w-auto">
+          <h1 className="md:text-4xl text-3xl font-bold">
+            Our Core Technology Stack
+          </h1>
         </div>
-        <div className="md:px-[15%] px-6 grid grid-cols-12 gap-8 w-full mt-10">
+        <div className="md:px-[15%] grid grid-cols-12 place-items-center md:gap-8  w-full mt-10">
           {code.map((item) => (
             <div
               key={item.title}
@@ -289,18 +291,18 @@ const Services = () => {
           ))}
         </div>
       </div>
-      <div className="mt-[110px] h-[500px] call-section bg-blue-500  bg-blue-500 flex flex-col items-center justify-center">
-        <h1 className="md:text-5xl text-4xl font-extrabold mt-4 text-center text-white w-[90%] md:w-[80%] lg:w-full">
+      <div className="mt-[110px] md:h-[500px] py-10 md:py-0 h-auto call-section bg-blue-500  bg-blue-500 flex flex-col items-center justify-center">
+        <h1 className="md:text-5xl text-3xl font-extrabold md:mt-4 text-center text-white w-[90%] md:w-[80%] lg:w-full">
           Ready to bring your ideas to life?
         </h1>
-        <p className="mt-6 text-white font-normal text-md md:text-lg w-[80%] md:w-[60%] text-center">
+        <p className="mt-6 text-white font-normal text-base md:text-lg w-[80%] md:w-[60%] text-center">
           We’re currently taking on new projects and would love to hear from
           you. Schedule a free consultation with our experts today.
         </p>
         <div className="mt-8">
           <button
             type="button"
-            className={`cursor-pointer flex flex-row items-center rounded-md bg-white text-md px-6 py-2 md:px-10 md:py-3 md:text-lg border-3 border-white font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
+            className={`cursor-pointer flex flex-row items-center rounded-md bg-white text-base px-6 py-2 md:px-10 md:py-3 md:text-lg border-3 border-white font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
           >
             Book Free Consultation
             <span className="ms-3">
