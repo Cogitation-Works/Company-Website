@@ -362,7 +362,7 @@ const Home = () => {
             {[...reviews, ...reviews].map((review, i) => (
               <div
                 key={`${review.name}-${i}`}
-                className="cursor-pointer bg-white flex flex-col justify-center p-6 rounded-lg shadow-md w-[250px] md:w-[350px] lg:w-[300px] shrink-0"
+                className="cursor-pointer bg-white flex flex-col justify-center p-6 rounded-lg shadow-md w-[250px] md:w-[350px] lg:w-[300px] min-h-[300px] md:min-h-auto lg:min-h-[250px] shrink-0"
               >
                 <div className="flex flex-row">
                   {Array(5)
@@ -398,7 +398,7 @@ const Home = () => {
       </div>
       <div className="mt-[110px] call-section flex flex-row justify-center items-center">
         <div className="lg:h-[380px] py-10 lg:py-0 w-[90%] lg:w-[65%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
-          <h1 className="lg:text-5xl md:text-4xl text-3xl font-bold lg:font-extrabold lg:mt-4 text-center text-white">
+          <h1 className="lg:text-5xl md:text-4xl text-3xl w-full font-bold lg:font-extrabold lg:mt-4 text-center text-white">
             Ready to Build Something Great ?
           </h1>
           <p className="mt-6 text-white/80 font-normal md:text-lg text-base md:w-[60%] w-[90%] text-center">

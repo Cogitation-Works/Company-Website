@@ -262,7 +262,7 @@ const About = () => {
           <h1 className="lg:text-5xl md:text-4xl text-3xl w-[90%] md:w-[85%] lg:w-full font-extrabold mt-4 text-center text-white">
             Ready to start a conversation ?
           </h1>
-          <p className="mt-6 text-white/80 font-normal md:text-lg text-base w-[80%] lg:w-[60%] text-center">
+          <p className="mt-6 text-white/80 font-normal md:text-lg text-base w-[90%] md:w-[80%] lg:w-[60%] text-center">
             Let's discuss how our team can help you navigate your digital
             transformation journey.
           </p>
