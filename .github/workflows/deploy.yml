@@ -1,4 +1,4 @@
-name: Deploy Website to AWS S3
+name: Auto Deploy to S3
 
 on:
   push:
@@ -10,8 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        working-directory: Cogitation_Works_Website
+        run: npm install
+
+      - name: Build Project
+        working-directory: Cogitation_Works_Website
+        run: npm run build
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -20,6 +33,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Upload files to S3
+      - name: Deploy dist to S3
+        working-directory: Cogitation_Works_Website
         run: |
-          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} --delete
+          aws s3 sync dist/ s3://${{ secrets.S3_BUCKET_NAME }} --delete
