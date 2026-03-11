@@ -51,6 +51,12 @@ const Header = () => {
           ))}
           <button
             type="button"
+            onClick={() =>
+              window.open(
+                "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
+                "_blank",
+              )
+            }
             className={`ms-4 rounded-md bg-blue-500 px-3 py-1 text-sm font-semibold text-white transition-colors duration-200 hover:bg-blue-600`}
           >
             Get Started

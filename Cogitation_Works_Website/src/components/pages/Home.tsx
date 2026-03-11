@@ -188,12 +188,24 @@ const Home = () => {
           <div className="flex md:flex-row flex-col items-center gap-4 mt-4 mb-[20%] md:mb-0">
             <button
               type="button"
+              onClick={() =>
+                window.open(
+                  "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
+                  "_blank",
+                )
+              }
               className={`md:me-4 py-3 rounded-md bg-blue-500 w-[230px] md:w-auto md:px-6 md:py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-white transition-colors transition-scale duration-200 hover:bg-blue-600 hover:scale-95`}
             >
               Get Started
             </button>
             <button
               type="button"
+              onClick={() =>
+                window.open(
+                  "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
+                  "_blank",
+                )
+              }
               className={`mt-[2%] py-3 md:mt-0 rounded-md cursor-pointer w-[230px] md:w-auto md:px-6 md:py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-black bg-white transition-scale duration-200 hover:bg-black hover:text-white hover:scale-95`}
             >
               Book a Free Consultation
@@ -214,7 +226,15 @@ const Home = () => {
               Thinking Beyond Technology. We don't just write code; we solve
               business problems with engineering excellence.
             </p>
-            <button className="lg:mt-8 mt-6 md:text-normal text-sm cursor-pointer flex items-center flex-row rounded-md bg-blue-500 px-6 py-3 text-white font-semibold hover:bg-blue-600">
+            <button
+              onClick={() =>
+                window.open(
+                  "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
+                  "_blank",
+                )
+              }
+              className="lg:mt-8 mt-6 md:text-normal text-sm cursor-pointer flex items-center flex-row rounded-md bg-blue-500 px-6 py-3 text-white font-semibold hover:bg-blue-600"
+            >
               Start Your Project
               <span className="ml-2">
                 <FaArrowRightLong />
@@ -408,12 +428,24 @@ const Home = () => {
           <div className="mt-8 flex md:flex-row flex-col md:items-center justify-center gap-6">
             <button
               type="button"
+              onClick={() =>
+                window.open(
+                  "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
+                  "_blank",
+                )
+              }
               className={`cursor-pointer w-[220px] md:w-auto me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
             >
               Get a Free Quote
             </button>
             <button
               type="button"
+              onClick={() =>
+                window.open(
+                  "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
+                  "_blank",
+                )
+              }
               className={`cursor-pointer w-[220px] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black `}
             >
               Schedule a Call

@@ -121,12 +121,24 @@ const About = () => {
           <div className="mt-6 flex md:flex-row flex-col md:items-center md:justify-start justify-center md:gap-6 gap-4">
             <button
               type="button"
+              onClick={() =>
+                window.open(
+                  "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
+                  "_blank",
+                )
+              }
               className={`cursor-pointer md:me-4 rounded-md bg-blue-500 px-8 py-2 text-sm md:text-lg border-3 border-blue-500 font-semibold text-white  transition-scale duration-200 hover:bg-blue-600 hover:scale-95`}
             >
               Meet the Team
             </button>
             <button
               type="button"
+              onClick={() => {
+                const element = document.getElementById("Missions");
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
               className={`cursor-pointer rounded-md px-8 py-2 text-sm md:text-lg border-3 bg-transparent border-blue-500 font-semibold text-blue-500 transition-scale duration-200 hover:bg-black hover:text-white hover:border-black `}
             >
               Our Vision
@@ -217,7 +229,7 @@ const About = () => {
           </div>
         </div>
       </div>
-      <div className="lg:mt-[8%] mt-[90px] px-[10%]">
+      <div id="Missions" className="lg:mt-[8%] mt-[90px] px-[10%]">
         <div className="flex flex-col items-center justify-center text-center">
           <h1 className="md:text-4xl text-3xl font-bold">Missions & Values</h1>
           <span className="h-[5px] bg-blue-500 w-[100px] mt-4"></span>
@@ -269,12 +281,24 @@ const About = () => {
           <div className="mt-8 w-full flex md:flex-row flex-col items-center justify-center gap-6">
             <button
               type="button"
+              onClick={() =>
+                window.open(
+                  "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
+                  "_blank",
+                )
+              }
               className={`cursor-pointer md:w-[250px] w-[80%] md:w-auto md:me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
             >
               Schedule a Call
             </button>
             <button
               type="button"
+              onClick={() =>
+                window.open(
+                  "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
+                  "_blank",
+                )
+              }
               className={`cursor-pointer md:w-[250px] w-[80%] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black `}
             >
               Book Free Consultation

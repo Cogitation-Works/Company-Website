@@ -232,6 +232,12 @@ const Services = () => {
             <span>Website, With Cogitation Works.</span>
           </h1>
           <button
+            onClick={() =>
+              window.open(
+                "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
+                "_blank",
+              )
+            }
             className="cursor-pointer bg-blue-600 lg:text-3xl md:text-2xl text-lg hover:bg-blue-500 text-white font-bold py-2 px-4 md:py-4 md:px-4 rounded-xl mt-[8%] md:mt-[6%] lg:mt-[4%]"
             style={{ boxShadow: "0 0 20px 15px rgba(59, 130, 246, 0.6)" }}
           >
@@ -301,6 +307,12 @@ const Services = () => {
         </p>
         <div className="mt-8">
           <button
+            onClick={() =>
+              window.open(
+                "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
+                "_blank",
+              )
+            }
             type="button"
             className={`cursor-pointer flex flex-row items-center rounded-md bg-white text-base px-6 py-2 md:px-10 md:py-3 md:text-lg border-3 border-white font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
           >
