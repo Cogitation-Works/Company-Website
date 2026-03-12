@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { HiMenuAlt1 } from "react-icons/hi";
-import logo from "../../assets/logo.png";
 
 const links = [
   { name: "Home", path: "/" },
@@ -25,7 +24,11 @@ const Header = () => {
           className="flex cursor-pointer flex-row items-center"
           onClick={() => navigation("/")}
         >
-          <img src={logo} alt="logo" className="size-15" />
+          <img
+            src={"/images/logo/logo.png"}
+            alt="Cogitation Works Logo"
+            className="size-15"
+          />
           <div className="text-xl font-extrabold text-black">
             Cogitation <span className="text-blue-500">Works</span>
           </div>
