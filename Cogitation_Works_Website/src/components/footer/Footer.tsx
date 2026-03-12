@@ -1,5 +1,3 @@
-import logo from "../../assets/logo.png";
-
 const socialLinks = [
   { name: "LinkedIn", link: "https://www.linkedin.com/in/cogitation-works/" },
   { name: "Twitter", link: "https://www.instagram.com/cogitation_works/" },
@@ -14,7 +12,11 @@ const Footer = () => {
       <div className="grid grid-cols-12 gap-8 p-8">
         <div className="lg:col-span-3 md:col-span-6 col-span-12">
           <div className="flex flex-row items-center my-4">
-            <img className="size-12" src={logo} alt="" />
+            <img
+              className="size-12"
+              src={"/images/logo/logo.png"}
+              alt="Cogitation Works Logo"
+            />
             <h3 className="ms-2 text-lg font-bold text-white">
               Cogitation Works
             </h3>
