@@ -132,30 +132,22 @@ const Products = () => {
             business processes.
           </p>
           <div className="mt-8 w-full flex md:flex-row flex-col items-center justify-center gap-6">
-            <button
-              type="button"
-              onClick={() =>
-                window.open(
-                  "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
-                  "_blank",
-                )
-              }
-              className={`cursor-pointer md:w-[250px] w-[80%] md:w-auto md:me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
+            <a
+              href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`cursor-pointer md:w-[250px] w-[80%] md:w-auto md:me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95 inline-block text-center`}
             >
               Book a Free Consultation
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                window.open(
-                  "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
-                  "_blank",
-                )
-              }
-              className={`cursor-pointer md:w-[250px] w-[80%] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black `}
+            </a>
+            <a
+              href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`cursor-pointer md:w-[250px] w-[80%] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black inline-block text-center`}
             >
               View Documentation
-            </button>
+            </a>
           </div>
         </div>
       </div>

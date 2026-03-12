@@ -49,18 +49,14 @@ const Header = () => {
               {link.name}
             </button>
           ))}
-          <button
-            type="button"
-            onClick={() =>
-              window.open(
-                "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
-                "_blank",
-              )
-            }
-            className={`ms-4 rounded-md bg-blue-500 px-3 py-1 text-sm font-semibold text-white transition-colors duration-200 hover:bg-blue-600`}
+          <a
+            href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`ms-4 rounded-md bg-blue-500 px-3 py-1 text-sm font-semibold text-white transition-colors duration-200 hover:bg-blue-600 inline-block`}
           >
             Get Started
-          </button>
+          </a>
         </div>
 
         <div className="ms-auto md:hidden">

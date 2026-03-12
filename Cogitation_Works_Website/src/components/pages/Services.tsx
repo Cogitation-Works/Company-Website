@@ -231,18 +231,15 @@ const Services = () => {
             <span>Just hit publish — Your</span>
             <span>Website, With Cogitation Works.</span>
           </h1>
-          <button
-            onClick={() =>
-              window.open(
-                "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
-                "_blank",
-              )
-            }
-            className="cursor-pointer bg-blue-600 lg:text-3xl md:text-2xl text-lg hover:bg-blue-500 text-white font-bold py-2 px-4 md:py-4 md:px-4 rounded-xl mt-[8%] md:mt-[6%] lg:mt-[4%]"
+          <a
+            href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cursor-pointer bg-blue-600 lg:text-3xl md:text-2xl text-lg hover:bg-blue-500 text-white font-bold py-2 px-4 md:py-4 md:px-4 rounded-xl mt-[8%] md:mt-[6%] lg:mt-[4%] inline-block"
             style={{ boxShadow: "0 0 20px 15px rgba(59, 130, 246, 0.6)" }}
           >
             Book Now
-          </button>
+          </a>
         </div>
       </div>
       <div className="mt-[120px] work-section bg-slate-200/50 py-[8%] md:py-[5%]">
@@ -306,21 +303,17 @@ const Services = () => {
           you. Schedule a free consultation with our experts today.
         </p>
         <div className="mt-8">
-          <button
-            onClick={() =>
-              window.open(
-                "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
-                "_blank",
-              )
-            }
-            type="button"
+          <a
+            href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
+            target="_blank"
+            rel="noopener noreferrer"
             className={`cursor-pointer flex flex-row items-center rounded-md bg-white text-base px-6 py-2 md:px-10 md:py-3 md:text-lg border-3 border-white font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
           >
             Book Free Consultation
             <span className="ms-3">
               <FaArrowRightLong />
             </span>
-          </button>
+          </a>
         </div>
       </div>
     </div>
