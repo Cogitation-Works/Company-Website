@@ -25,7 +25,7 @@ const Header = () => {
           onClick={() => navigation("/")}
         >
           <img
-            src={"/images/logo/logo.png"}
+            src={"/logo/logo.png"}
             alt="Cogitation Works Logo"
             className="size-15"
           />

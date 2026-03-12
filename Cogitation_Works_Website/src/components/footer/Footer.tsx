@@ -14,7 +14,7 @@ const Footer = () => {
           <div className="flex flex-row items-center my-4">
             <img
               className="size-12"
-              src={"/images/logo/logo.png"}
+              src={"/logo/logo.png"}
               alt="Cogitation Works Logo"
             />
             <h3 className="ms-2 text-lg font-bold text-white">
