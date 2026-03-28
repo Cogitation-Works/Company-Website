@@ -3,9 +3,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { HiMenuAlt1 } from "react-icons/hi";
 
 const links = [
-  { name: "Home", path: "/" },
-  { name: "Service", path: "/service" },
-  { name: "Product", path: "/product" },
+  { name: "Home", path: "/home" },
+  { name: "Services", path: "/services" },
+  { name: "Products", path: "/products" },
   { name: "About", path: "/about" },
 ];
 
