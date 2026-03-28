@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { HiMenuAlt1 } from "react-icons/hi";
 
 const links = [
-  { name: "Home", path: "/home" },
+  { name: "Home", path: "/" },
   { name: "Services", path: "/services" },
   { name: "Products", path: "/products" },
   { name: "About", path: "/about" },
