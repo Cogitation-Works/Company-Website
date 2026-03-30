@@ -182,8 +182,8 @@ const Home = () => {
             Powerful Digital Products
           </h1>
           <p className=" lg:w-[55%] w-[90%] md:w-[70%] lg:text-[22px] text-sm text-gray-600 py-6 lg:py-4 lg:mt-[40px] text-center">
-            Cogitation Works delivers end-to-end IT services and software
-            solutions that transform how businesses operate, innovate, and grow.
+            Cogitation Works delivers end-to-end IT Services and Software
+            Solutions that transform how businesses operate, innovate, and grow.
           </p>
           <div className="flex md:flex-row flex-col items-center gap-4 mt-4 mb-[20%] md:mb-0">
             <a
