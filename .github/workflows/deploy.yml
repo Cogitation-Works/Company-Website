@@ -1,0 +1,38 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: npm install
+        working-directory: Cogitation_Works_Website
+
+      - run: npm run build
+        working-directory: Cogitation_Works_Website
+
+      - name: Upload
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "Cogitation_Works_Website/dist/*"
+          target: "/var/www/site/releases/${{ github.run_number }}"
+
+      - name: Activate
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            ln -sfn /var/www/site/releases/${{ github.run_number }} /var/www/site/current
+            sudo systemctl reload nginx
