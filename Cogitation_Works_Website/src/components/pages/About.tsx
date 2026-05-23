@@ -150,12 +150,12 @@ const About = () => {
           </div>
         </div>
       </Reveal>
-      <Reveal className="mt-[6%] bg-blue-300/20 py-8 overflow-hidden lg:overflow-visible">
-        <div className="marquee-fade scroll-track-sm flex flex-row gap-8 lg:gap-10 w-max hover:[animation-play-state:paused] lg:w-full lg:justify-center">
+      <Reveal className="impact-strip-wrap mt-[6%] py-8 overflow-hidden lg:overflow-visible">
+        <div className="impact-strip scroll-track-sm flex flex-row gap-8 lg:gap-10 w-max hover:[animation-play-state:paused] lg:w-full lg:justify-center">
           {[...client, ...client].map((item, i) => (
             <div
               key={`${item.title}-${i}`}
-              className={`motion-card flex flex-col justify-center lg:w-[300px] w-[250px] p-6 bg-white rounded-lg shadow-md shrink-0 ${i >= client.length ? "lg:hidden" : ""}`}
+              className={`impact-metric shrink-0 ${i >= client.length ? "lg:hidden" : ""}`}
             >
               <h4 className="text-base font-medium text-slate-500">
                 {item.title}
@@ -245,19 +245,18 @@ const About = () => {
           </div>
         </div>
       </Reveal>
-      <Reveal id="Missions" className="lg:mt-[8%] mt-[90px] px-[10%]">
+      <Reveal id="Missions" className="mission-section lg:mt-[8%] mt-[90px] px-[10%]">
         <div className="flex flex-col items-center justify-center text-center">
           <h1 className="md:text-4xl text-3xl font-bold">Missions & Values</h1>
           <span className="h-[5px] bg-blue-500 w-[100px] mt-4"></span>
         </div>
-        <div className="mt-10 flex flex-row justify-center flex-wrap gap-10">
+        <div className="mission-track mt-10">
           {missions.map((mission) => (
             <div
               key={mission.title}
-              className="motion-card flex flex-col items-start justify-start gap-4 p-6 bg-white rounded-lg max-w-[350px]"
-              style={{ boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px" }}
+              className="mission-track-item"
             >
-              <div className="motion-icon text-3xl text-blue-500">
+              <div className="motion-icon mission-track-icon">
                 {mission.icon}
               </div>
               <h3 className="text-xl font-bold">{mission.title}</h3>
@@ -266,20 +265,19 @@ const About = () => {
           ))}
         </div>
       </Reveal>
-      <Reveal className="lg:mt-[8%] mt-[90px] md:px-[10%] px-5">
+      <Reveal className="about-industries lg:mt-[8%] mt-[90px] md:px-[10%] px-5">
         <div className="flex flex-col items-center justify-center text-center">
           <h1 className="md:text-4xl text-2xl font-bold">
             Industries We Empower
           </h1>
         </div>
-        <div className="mt-10 grid grid-cols-12 md:gap-10 gap-6 md:px-[10%] px-5">
+        <div className="industry-map mt-10">
           {industries.map((industry) => (
             <div
               key={industry.title}
-              className="motion-tile lg:col-span-3 col-span-6 flex flex-col items-center justify-center md:gap-4 gap-2 py-4 w-full md:w-auto md:py-4 md:px-4 bg-white rounded-lg"
-              style={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
+              className="industry-map-node"
             >
-              <div className="motion-icon md:text-4xl text-2xl text-blue-500">
+              <div className="motion-icon industry-map-icon">
                 {industry.icon}
               </div>
               <h3 className="md:text-lg text-sm font-bold">{industry.title}</h3>

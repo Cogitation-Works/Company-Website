@@ -222,100 +222,101 @@ const Home = () => {
     <div className="page-shell">
       <Reveal variant="zoom">
         <Parallax distance={24} direction="down">
-        <div
-          className="hero-stage md:min-h-[60vh] lg:min-h-[70vh] h-auto w-full py-8 overflow-hidden rounded-b-[40px]"
-          style={{
-            backgroundImage: `url(${withBase("/images/home/homebg.png")})`,
-            backgroundSize: "110%",
-            backgroundPosition: "0% 80%",
-            backgroundRepeat: "no-repeat",
-          }}
-        >
-        <HeroMotionLayer />
-        <motion.div
-          className="relative z-10 flex flex-col items-center justify-center"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.09,
-                delayChildren: 0.08,
-              },
-            },
-          }}
-        >
-          <motion.h6
-            className="floating-badge text-sm  md:mt-0 text-blue-500 bg-blue-300/20 lg:bg-white/70 p-3 text-center rounded-lg  md:text-base lg:text-black/50 font-medium"
-            variants={{
-              hidden: { opacity: 0, y: 18 },
-              visible: { opacity: 1, y: 0 },
+          <div
+            className="hero-stage md:min-h-[60vh] lg:min-h-[70vh] h-auto w-full py-8 overflow-hidden rounded-b-[40px]"
+            style={{
+              backgroundImage: `url(${withBase("/images/home/homebg.png")})`,
+              backgroundSize: "110%",
+              backgroundPosition: "0% 80%",
+              backgroundRepeat: "no-repeat",
             }}
           >
-            Full-Spectrum IT Services & Solutions
-          </motion.h6>
-          <motion.h1
-            className="text-center text-[45px] leading-12 md:leading-none w-[90%] mt-8 lg:mt-0 md:text-5xl lg:text-6xl md:w-[80%] lg:w-full font-bold lg:text-[80px] lg:font-semibold text-black lg:py-4"
-            variants={{
-              hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
-              visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-            }}
-          >
-            We Craft Your Ideas Into
-          </motion.h1>
-          <motion.h1
-            className="animated-gradient-text text-center text-[45px] leading-12 md:leading-none w-[95%] font-bold md:text-5xl lg:text-6xl lg:text-[85px] md:w-[80%] lg:w-full lg:font-semibold text-blue-500"
-            variants={{
-              hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
-              visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-            }}
-          >
-            Powerful Digital Products
-          </motion.h1>
-          <motion.p
-            className=" lg:w-[55%] w-[90%] md:w-[70%] lg:text-[22px] text-sm text-gray-600 py-6 lg:py-4 lg:mt-[40px] text-center"
-            variants={{
-              hidden: { opacity: 0, y: 22 },
-              visible: { opacity: 1, y: 0 },
-            }}
-          >
-            Cogitation Works delivers end-to-end IT Services and Software
-            Solutions that transform how businesses operate, innovate, and grow.
-          </motion.p>
-          <motion.div
-            className="flex md:flex-row flex-col items-center gap-4 mt-4 mb-[20%] md:mb-0"
-            variants={{
-              hidden: { opacity: 0, y: 18 },
-              visible: { opacity: 1, y: 0 },
-            }}
-          >
-            <a
-              href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button-glow md:me-4 py-3 rounded-md bg-blue-500 w-[230px] md:w-auto md:px-6 md:py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-white transition-colors transition-scale duration-200 hover:bg-blue-600 hover:scale-95 inline-block text-center"
+            <HeroMotionLayer />
+            <motion.div
+              className="relative z-10 flex flex-col items-center justify-center"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: {
+                  transition: {
+                    staggerChildren: 0.09,
+                    delayChildren: 0.08,
+                  },
+                },
+              }}
             >
-              Get Started
-            </a>
-            <a
-              href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button-outline-motion mt-[2%] py-3 md:mt-0 rounded-md cursor-pointer w-[230px] md:w-auto md:px-6 md:py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-black bg-white transition-scale duration-200 hover:bg-black hover:text-white hover:scale-95 inline-block text-center"
-            >
-              Book a Free Consultation
-            </a>
-          </motion.div>
-        </motion.div>
-        </div>
+              <motion.h6
+                className="floating-badge text-sm  md:mt-0 text-blue-500 bg-blue-300/20 lg:bg-white/70 p-3 text-center rounded-lg  md:text-base lg:text-black/50 font-medium"
+                variants={{
+                  hidden: { opacity: 0, y: 18 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+              >
+                Full-Spectrum IT Services & Solutions
+              </motion.h6>
+              <motion.h1
+                className="text-center text-[45px] leading-12 md:leading-none w-[90%] mt-8 lg:mt-0 md:text-5xl lg:text-6xl md:w-[80%] lg:w-full font-bold lg:text-[80px] lg:font-semibold text-black lg:py-4"
+                variants={{
+                  hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
+                  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+                }}
+              >
+                We Craft Your Ideas Into
+              </motion.h1>
+              <motion.h1
+                className="animated-gradient-text text-center text-[45px] leading-12 md:leading-none w-[95%] font-bold md:text-5xl lg:text-6xl lg:text-[85px] md:w-[80%] lg:w-full lg:font-semibold text-blue-500"
+                variants={{
+                  hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
+                  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+                }}
+              >
+                Powerful Digital Products
+              </motion.h1>
+              <motion.p
+                className=" lg:w-[55%] w-[90%] md:w-[70%] lg:text-[22px] text-sm text-gray-600 py-6 lg:py-4 lg:mt-[40px] text-center"
+                variants={{
+                  hidden: { opacity: 0, y: 22 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+              >
+                Cogitation Works delivers end-to-end IT Services and Software
+                Solutions that transform how businesses operate, innovate, and
+                grow.
+              </motion.p>
+              <motion.div
+                className="flex md:flex-row flex-col items-center gap-4 mt-4 mb-[20%] md:mb-0"
+                variants={{
+                  hidden: { opacity: 0, y: 18 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+              >
+                <a
+                  href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button-glow md:me-4 py-3 rounded-md bg-blue-500 w-[230px] md:w-auto md:px-6 md:py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-white transition-colors transition-scale duration-200 hover:bg-blue-600 hover:scale-95 inline-block text-center"
+                >
+                  Get Started
+                </a>
+                <a
+                  href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button-outline-motion mt-[2%] py-3 md:mt-0 rounded-md cursor-pointer w-[230px] md:w-auto md:px-6 md:py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-black bg-white transition-scale duration-200 hover:bg-black hover:text-white hover:scale-95 inline-block text-center"
+                >
+                  Book a Free Consultation
+                </a>
+              </motion.div>
+            </motion.div>
+          </div>
         </Parallax>
       </Reveal>
       <Reveal className="lg:mt-[100px] md:mt-[80px] mt-2 md:mt-10 px-8 philosophy-section">
         <h3 className="text-blue-500 font-semibold text-base uppercase">
           Our Philosophy
         </h3>
-        <div className="grid grid-cols-2 gap-4 mt-4">
+        <div className="philosophy-lab grid grid-cols-2 gap-4 mt-4">
           <div className="lg:col-span-1 col-span-2 flex flex-col items-start">
             <h2 className="lg:text-5xl text-4xl font-bold text-black">
               Who We Are
@@ -336,18 +337,12 @@ const Home = () => {
               </span>
             </a>
           </div>
-          <div className="lg:col-span-1 col-span-2 flex md:flex-row flex-col md:justify-center lg:justify-normal items-center gap-10 mt-10 lg:mt-0">
+          <div className="metrics-rail lg:col-span-1 col-span-2">
             {philosophy.map((item) => (
-              <div
-                key={item.title}
-                className="motion-card flex md:flex-col flex-row items-center md:w-auto w-[90%] text-center md:justify-content cursor-pointer md:px-6 md:py-4 py-6 justify-center rounded-lg"
-                style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px" }}
-              >
-                <div className="motion-icon md:text-4xl text-5xl text-blue-500 md:p-6 me-6 md:me-0">
-                  {item.icon}
-                </div>
+              <div key={item.title} className="metric-node">
+                <div className="motion-icon metric-node-icon">{item.icon}</div>
 
-                <div className="flex flex-col md:items-center items-start">
+                <div className="flex flex-col md:items-center items-start relative z-10">
                   <h4 className="md:text-2xl text-xl font-bold text-black">
                     {item.title}
                   </h4>
@@ -413,22 +408,17 @@ const Home = () => {
           </p>
         </div>
         <div className="mt-10">
-          <div className="grid grid-cols-4 gap-6">
+          <div className="product-runway">
             {products.map((product) => (
-              <div
-                key={product.item}
-                className="motion-card col-span-4 md:col-span-2 lg:col-span-1 relative min-h-[200px] overflow-hidden rounded-2xl shadow-lg"
-              >
-                <div className="absolute inset-0 -z-1 ps-[100px] bg-blue-800 overflow-hidden text-[100px] p-0 m-0">
-                  <h1 className="text-nowrap font-bold text-white m-0 p-0 leading-none opacity-70">
-                    {product.item}
-                  </h1>
+              <div key={product.item} className="product-runway-item">
+                <div className="product-runway-word">
+                  <h1>{product.item}</h1>
                 </div>
-                <div className="relative z-5 flex flex-col justify-center h-full w-full px-6 py-4 bg-black/80 p-4">
+                <div className="relative z-5 flex flex-col justify-center h-full w-full px-6 py-4">
                   <h4 className="text-xl font-bold text-white">
                     {product.item}
                   </h4>
-                  <p className="text-white/50 font-nora mt-4 text-sm">
+                  <p className="text-white/70 font-nora mt-4 text-sm">
                     {product.description}
                   </p>
                   <div>
@@ -452,15 +442,10 @@ const Home = () => {
         <h1 className="text-2xl font-extrabold mt-1 text-center">
           Industries We Serve
         </h1>
-        <div className="md:mt-15 mt-10 grid grid-cols-12 md:gap-10 gap-y-8 lg:px-[110px]">
+        <div className="industry-ribbon md:mt-15 mt-10 lg:px-[110px]">
           {industries.map((industry) => (
-            <div
-              key={industry.title}
-              className="motion-tile lg:col-span-2 md:col-span-4 col-span-6 cursor-pointer flex flex-col items-center text-center"
-            >
-              <div className="text-4xl p-4 rounded-full bg-blue-500 text-white shadow-lg">
-                {industry.icon}
-              </div>
+            <div key={industry.title} className="industry-ribbon-item">
+              <div className="industry-ribbon-icon">{industry.icon}</div>
               <h3 className="mt-4 md:text-lg text-sm font-semibold">
                 {industry.title}
               </h3>
@@ -547,4 +532,3 @@ const Home = () => {
 };
 
 export default Home;
-

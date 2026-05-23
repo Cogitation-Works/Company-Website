@@ -8,10 +8,12 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { RiReactjsLine } from "react-icons/ri";
 import { RiNodejsFill } from "react-icons/ri";
 import { FaAws } from "react-icons/fa6";
+import { FaRegSquare } from "react-icons/fa";
 import { IoServerOutline } from "react-icons/io5";
 import { TbBrandSwift } from "react-icons/tb";
 import { TbBrandFlutter } from "react-icons/tb";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { SiDjango, SiPython } from "react-icons/si";
 import Reveal from "../Reveal";
 import Parallax from "../Parallax";
 
@@ -112,6 +114,22 @@ const code = [
     title: "Flutter",
     icon: <TbBrandFlutter />,
   },
+  {
+    title: "React Native",
+    icon: <RiReactjsLine />,
+  },
+  {
+    title: "Python",
+    icon: <SiPython />,
+  },
+  {
+    title: "Django",
+    icon: <SiDjango />,
+  },
+  {
+    title: "Square Brothers",
+    icon: <FaRegSquare />,
+  },
 ];
 
 const Services = () => {
@@ -185,22 +203,25 @@ const Services = () => {
         </div>
         </div>
       </Reveal>
-      <Reveal className="grid grid-cols-2 gap-10 mt-[100px] px-[6%]">
+      <Reveal className="service-lab mt-[100px] px-[6%]">
         {services.map((service, index) => (
           <Reveal
             key={service.title}
-            className="md:col-span-1 col-span-2 h-full"
+            className="h-full"
             delay={index * 80}
           >
-            <div className="motion-card bg-slate-200/40 justify-start p-8 rounded-lg h-full">
-              <div className="motion-icon text-blue-500 inline-block text-4xl mb-4 p-2 bg-blue-200/40 rounded-md">
-                {service.icon}
+            <div className="service-lab-panel h-full">
+              <div className="service-lab-topline">
+                <span>{(index + 1).toString().padStart(2, "0")}</span>
+                <div className="motion-icon service-lab-icon">
+                  {service.icon}
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-black mb-2">
+              <h3 className="text-xl font-bold text-black mb-2 relative z-10">
                 {service.title}
               </h3>
-              <p className="text-gray-600 mb-4">{service.description}</p>
-              <ul className="space-y-2 text-gray-600">
+              <p className="text-gray-600 mb-4 relative z-10">{service.description}</p>
+              <ul className="service-lab-list">
                 <li className="flex items-center gap-2">
                   <FaRegCheckCircle className="text-blue-500 shrink-0" />
                   {service.p1}
@@ -234,6 +255,7 @@ const Services = () => {
             )),
           )}
         </div>
+        </Parallax>
         <div
           className="h-full w-full relative flex flex-col items-center justify-center z-10"
           style={{
@@ -256,7 +278,6 @@ const Services = () => {
             Book Now
           </a>
         </div>
-        </Parallax>
       </Reveal>
       <Reveal className="mt-[120px] work-section bg-slate-200/50 py-[8%] md:py-[5%]">
         <div className="flex flex-col items-center justify-center text-center">
@@ -266,20 +287,20 @@ const Services = () => {
             and timely project completion.
           </p>
         </div>
-        <div className="mt-[4%] grid grid-cols-6 gap-8 px-[6%]">
+        <div className="work-timeline mt-[4%] px-[6%]">
           {work.map((item, index) => (
             <div
-              className="relative col-span-6 md:col-span-3 lg:col-span-2"
+              className="work-timeline-item"
               key={item.title}
             >
-              <div className="absolute right-4 top-4 text-blue-500/10 font-black text-5xl">
+              <div className="work-timeline-index">
                 {(index + 1).toString().padStart(2, "0")}
               </div>
               <div
                 key={item.title}
-                className="motion-card p-8 rounded-lg shadow-md bg-white/90 "
+                className="work-timeline-content"
               >
-                <h3 className="text-xl mt-8 font-bold text-black mb-2">
+                <h3 className="text-xl font-bold text-black mb-2">
                   {item.title}
                 </h3>
                 <p className="text-gray-600">{item.description}</p>
@@ -294,16 +315,20 @@ const Services = () => {
             Our Core Technology Stack
           </h1>
         </div>
-        <div className="md:px-[15%] grid grid-cols-12 place-items-center md:gap-8  w-full mt-10">
-          {code.map((item) => (
+        <div className="tech-orbit mt-10">
+          <div className="tech-orbit-core">
+            <span>Modern</span>
+            <strong>Stack</strong>
+          </div>
+          {code.map((item, index) => (
             <div
               key={item.title}
-              className="motion-tile col-span-6 md:col-span-4 lg:col-span-2 flex flex-col items-center mt-8"
+              className={`motion-tile tech-orbit-item tech-orbit-item-${index + 1}`}
             >
-              <div className="motion-icon text-4xl p-3 bg-slate-200/50 rounded-xl">
+              <div className="motion-icon tech-orbit-icon">
                 {item.icon}
               </div>
-              <h3 className="text-lg font-bold text-black/70 mt-4">
+              <h3 className="text-lg font-bold text-black/70">
                 {item.title}
               </h3>
             </div>

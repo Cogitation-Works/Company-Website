@@ -76,20 +76,17 @@ const Products = () => {
           designed to streamline your business workflow and drive growth.
         </p>
       </Reveal>
-      <Reveal className="mt-[4%] md:px-[10%] px-[5%]">
+      <Reveal className="product-feature-flow mt-[4%] md:px-[10%] px-[5%]">
         {products.map((product, index) => (
           <Reveal
             key={product.title}
             delay={index * 90}
           >
             <div
-              className="motion-card grid grid-cols-14 lg:h-[350px] h-auto my-10 bg-white lg:rounded-lg rounded-[20px] overflow-hidden"
-              style={{
-                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-              }}
+              className="product-feature-panel grid grid-cols-14 lg:h-[390px] h-auto my-10 overflow-hidden"
             >
               <div
-                className={` ${index % 2 === 0 || index == 0 ? "lg:order-1" : "lg:order-2"} lg:col-span-4 col-span-14 h-full w-full min-h-0 overflow-hidden`}
+                className={`product-feature-media ${index % 2 === 0 || index == 0 ? "lg:order-1" : "lg:order-2"} lg:col-span-5 col-span-14 h-full w-full min-h-0 overflow-hidden`}
               >
                 <Parallax className="h-full w-full" distance={22}>
                 <img
@@ -102,9 +99,12 @@ const Products = () => {
                 </Parallax>
               </div>
               <div
-                className={` ${index % 2 === 0 || index == 0 ? "lg:order-2" : "lg:order-1"} lg:col-span-10 col-span-14 px-[10%] py-8 flex flex-col items-start justify-center`}
+                className={`product-feature-copy ${index % 2 === 0 || index == 0 ? "lg:order-2" : "lg:order-1"} lg:col-span-9 col-span-14 px-[10%] py-8 flex flex-col items-start justify-center`}
               >
-                <div className="flex flex-row items-center">
+                <div className="product-feature-kicker">
+                  <span className="product-feature-index">
+                    {(index + 1).toString().padStart(2, "0")}
+                  </span>
                   <div className="motion-icon text-blue-500 text-2xl me-2">
                     {product.icon}
                   </div>
@@ -119,7 +119,7 @@ const Products = () => {
                 <p className="md:text-base w-[95%] text-[15px] text-black/80 mt-6 md:w-[80%]">
                   {product.description}
                 </p>
-                <ul className="list-disc list-inside text-slate-600 mt-4">
+                <ul className="product-feature-list text-slate-600 mt-4">
                   {product.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center mt-1">
                       <FaRegCheckCircle className="text-blue-500 text-xl md:text-[15px] shrink-0 me-3 md:me-2" />
