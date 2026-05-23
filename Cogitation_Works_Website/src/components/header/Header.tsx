@@ -10,24 +10,41 @@ const links = [
 ];
 
 const Header = () => {
+  const baseUrl = import.meta.env.BASE_URL;
   const navigation = useNavigate();
   const location = useLocation();
   const activeLink = location.pathname.split("/")[1]
     ? `/${location.pathname.split("/")[1]}`
     : "/";
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
+  const [isScrolled, setIsScrolled] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 18);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-white px-6 py-2">
+    <header
+      className={`site-header sticky top-0 z-50 px-6 py-2 ${
+        isScrolled ? "is-scrolled" : "bg-white/95"
+      }`}
+    >
       <nav className="flex items-center">
         <div
-          className="flex cursor-pointer flex-row items-center"
+          className="site-brand flex cursor-pointer flex-row items-center"
           onClick={() => navigation("/")}
         >
           <img
-            src={"/logo/logo.png"}
+            src={`${baseUrl}logo/logo.png`}
             alt="Cogitation Works Logo"
-            className="size-15"
+            className="brand-mark size-15"
           />
           <div className="text-xl font-extrabold text-black">
             Cogitation <span className="text-blue-500">Works</span>
@@ -39,9 +56,17 @@ const Header = () => {
             <button
               type="button"
               key={link.name}
-              className={`ms-4 cursor-pointer p-1 text-lg font-semibold transition-colors duration-200 ${
+              className={`site-nav-item nav-link ms-4 cursor-pointer p-1 text-lg font-semibold transition-colors duration-200 ${
+                link.name === "Home"
+                  ? "site-nav-item-delay-1"
+                  : link.name === "Services"
+                    ? "site-nav-item-delay-2"
+                    : link.name === "Products"
+                      ? "site-nav-item-delay-3"
+                      : "site-nav-item-delay-4"
+              } ${
                 activeLink === link.path
-                  ? "text-blue-500"
+                  ? "is-active text-blue-500"
                   : "text-black/70 hover:text-blue-500"
               }`}
               onClick={() => {
@@ -56,13 +81,13 @@ const Header = () => {
             href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
             target="_blank"
             rel="noopener noreferrer"
-            className={`ms-4 rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-blue-600 inline-block`}
+            className="site-nav-item site-nav-item-delay-5 button-glow ms-4 inline-block rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-blue-600"
           >
             Get Started
           </a>
         </div>
 
-        <div className="ms-auto md:hidden">
+        <div className="site-nav-item site-nav-item-delay-4 ms-auto md:hidden">
           <button
             type="button"
             onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -86,9 +111,9 @@ const Header = () => {
             <button
               type="button"
               key={link.name}
-              className={`ms-4 cursor-pointer p-1 text-lg font-semibold transition-colors duration-200 ${
+              className={`nav-link ms-4 cursor-pointer p-1 text-lg font-semibold transition-colors duration-200 ${
                 activeLink === link.path
-                  ? "text-blue-500"
+                  ? "is-active text-blue-500"
                   : "text-black/70 hover:text-blue-500"
               }`}
               onClick={() => {
@@ -99,16 +124,17 @@ const Header = () => {
               {link.name}
             </button>
           ))}
-          <button
-            type="button"
-            className={`ms-4 mt-1 rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-blue-600`}
+          <a
+            href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button-glow ms-4 mt-1 rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-blue-600"
             onClick={() => {
-              navigation("/get-started");
               setIsMenuOpen(false);
             }}
           >
             Get Started
-          </button>
+          </a>
         </div>
       </div>
     </header>

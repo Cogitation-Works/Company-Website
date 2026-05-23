@@ -12,6 +12,7 @@
   align-items: center;
   width: max-content;
   animation: scroll-x 25s linear infinite;
+  will-change: transform;
 }
 
 .scroll-track:hover {
@@ -20,6 +21,7 @@
 
 .scroll-track-sm {
   animation: scroll-x 25s linear infinite;
+  will-change: transform;
 }
 
 @media (min-width: 1024px) {

@@ -12,6 +12,8 @@ import { IoServerOutline } from "react-icons/io5";
 import { TbBrandSwift } from "react-icons/tb";
 import { TbBrandFlutter } from "react-icons/tb";
 import { FaArrowRightLong } from "react-icons/fa6";
+import Reveal from "../Reveal";
+import Parallax from "../Parallax";
 
 const services = [
   {
@@ -113,13 +115,16 @@ const code = [
 ];
 
 const Services = () => {
+  const withBase = (path: string) =>
+    `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
   return (
-    <div>
-      <div className="lg:h-[70vh] md:h-[60vh] h-auto w-full overflow-hidden bg-slate-200/50">
+    <div className="page-shell">
+      <Reveal variant="zoom">
+        <div className="hero-stage lg:h-[70vh] md:h-[60vh] h-auto w-full overflow-hidden bg-slate-200/50">
         <div className="grid grid-cols-10 h-full">
           <div className="lg:col-span-6 col-span-10 py-15 px-10 md:px-15 md:py-15 h-full flex flex-row items-start justify-center">
             <div className="flex flex-col items-start">
-              <h5 className="text-blue-500 bg-blue-200/40 font-bold text-sm p-2 rounded-md">
+              <h5 className="floating-badge text-blue-500 bg-blue-200/40 font-bold text-sm p-2 rounded-md">
                 Our Expertise
               </h5>
               <h1 className="md:text-[55px] text-4xl md:leading-16 font-bold mt-6 w-full md:w-[90%]">
@@ -140,16 +145,17 @@ const Services = () => {
             </div>
           </div>
           <div className="lg:col-span-4 hidden lg:block bg-blue-500 h-full">
+            <Parallax className="h-full w-full" distance={34} direction="down">
             <div className="h-full w-full relative">
               <div
                 className="absolute h-[95%] w-[95%] z-5 right-0 bottom-0"
                 style={{
-                  backgroundImage: "url('/images/services/hero-section.jpg')",
+                  backgroundImage: `url(${withBase("/images/services/hero-section.jpg")})`,
                   backgroundSize: "cover",
                   backgroundPosition: "20% center",
                 }}
               >
-                <div className="absolute z-10 bg-white rounded-lg shadow-xl shadow-blue-500/100 bottom-[80px] right-5">
+                <div className="floating-badge absolute z-10 bg-white rounded-lg shadow-xl shadow-blue-500/100 bottom-[80px] right-5">
                   <div className="flex flex-row items-center py-4 px-3">
                     <h5 className="font-semibold text-black text-2xl">5.0</h5>
                     <div className="flex flex-row ms-3">
@@ -166,54 +172,63 @@ const Services = () => {
                 </div>
               </div>
             </div>
+            </Parallax>
           </div>
         </div>
         <div className="grid place-items-center md:hidden mb-8">
           <img
-            className="w-[85%] h-auto object-cover rounded-lg"
-            src="images/services/hero-sm.png"
+            className="motion-image w-[85%] h-auto object-cover rounded-lg"
+            src={withBase("/images/services/hero-sm.png")}
             alt="hero-sm"
+            decoding="async"
           />
         </div>
-      </div>
-      <div className="grid grid-cols-2 gap-10 mt-[100px] px-[6%]">
-        {services.map((service) => (
-          <div
+        </div>
+      </Reveal>
+      <Reveal className="grid grid-cols-2 gap-10 mt-[100px] px-[6%]">
+        {services.map((service, index) => (
+          <Reveal
             key={service.title}
-            className="bg-slate-200/40 md:col-span-1 col-span-2 justify-start p-8 rounded-lg"
+            className="md:col-span-1 col-span-2 h-full"
+            delay={index * 80}
           >
-            <div className="text-blue-500 inline-block text-4xl mb-4 p-2 bg-blue-200/40 rounded-md">
-              {service.icon}
+            <div className="motion-card bg-slate-200/40 justify-start p-8 rounded-lg h-full">
+              <div className="motion-icon text-blue-500 inline-block text-4xl mb-4 p-2 bg-blue-200/40 rounded-md">
+                {service.icon}
+              </div>
+              <h3 className="text-xl font-bold text-black mb-2">
+                {service.title}
+              </h3>
+              <p className="text-gray-600 mb-4">{service.description}</p>
+              <ul className="space-y-2 text-gray-600">
+                <li className="flex items-center gap-2">
+                  <FaRegCheckCircle className="text-blue-500 shrink-0" />
+                  {service.p1}
+                </li>
+                <li className="flex items-center gap-2">
+                  <FaRegCheckCircle className="text-blue-500 shrink-0" />
+                  {service.p2}
+                </li>
+                <li className="flex items-center gap-2">
+                  <FaRegCheckCircle className="text-blue-500 shrink-0" />
+                  {service.p3}
+                </li>
+              </ul>
             </div>
-            <h3 className="text-xl font-bold text-black mb-2">
-              {service.title}
-            </h3>
-            <p className="text-gray-600 mb-4">{service.description}</p>
-            <ul className="space-y-2 text-gray-600">
-              <li className="flex items-center gap-2">
-                <FaRegCheckCircle className="text-blue-500 shrink-0" />
-                {service.p1}
-              </li>
-              <li className="flex items-center gap-2">
-                <FaRegCheckCircle className="text-blue-500 shrink-0" />
-                {service.p2}
-              </li>
-              <li className="flex items-center gap-2">
-                <FaRegCheckCircle className="text-blue-500 shrink-0" />
-                {service.p3}
-              </li>
-            </ul>
-          </div>
+          </Reveal>
         ))}
-      </div>
-      <div className="md:h-[600px] h-[500px] mt-[120px] w-full overflow-hidden relative">
-        <div className="scroll-track bg-black absolute h-full w-full -z-1">
+      </Reveal>
+      <Reveal className="md:h-[600px] h-[500px] mt-[120px] w-full overflow-hidden relative">
+        <Parallax className="absolute inset-0 -z-1" distance={26}>
+        <div className="scroll-track bg-black absolute h-full w-full">
           {[...Array(2)].map((_, setIndex) =>
             Array.from({ length: 8 }, (_, i) => (
               <img
                 key={`${setIndex}-${i}`}
-                src={`/images/services/book${i + 1}.png`}
+                src={withBase(`/images/services/book${i + 1}.png`)}
                 alt={`book${i + 1}`}
+                loading="lazy"
+                decoding="async"
                 className="md:h-full md:w-[300px] h-[90%] w-auto object-contain mx-[2%] shrink-0"
               />
             )),
@@ -228,21 +243,22 @@ const Services = () => {
         >
           <h1 className="text-center text-slate-200 md:leading-12 flex flex-col lg:text-[50px] md:text-4xl text-xl font-bold w-full lg:w-[50%]">
             <span> Ready to go live ?</span>
-            <span>Just hit publish — Your</span>
+            <span>Just hit publish -- Your</span>
             <span>Website, With Cogitation Works.</span>
           </h1>
           <a
             href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
             target="_blank"
             rel="noopener noreferrer"
-            className="cursor-pointer bg-blue-600 lg:text-3xl md:text-2xl text-lg hover:bg-blue-500 text-white font-bold py-2 px-4 md:py-4 md:px-4 rounded-xl mt-[8%] md:mt-[6%] lg:mt-[4%] inline-block"
+            className="button-glow cursor-pointer bg-blue-600 lg:text-3xl md:text-2xl text-lg hover:bg-blue-500 text-white font-bold py-2 px-4 md:py-4 md:px-4 rounded-xl mt-[8%] md:mt-[6%] lg:mt-[4%] inline-block"
             style={{ boxShadow: "0 0 20px 15px rgba(59, 130, 246, 0.6)" }}
           >
             Book Now
           </a>
         </div>
-      </div>
-      <div className="mt-[120px] work-section bg-slate-200/50 py-[8%] md:py-[5%]">
+        </Parallax>
+      </Reveal>
+      <Reveal className="mt-[120px] work-section bg-slate-200/50 py-[8%] md:py-[5%]">
         <div className="flex flex-col items-center justify-center text-center">
           <h1 className="md:text-4xl text-3xl font-bold">How We Work</h1>
           <p className="mt-4 text-slate-500/90 font-medium md:text-base text-sm w-[90%] md:w-[80%] lg:w-[40%]">
@@ -261,7 +277,7 @@ const Services = () => {
               </div>
               <div
                 key={item.title}
-                className="p-8 rounded-lg shadow-md bg-white/90 "
+                className="motion-card p-8 rounded-lg shadow-md bg-white/90 "
               >
                 <h3 className="text-xl mt-8 font-bold text-black mb-2">
                   {item.title}
@@ -271,8 +287,8 @@ const Services = () => {
             </div>
           ))}
         </div>
-      </div>
-      <div className="md:mt-[120px] mt-[80px] code-section code-section">
+      </Reveal>
+      <Reveal className="md:mt-[120px] mt-[80px] code-section code-section">
         <div className="flex flex-col items-center justify-center text-center sm:w-[80%] md:w-auto">
           <h1 className="md:text-4xl text-3xl font-bold">
             Our Core Technology Stack
@@ -282,9 +298,9 @@ const Services = () => {
           {code.map((item) => (
             <div
               key={item.title}
-              className="col-span-6 md:col-span-4 lg:col-span-2 flex flex-col items-center mt-8"
+              className="motion-tile col-span-6 md:col-span-4 lg:col-span-2 flex flex-col items-center mt-8"
             >
-              <div className="text-4xl p-3 bg-slate-200/50 rounded-xl">
+              <div className="motion-icon text-4xl p-3 bg-slate-200/50 rounded-xl">
                 {item.icon}
               </div>
               <h3 className="text-lg font-bold text-black/70 mt-4">
@@ -293,13 +309,13 @@ const Services = () => {
             </div>
           ))}
         </div>
-      </div>
-      <div className="mt-[110px] md:h-[500px] py-10 md:py-0 h-auto call-section bg-blue-500  bg-blue-500 flex flex-col items-center justify-center">
+      </Reveal>
+      <Reveal className="mt-[110px] md:h-[500px] py-10 md:py-0 h-auto call-section bg-blue-500  bg-blue-500 flex flex-col items-center justify-center">
         <h1 className="md:text-5xl text-3xl font-extrabold md:mt-4 text-center text-white w-[90%] md:w-[80%] lg:w-full">
           Ready to bring your ideas to life?
         </h1>
         <p className="mt-6 text-white font-normal text-base md:text-lg w-[80%] md:w-[60%] text-center">
-          We’re currently taking on new projects and would love to hear from
+          We're currently taking on new projects and would love to hear from
           you. Schedule a free consultation with our experts today.
         </p>
         <div className="mt-8">
@@ -307,7 +323,7 @@ const Services = () => {
             href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
             target="_blank"
             rel="noopener noreferrer"
-            className={`cursor-pointer flex flex-row items-center rounded-md bg-white text-base px-6 py-2 md:px-10 md:py-3 md:text-lg border-3 border-white font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95`}
+            className="button-glow cursor-pointer flex flex-row items-center rounded-md bg-white text-base px-6 py-2 md:px-10 md:py-3 md:text-lg border-3 border-white font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95"
           >
             Book Free Consultation
             <span className="ms-3">
@@ -315,7 +331,7 @@ const Services = () => {
             </span>
           </a>
         </div>
-      </div>
+      </Reveal>
     </div>
   );
 };

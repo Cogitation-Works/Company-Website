@@ -1,3 +1,5 @@
+import Reveal from "../Reveal";
+
 const socialLinks = [
   { name: "LinkedIn", link: "https://www.linkedin.com/in/cogitation-works/" },
   { name: "Twitter", link: "https://www.instagram.com/cogitation_works/" },
@@ -7,14 +9,16 @@ const socialLinks = [
 ];
 
 const Footer = () => {
+  const baseUrl = import.meta.env.BASE_URL;
+
   return (
     <div className="mt-[100px] min-h-[350px] bg-slate-900 flex flex-row items-center">
       <div className="grid grid-cols-12 gap-8 p-8">
-        <div className="lg:col-span-3 md:col-span-6 col-span-12">
+        <Reveal className="lg:col-span-3 md:col-span-6 col-span-12">
           <div className="flex flex-row items-center my-4">
             <img
-              className="size-12"
-              src={"/logo/logo.png"}
+              className="brand-mark size-12"
+              src={`${baseUrl}logo/logo.png`}
               alt="Cogitation Works Logo"
             />
             <h3 className="ms-2 text-lg font-bold text-white">
@@ -28,8 +32,9 @@ const Footer = () => {
           <p className="text-white/70 font-medium text-[15px] w-[78%] mt-4">
             Dubai | India | Global
           </p>
-        </div>
-        <div className="lg:col-span-2 md:col-span-6 col-span-12">
+        </Reveal>
+
+        <Reveal className="lg:col-span-2 md:col-span-6 col-span-12" delay={80}>
           <h3 className="text-lg font-bold text-white my-4">Services</h3>
           <ul className="text-white/50 font-normal text-[14px]">
             {[
@@ -38,31 +43,45 @@ const Footer = () => {
               "Cloud Solutions",
               "UI/UX Design",
             ].map((service) => (
-              <li key={service} className="my-4 cursor-pointer">
+              <li
+                key={service}
+                className="my-4 cursor-pointer transition-colors duration-200 hover:text-white"
+              >
                 {service}
               </li>
             ))}
           </ul>
-        </div>
-        <div className="lg:col-span-2 md:col-span-6 col-span-12">
+        </Reveal>
+
+        <Reveal
+          className="lg:col-span-2 md:col-span-6 col-span-12"
+          delay={140}
+        >
           <h3 className="text-lg font-bold text-white my-4">Company</h3>
           <ul className="text-white/50 font-normal text-[14px]">
             {["About Us", "Our Process", "Case Studies", "Contact"].map(
               (item) => (
-                <li key={item} className="my-4 cursor-pointer">
+                <li
+                  key={item}
+                  className="my-4 cursor-pointer transition-colors duration-200 hover:text-white"
+                >
                   {item}
                 </li>
               ),
             )}
           </ul>
-        </div>
-        <div className="lg:col-span-2 md:col-span-6 col-span-12">
+        </Reveal>
+
+        <Reveal
+          className="lg:col-span-2 md:col-span-6 col-span-12"
+          delay={200}
+        >
           <h3 className="text-lg font-bold text-white my-4">Social</h3>
           <ul className="text-white/50 font-normal text-[14px]">
             {socialLinks.map((link) => (
               <li
                 key={link.name}
-                className="my-4 cursor-pointer hover:text-white transition-colors"
+                className="my-4 cursor-pointer transition-colors duration-200 hover:text-white"
               >
                 <a href={link.link} target="_blank" rel="noopener noreferrer">
                   {link.name}
@@ -70,13 +89,14 @@ const Footer = () => {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="lg:col-span-3 col-span-12">
+        </Reveal>
+
+        <Reveal className="lg:col-span-3 col-span-12" delay={260}>
           <h3 className="text-lg font-bold text-white my-2 lg:my-4">Connect</h3>
           <p className="text-white/50 lg:mt-6 font-normal text-[12px]">
-            © 2026 Cogitation Works. All rights reserved.
+            (c) 2026 Cogitation Works. All rights reserved.
           </p>
-        </div>
+        </Reveal>
       </div>
     </div>
   );

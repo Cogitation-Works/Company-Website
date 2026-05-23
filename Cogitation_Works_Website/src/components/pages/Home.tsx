@@ -19,6 +19,9 @@ import { LuFactory } from "react-icons/lu";
 import { PiTruckDuotone } from "react-icons/pi";
 import { RiGraduationCapLine } from "react-icons/ri";
 import { FaStar } from "react-icons/fa6";
+import { motion, useReducedMotion } from "motion/react";
+import Reveal from "../Reveal";
+import Parallax from "../Parallax";
 
 const philosophy = [
   {
@@ -159,38 +162,139 @@ const reviews = [
   },
 ];
 
-const Home = () => {
+const heroMotionItems = [
+  { icon: <FaCode />, delay: 0 },
+  { icon: <PiCloudArrowUpBold />, delay: 0.16 },
+  { icon: <VscCircuitBoard />, delay: 0.32 },
+];
+
+const HeroMotionLayer = () => {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
-    <div>
-      <div
-        className="md:min-h-[60vh] lg:min-h-[70vh] h-auto w-full py-8 overflow-hidden rounded-b-[40px]"
-        style={{
-          backgroundImage: `url(${"/images/home/homebg.png"})`,
-          backgroundSize: "110%",
-          backgroundPosition: "0% 80%",
-          backgroundRepeat: "no-repeat",
-        }}
+    <div className="hero-motion-layer" aria-hidden="true">
+      <motion.div
+        className="hero-blueprint"
+        animate={
+          prefersReducedMotion
+            ? undefined
+            : {
+                y: [0, -12, 0],
+              }
+        }
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="flex flex-col items-center justify-center">
-          <h6 className="text-sm  md:mt-0 text-blue-500 bg-blue-300/20 lg:bg-transparent p-3 text-center rounded-lg  md:text-base lg:text-black/50 font-medium">
+        <span className="hero-blueprint-line hero-blueprint-line-one" />
+        <span className="hero-blueprint-line hero-blueprint-line-two" />
+        <span className="hero-blueprint-line hero-blueprint-line-three" />
+        {heroMotionItems.map((item, index) => (
+          <motion.span
+            key={index}
+            className={`hero-blueprint-node hero-blueprint-node-${index + 1}`}
+            animate={
+              prefersReducedMotion
+                ? undefined
+                : {
+                    y: [0, -10, 0],
+                    rotate: [0, index % 2 === 0 ? 4 : -4, 0],
+                  }
+            }
+            transition={{
+              duration: 4.8,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: item.delay,
+            }}
+          >
+            {item.icon}
+          </motion.span>
+        ))}
+      </motion.div>
+      <div className="hero-scan-band" />
+    </div>
+  );
+};
+
+const Home = () => {
+  const withBase = (path: string) =>
+    `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+  return (
+    <div className="page-shell">
+      <Reveal variant="zoom">
+        <Parallax distance={24} direction="down">
+        <div
+          className="hero-stage md:min-h-[60vh] lg:min-h-[70vh] h-auto w-full py-8 overflow-hidden rounded-b-[40px]"
+          style={{
+            backgroundImage: `url(${withBase("/images/home/homebg.png")})`,
+            backgroundSize: "110%",
+            backgroundPosition: "0% 80%",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
+        <HeroMotionLayer />
+        <motion.div
+          className="relative z-10 flex flex-col items-center justify-center"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.09,
+                delayChildren: 0.08,
+              },
+            },
+          }}
+        >
+          <motion.h6
+            className="floating-badge text-sm  md:mt-0 text-blue-500 bg-blue-300/20 lg:bg-white/70 p-3 text-center rounded-lg  md:text-base lg:text-black/50 font-medium"
+            variants={{
+              hidden: { opacity: 0, y: 18 },
+              visible: { opacity: 1, y: 0 },
+            }}
+          >
             Full-Spectrum IT Services & Solutions
-          </h6>
-          <h1 className="text-center text-[45px] leading-12 md:leading-none w-[90%] mt-8 lg:mt-0 md:text-5xl lg:text-6xl md:w-[80%] lg:w-full font-bold lg:text-[80px] lg:font-semibold text-black lg:py-4">
+          </motion.h6>
+          <motion.h1
+            className="text-center text-[45px] leading-12 md:leading-none w-[90%] mt-8 lg:mt-0 md:text-5xl lg:text-6xl md:w-[80%] lg:w-full font-bold lg:text-[80px] lg:font-semibold text-black lg:py-4"
+            variants={{
+              hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
+              visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+            }}
+          >
             We Craft Your Ideas Into
-          </h1>
-          <h1 className="text-center text-[45px] leading-12 md:leading-none w-[95%] font-bold md:text-5xl lg:text-6xl lg:text-[85px] md:w-[80%] lg:w-full lg:font-semibold text-blue-500">
+          </motion.h1>
+          <motion.h1
+            className="animated-gradient-text text-center text-[45px] leading-12 md:leading-none w-[95%] font-bold md:text-5xl lg:text-6xl lg:text-[85px] md:w-[80%] lg:w-full lg:font-semibold text-blue-500"
+            variants={{
+              hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
+              visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+            }}
+          >
             Powerful Digital Products
-          </h1>
-          <p className=" lg:w-[55%] w-[90%] md:w-[70%] lg:text-[22px] text-sm text-gray-600 py-6 lg:py-4 lg:mt-[40px] text-center">
+          </motion.h1>
+          <motion.p
+            className=" lg:w-[55%] w-[90%] md:w-[70%] lg:text-[22px] text-sm text-gray-600 py-6 lg:py-4 lg:mt-[40px] text-center"
+            variants={{
+              hidden: { opacity: 0, y: 22 },
+              visible: { opacity: 1, y: 0 },
+            }}
+          >
             Cogitation Works delivers end-to-end IT Services and Software
             Solutions that transform how businesses operate, innovate, and grow.
-          </p>
-          <div className="flex md:flex-row flex-col items-center gap-4 mt-4 mb-[20%] md:mb-0">
+          </motion.p>
+          <motion.div
+            className="flex md:flex-row flex-col items-center gap-4 mt-4 mb-[20%] md:mb-0"
+            variants={{
+              hidden: { opacity: 0, y: 18 },
+              visible: { opacity: 1, y: 0 },
+            }}
+          >
             <a
               href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
               target="_blank"
               rel="noopener noreferrer"
-              className={`md:me-4 py-3 rounded-md bg-blue-500 w-[230px] md:w-auto md:px-6 md:py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-white transition-colors transition-scale duration-200 hover:bg-blue-600 hover:scale-95 inline-block text-center`}
+              className="button-glow md:me-4 py-3 rounded-md bg-blue-500 w-[230px] md:w-auto md:px-6 md:py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-white transition-colors transition-scale duration-200 hover:bg-blue-600 hover:scale-95 inline-block text-center"
             >
               Get Started
             </a>
@@ -198,14 +302,16 @@ const Home = () => {
               href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
               target="_blank"
               rel="noopener noreferrer"
-              className={`mt-[2%] py-3 md:mt-0 rounded-md cursor-pointer w-[230px] md:w-auto md:px-6 md:py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-black bg-white transition-scale duration-200 hover:bg-black hover:text-white hover:scale-95 inline-block text-center`}
+              className="button-outline-motion mt-[2%] py-3 md:mt-0 rounded-md cursor-pointer w-[230px] md:w-auto md:px-6 md:py-3 text-sm lg:px-8 lg:py-4 lg:text-lg font-semibold text-black bg-white transition-scale duration-200 hover:bg-black hover:text-white hover:scale-95 inline-block text-center"
             >
               Book a Free Consultation
             </a>
-          </div>
+          </motion.div>
+        </motion.div>
         </div>
-      </div>
-      <div className="lg:mt-[100px] md:mt-[80px] mt-2 md:mt-10 px-8 philosophy-section">
+        </Parallax>
+      </Reveal>
+      <Reveal className="lg:mt-[100px] md:mt-[80px] mt-2 md:mt-10 px-8 philosophy-section">
         <h3 className="text-blue-500 font-semibold text-base uppercase">
           Our Philosophy
         </h3>
@@ -222,7 +328,7 @@ const Home = () => {
               href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
               target="_blank"
               rel="noopener noreferrer"
-              className="lg:mt-8 mt-6 md:text-normal text-sm cursor-pointer flex items-center flex-row rounded-md bg-blue-500 px-6 py-3 text-white font-semibold hover:bg-blue-600"
+              className="button-glow lg:mt-8 mt-6 md:text-normal text-sm cursor-pointer flex items-center flex-row rounded-md bg-blue-500 px-6 py-3 text-white font-semibold hover:bg-blue-600"
             >
               Start Your Project
               <span className="ml-2">
@@ -234,10 +340,10 @@ const Home = () => {
             {philosophy.map((item) => (
               <div
                 key={item.title}
-                className="flex md:flex-col flex-row items-center md:w-auto w-[90%] text-center md:justify-content cursor-pointer md:px-6 md:py-4 py-6 justify-center rounded-lg"
+                className="motion-card flex md:flex-col flex-row items-center md:w-auto w-[90%] text-center md:justify-content cursor-pointer md:px-6 md:py-4 py-6 justify-center rounded-lg"
                 style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px" }}
               >
-                <div className="md:text-4xl text-5xl text-blue-500 md:p-6 me-6 md:me-0">
+                <div className="motion-icon md:text-4xl text-5xl text-blue-500 md:p-6 me-6 md:me-0">
                   {item.icon}
                 </div>
 
@@ -253,8 +359,8 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </div>
-      <div className="lg:mt-[150px] mt-20 md:mt-[100px] core-section">
+      </Reveal>
+      <Reveal className="lg:mt-[150px] mt-20 md:mt-[100px] core-section">
         <div className="flex-col items-center justify-items-center text-center">
           <h1 className="md:text-4xl text-3xl font-bold">Core Services</h1>
           <p className="md:mt-2 mt-4 md:w-[100%] w-[85%] text-slate-500/90 font-medium md:text-base text-sm">
@@ -267,20 +373,20 @@ const Home = () => {
             {coreServices.map((service) => (
               <div
                 key={service.title}
-                className="lg:col-span-2 md:h-[240px] py-2 md:py-0 col-span-6 md:col-span-3 cursor-pointer flex md:flex-col md:gap-0 gap-4 flex-row justify-center md:items-start items-center px-6 rounded-lg shadow-lg transition-transform duration-200 hover:scale-105"
-                style={{
-                  backgroundImage: `url(${service.bgImg})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  backgroundColor: "rgba(0, 0, 0, 0.49)",
-                  backgroundBlendMode: "overlay",
-                }}
+                className="motion-card relative lg:col-span-2 md:h-[240px] py-2 md:py-0 col-span-6 md:col-span-3 cursor-pointer flex md:flex-col md:gap-0 gap-4 flex-row justify-center md:items-start items-center px-6 rounded-lg shadow-lg transition-transform duration-200 hover:scale-105 overflow-hidden"
               >
-                <div className="md:text-3xl text-2xl text-blue-600 md:bg-white/15 bg-white/90 md:p-2 px-[10px] py-3 rounded-md my-4 ">
+                <img
+                  src={withBase(service.bgImg)}
+                  alt={service.title}
+                  loading="lazy"
+                  decoding="async"
+                  className="motion-image absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/50"></div>
+                <div className="motion-icon md:text-3xl text-2xl text-blue-600 md:bg-white/15 bg-white/90 md:p-2 px-[10px] py-3 rounded-md my-4 ">
                   {service.icon}
                 </div>
-                <div className="flex flex-col justify-center items-start">
+                <div className="relative z-5 flex flex-col justify-center items-start">
                   <h4 className="md:text-xl text-lg font-semibold text-white md:mt-4">
                     {service.title}
                   </h4>
@@ -292,8 +398,8 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </div>
-      <div className="lg:mt-[110px] mt-20 md:mt-[80px] px-8 products-section">
+      </Reveal>
+      <Reveal className="lg:mt-[110px] mt-20 md:mt-[80px] px-8 products-section">
         <h3 className="text-blue-500 font-semibold md:text-base uppercase">
           Off-The-Shelf
         </h3>
@@ -311,7 +417,7 @@ const Home = () => {
             {products.map((product) => (
               <div
                 key={product.item}
-                className="col-span-4 md:col-span-2 lg:col-span-1 relative min-h-[200px] overflow-hidden rounded-2xl shadow-lg"
+                className="motion-card col-span-4 md:col-span-2 lg:col-span-1 relative min-h-[200px] overflow-hidden rounded-2xl shadow-lg"
               >
                 <div className="absolute inset-0 -z-1 ps-[100px] bg-blue-800 overflow-hidden text-[100px] p-0 m-0">
                   <h1 className="text-nowrap font-bold text-white m-0 p-0 leading-none opacity-70">
@@ -341,8 +447,8 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </div>
-      <div className="lg:mt-[110px] mt-20 md:mt-[100px] industries-section">
+      </Reveal>
+      <Reveal className="lg:mt-[110px] mt-20 md:mt-[100px] industries-section">
         <h1 className="text-2xl font-extrabold mt-1 text-center">
           Industries We Serve
         </h1>
@@ -350,7 +456,7 @@ const Home = () => {
           {industries.map((industry) => (
             <div
               key={industry.title}
-              className="lg:col-span-2 md:col-span-4 col-span-6 cursor-pointer flex flex-col items-center text-center"
+              className="motion-tile lg:col-span-2 md:col-span-4 col-span-6 cursor-pointer flex flex-col items-center text-center"
             >
               <div className="text-4xl p-4 rounded-full bg-blue-500 text-white shadow-lg">
                 {industry.icon}
@@ -361,23 +467,23 @@ const Home = () => {
             </div>
           ))}
         </div>
-      </div>
-      <div className="mt-[110px] reviews-section lg:h-[450px] h-auto bg-blue-300/20 flex flex-col justify-center items-center py-8 lg:py-0">
+      </Reveal>
+      <Reveal className="mt-[110px] reviews-section lg:h-[450px] h-auto bg-blue-300/20 flex flex-col justify-center items-center py-8 lg:py-0">
         <h1 className="md:text-4xl text-3xl w-[90%] md:w-auto font-extrabold mt-1 text-center">
           Trusted by Global Leaders
         </h1>
-        <div className="mt-15 overflow-hidden w-full">
+        <div className="marquee-fade mt-15 overflow-hidden w-full">
           <div className="scroll-track flex flex-row gap-8 w-max hover:[animation-play-state:paused]">
             {[...reviews, ...reviews].map((review, i) => (
               <div
                 key={`${review.name}-${i}`}
-                className="cursor-pointer bg-white flex flex-col justify-center p-6 rounded-lg shadow-md w-[250px] md:w-[350px] lg:w-[300px] min-h-[300px] md:min-h-auto lg:min-h-[250px] shrink-0"
+                className="motion-card cursor-pointer bg-white flex flex-col justify-center p-6 rounded-lg shadow-md w-[250px] md:w-[350px] lg:w-[300px] min-h-[300px] md:min-h-auto lg:min-h-[250px] shrink-0"
               >
                 <div className="flex flex-row">
                   {Array(5)
                     .fill(0)
                     .map((_, index) => (
-                      <FaStar key={index} className="text-yellow-400 me-3" />
+                      <FaStar key={index} className="text-blue-400 me-3" />
                     ))}
                 </div>
                 <div className="text-gray-700 mt-4 text-sm italic">
@@ -386,9 +492,11 @@ const Home = () => {
                 <div className="flex flex-row items-center justify-start mt-6 w-full">
                   <div>
                     <img
-                      src={review.img}
+                      src={withBase(review.img)}
                       alt={review.name}
-                      className="md:size-12 size-16 rounded-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      className="motion-image md:size-12 size-16 rounded-full object-cover"
                     />
                   </div>
                   <div className="ms-4">
@@ -404,9 +512,9 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </div>
-      <div className="mt-[110px] call-section flex flex-row justify-center items-center">
-        <div className="lg:h-[380px] py-10 lg:py-0 w-[90%] lg:w-[65%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
+      </Reveal>
+      <Reveal className="mt-[110px] call-section flex flex-row justify-center items-center">
+        <div className="motion-card lg:h-[380px] py-10 lg:py-0 w-[90%] lg:w-[65%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
           <h1 className="lg:text-5xl md:text-4xl text-3xl w-full font-bold lg:font-extrabold lg:mt-4 text-center text-white">
             Ready to Build Something Great ?
           </h1>
@@ -419,7 +527,7 @@ const Home = () => {
               href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
               target="_blank"
               rel="noopener noreferrer"
-              className={`cursor-pointer w-[220px] md:w-auto me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95 inline-block text-center`}
+              className="button-glow cursor-pointer w-[220px] md:w-auto me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95 inline-block text-center"
             >
               Get a Free Quote
             </a>
@@ -427,15 +535,16 @@ const Home = () => {
               href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
               target="_blank"
               rel="noopener noreferrer"
-              className={`cursor-pointer w-[220px] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black inline-block text-center`}
+              className="button-outline-motion cursor-pointer w-[220px] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black inline-block text-center"
             >
               Schedule a Call
             </a>
           </div>
         </div>
-      </div>
+      </Reveal>
     </div>
   );
 };
 
 export default Home;
+

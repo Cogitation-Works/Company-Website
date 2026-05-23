@@ -3,6 +3,8 @@ import { MdOutlineInventory2 } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import { RiRobot2Line } from "react-icons/ri";
 import { FaRegCheckCircle } from "react-icons/fa";
+import Reveal from "../Reveal";
+import Parallax from "../Parallax";
 
 const products = [
   {
@@ -61,9 +63,11 @@ const products = [
 ];
 
 const Products = () => {
+  const withBase = (path: string) =>
+    `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
   return (
-    <div className="pt-[6%]">
-      <div className="text-center flex flex-col items-center">
+    <div className="page-shell pt-[6%]">
+      <Reveal className="text-center flex flex-col items-center" variant="zoom">
         <h1 className="lg:text-5xl text-4xl lg:font-black font-bold">
           Our Products
         </h1>
@@ -71,59 +75,67 @@ const Products = () => {
           Software Products Built for Modern Operations. Scalable solutions
           designed to streamline your business workflow and drive growth.
         </p>
-      </div>
-      <div className="mt-[4%] md:px-[10%] px-[5%]">
+      </Reveal>
+      <Reveal className="mt-[4%] md:px-[10%] px-[5%]">
         {products.map((product, index) => (
-          <div
-            className="grid grid-cols-14 lg:h-[350px] h-auto my-10 bg-white lg:rounded-lg rounded-[20px] overflow-hidden"
+          <Reveal
             key={product.title}
-            style={{
-              boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-            }}
+            delay={index * 90}
           >
             <div
-              className={` ${index % 2 === 0 || index == 0 ? "lg:order-1" : "lg:order-2"} lg:col-span-4 col-span-14 h-full w-full min-h-0`}
+              className="motion-card grid grid-cols-14 lg:h-[350px] h-auto my-10 bg-white lg:rounded-lg rounded-[20px] overflow-hidden"
+              style={{
+                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+              }}
             >
-              <img
-                className="object-cover h-full w-full"
-                src={product.img}
-                alt={product.title}
-              />
-            </div>
-            <div
-              className={` ${index % 2 === 0 || index == 0 ? "lg:order-2" : "lg:order-1"} lg:col-span-10 col-span-14 px-[10%] py-8 flex flex-col items-start justify-center`}
-            >
-              <div className="flex flex-row items-center">
-                <div className="text-blue-500 text-2xl me-2">
-                  {product.icon}
-                </div>
-                <h5 className="text-base font-semibold text-blue-500">
-                  {product.subtitle}
-                </h5>
+              <div
+                className={` ${index % 2 === 0 || index == 0 ? "lg:order-1" : "lg:order-2"} lg:col-span-4 col-span-14 h-full w-full min-h-0 overflow-hidden`}
+              >
+                <Parallax className="h-full w-full" distance={22}>
+                <img
+                  className="motion-image object-cover h-full w-full"
+                  src={withBase(product.img)}
+                  alt={product.title}
+                  loading="lazy"
+                  decoding="async"
+                />
+                </Parallax>
               </div>
+              <div
+                className={` ${index % 2 === 0 || index == 0 ? "lg:order-2" : "lg:order-1"} lg:col-span-10 col-span-14 px-[10%] py-8 flex flex-col items-start justify-center`}
+              >
+                <div className="flex flex-row items-center">
+                  <div className="motion-icon text-blue-500 text-2xl me-2">
+                    {product.icon}
+                  </div>
+                  <h5 className="text-base font-semibold text-blue-500">
+                    {product.subtitle}
+                  </h5>
+                </div>
 
-              <h1 className="text-3xl text-black font-bold mt-4">
-                {product.title}
-              </h1>
-              <p className="md:text-base w-[95%] text-[15px] text-black/80 mt-6 md:w-[80%]">
-                {product.description}
-              </p>
-              <ul className="list-disc list-inside text-slate-600 mt-4">
-                {product.features.map((feature, index) => (
-                  <li key={index} className="flex items-center mt-1">
-                    <FaRegCheckCircle className="text-blue-500 text-xl md:text-[15px] shrink-0 me-3 md:me-2" />
-                    <span className="text-slate-500 text-sm md:text-md ">
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+                <h1 className="text-3xl text-black font-bold mt-4">
+                  {product.title}
+                </h1>
+                <p className="md:text-base w-[95%] text-[15px] text-black/80 mt-6 md:w-[80%]">
+                  {product.description}
+                </p>
+                <ul className="list-disc list-inside text-slate-600 mt-4">
+                  {product.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-center mt-1">
+                      <FaRegCheckCircle className="text-blue-500 text-xl md:text-[15px] shrink-0 me-3 md:me-2" />
+                      <span className="text-slate-500 text-sm md:text-md ">
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
+          </Reveal>
         ))}
-      </div>
-      <div className="mt-[110px] call-section flex flex-row justify-center items-center gap-12">
-        <div className="lg:h-[400px] px-6 py-8 lg:px-0 lg:py-0 lg:w-[75%] w-[90%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
+      </Reveal>
+      <Reveal className="mt-[110px] call-section flex flex-row justify-center items-center gap-12">
+        <div className="motion-card lg:h-[400px] px-6 py-8 lg:px-0 lg:py-0 lg:w-[75%] w-[90%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
           <h1 className="lg:text-5xl md:text-4xl text-2xl w-[90%] md:w-[80%] lg:w-full font-extrabold mt-4 text-center text-white">
             Ready to modernize your operations ?
           </h1>
@@ -136,7 +148,7 @@ const Products = () => {
               href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
               target="_blank"
               rel="noopener noreferrer"
-              className={`cursor-pointer md:w-[250px] w-[80%] md:w-auto md:me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95 inline-block text-center`}
+              className="button-glow cursor-pointer md:w-[250px] w-[80%] md:w-auto md:me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95 inline-block text-center"
             >
               Book a Free Consultation
             </a>
@@ -144,13 +156,13 @@ const Products = () => {
               href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
               target="_blank"
               rel="noopener noreferrer"
-              className={`cursor-pointer md:w-[250px] w-[80%] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black inline-block text-center`}
+              className="button-outline-motion cursor-pointer md:w-[250px] w-[80%] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black inline-block text-center"
             >
               View Documentation
             </a>
           </div>
         </div>
-      </div>
+      </Reveal>
     </div>
   );
 };

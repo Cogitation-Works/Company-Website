@@ -12,6 +12,8 @@ import { RiGraduationCapLine } from "react-icons/ri";
 import { LiaHandsHelpingSolid } from "react-icons/lia";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { BsGlobeAmericas } from "react-icons/bs";
+import Reveal from "../Reveal";
+import Parallax from "../Parallax";
 
 const client = [
   {
@@ -19,14 +21,14 @@ const client = [
     value: "50+",
     description: "+15% this year",
     icon: <IoMdTrendingUp />,
-    color: "text-green-600",
+    color: "text-blue-600",
   },
   {
     title: "Client Satisfaction",
     value: "98%",
     description: "Retention rate",
     icon: <FaRegCheckCircle />,
-    color: "text-green-600",
+    color: "text-sky-600",
   },
   {
     title: "Global Hubs",
@@ -94,15 +96,21 @@ const industries = [
 ];
 
 const About = () => {
+  const withBase = (path: string) =>
+    `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
   return (
-    <div className="mt-[6%]">
-      <div className="lg:h-[70vh] lg:px-[10%] px-[6%] grid grid-cols-2 gap-8">
+    <div className="page-shell mt-[6%]">
+      <Reveal className="lg:h-[70vh] lg:px-[10%] px-[6%] grid grid-cols-2 gap-8" variant="zoom">
         <div className="lg:col-span-1 hidden lg:block place-items-center">
+          <Parallax distance={36} direction="down">
           <img
-            className="size-125 rounded-xl"
-            src="/images/about/about-hero.png"
+            className="motion-image size-125 rounded-xl"
+            src={withBase("/images/about/about-hero.png")}
             alt="About Us"
+            loading="lazy"
+            decoding="async"
           />
+          </Parallax>
         </div>
         <div className="lg:col-span-1 col-span-2 p-6">
           <h6 className="text-blue-500 md:text-xl text-lg font-extrabold">
@@ -123,7 +131,7 @@ const About = () => {
               href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
               target="_blank"
               rel="noopener noreferrer"
-              className={`cursor-pointer md:me-4 rounded-md bg-blue-500 px-8 py-2 text-sm md:text-lg border-3 border-blue-500 font-semibold text-white  transition-scale duration-200 hover:bg-blue-600 hover:scale-95 inline-block text-center`}
+              className="button-glow cursor-pointer md:me-4 rounded-md bg-blue-500 px-8 py-2 text-sm md:text-lg border-3 border-blue-500 font-semibold text-white  transition-scale duration-200 hover:bg-blue-600 hover:scale-95 inline-block text-center"
             >
               Meet the Team
             </a>
@@ -135,19 +143,19 @@ const About = () => {
                   element.scrollIntoView({ behavior: "smooth" });
                 }
               }}
-              className={`cursor-pointer rounded-md px-8 py-2 text-sm md:text-lg border-3 bg-transparent border-blue-500 font-semibold text-blue-500 transition-scale duration-200 hover:bg-black hover:text-white hover:border-black `}
+              className="button-outline-motion cursor-pointer rounded-md px-8 py-2 text-sm md:text-lg border-3 bg-transparent border-blue-500 font-semibold text-blue-500 transition-scale duration-200 hover:bg-black hover:text-white hover:border-black "
             >
               Our Vision
             </button>
           </div>
         </div>
-      </div>
-      <div className="mt-[6%] bg-blue-300/20 py-8 overflow-hidden lg:overflow-visible">
-        <div className="scroll-track-sm flex flex-row gap-8 lg:gap-10 w-max hover:[animation-play-state:paused] lg:w-full lg:justify-center">
+      </Reveal>
+      <Reveal className="mt-[6%] bg-blue-300/20 py-8 overflow-hidden lg:overflow-visible">
+        <div className="marquee-fade scroll-track-sm flex flex-row gap-8 lg:gap-10 w-max hover:[animation-play-state:paused] lg:w-full lg:justify-center">
           {[...client, ...client].map((item, i) => (
             <div
               key={`${item.title}-${i}`}
-              className={`flex flex-col justify-center lg:w-[300px] w-[250px] p-6 bg-white rounded-lg shadow-md shrink-0 ${i >= client.length ? "lg:hidden" : ""}`}
+              className={`motion-card flex flex-col justify-center lg:w-[300px] w-[250px] p-6 bg-white rounded-lg shadow-md shrink-0 ${i >= client.length ? "lg:hidden" : ""}`}
             >
               <h4 className="text-base font-medium text-slate-500">
                 {item.title}
@@ -162,8 +170,8 @@ const About = () => {
             </div>
           ))}
         </div>
-      </div>
-      <div className="lg:mt-[6%] md:mt-[10%] mt-[15%] lg:px-[10%] px-[6%]">
+      </Reveal>
+      <Reveal className="lg:mt-[6%] md:mt-[10%] mt-[15%] lg:px-[10%] px-[6%]">
         <div className="flex flex-col items-center justify-center text-center">
           <h1 className="md:text-4xl text-3xl font-bold">Our Story</h1>
           <div className="text-slate-500/90 indent-10 md:indent:0 font-medium md:text-base text-justify md:text-center text-sm lg:w-[70%] md:w-[90%] w-[95%] lg:mt-8 mt-6">
@@ -188,44 +196,56 @@ const About = () => {
         </div>
         <div className="md:flex flex-row justify-center items-center hidden gap-10 mt-15">
           <div className="">
+            <Parallax distance={24}>
             <img
-              className="w-[400px] h-auto rounded-lg"
-              src="/images/about/dubai.png"
+              className="motion-image w-[400px] h-auto rounded-lg"
+              src={withBase("/images/about/dubai.png")}
               alt="Our Story"
+              loading="lazy"
+              decoding="async"
             />
+            </Parallax>
           </div>
           <div className="">
+            <Parallax distance={24} direction="down">
             <img
-              className="w-[400px] h-auto rounded-lg"
-              src="/images/about/vellore.png"
+              className="motion-image w-[400px] h-auto rounded-lg"
+              src={withBase("/images/about/vellore.png")}
               alt="Our Story"
+              loading="lazy"
+              decoding="async"
             />
+            </Parallax>
           </div>
         </div>
         <div className="flex flex-col md:hidden mt-15 px-5">
-          <div className="flex flex-col items-center rounded-lg overflow-hidden shadow-md">
+          <div className="motion-card flex flex-col items-center rounded-lg overflow-hidden shadow-md">
             <img
-              className="h-[300px] w-full object-cover"
-              src="/images/about/dubai-hub.png"
+              className="motion-image h-[300px] w-full object-cover"
+              src={withBase("/images/about/dubai-hub.png")}
               alt="Our Story"
+              loading="lazy"
+              decoding="async"
             />
             <h6 className="text-lg py-3 font-bold text-black/85 bg-white w-full text-center">
               Dubai Hub
             </h6>
           </div>
-          <div className="flex flex-col items-center rounded-lg overflow-hidden shadow-md mt-10">
+          <div className="motion-card flex flex-col items-center rounded-lg overflow-hidden shadow-md mt-10">
             <img
-              className="h-[300px] w-full object-cover"
-              src="/images/about/vellore-hub.jpg"
+              className="motion-image h-[300px] w-full object-cover"
+              src={withBase("/images/about/vellore-hub.jpg")}
               alt="Our Story"
+              loading="lazy"
+              decoding="async"
             />
             <h6 className="text-lg py-3 font-bold text-black/85 bg-white w-full text-center">
               Indian Hub
             </h6>
           </div>
         </div>
-      </div>
-      <div id="Missions" className="lg:mt-[8%] mt-[90px] px-[10%]">
+      </Reveal>
+      <Reveal id="Missions" className="lg:mt-[8%] mt-[90px] px-[10%]">
         <div className="flex flex-col items-center justify-center text-center">
           <h1 className="md:text-4xl text-3xl font-bold">Missions & Values</h1>
           <span className="h-[5px] bg-blue-500 w-[100px] mt-4"></span>
@@ -234,17 +254,19 @@ const About = () => {
           {missions.map((mission) => (
             <div
               key={mission.title}
-              className="flex flex-col items-start justify-start gap-4 p-6 bg-white rounded-lg max-w-[350px]"
+              className="motion-card flex flex-col items-start justify-start gap-4 p-6 bg-white rounded-lg max-w-[350px]"
               style={{ boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px" }}
             >
-              <div className="text-3xl text-blue-500">{mission.icon}</div>
+              <div className="motion-icon text-3xl text-blue-500">
+                {mission.icon}
+              </div>
               <h3 className="text-xl font-bold">{mission.title}</h3>
               <p className="text-slate-500 text-sm">{mission.description}</p>
             </div>
           ))}
         </div>
-      </div>
-      <div className="lg:mt-[8%] mt-[90px] md:px-[10%] px-5">
+      </Reveal>
+      <Reveal className="lg:mt-[8%] mt-[90px] md:px-[10%] px-5">
         <div className="flex flex-col items-center justify-center text-center">
           <h1 className="md:text-4xl text-2xl font-bold">
             Industries We Empower
@@ -254,19 +276,19 @@ const About = () => {
           {industries.map((industry) => (
             <div
               key={industry.title}
-              className="lg:col-span-3 col-span-6 flex flex-col items-center justify-center md:gap-4 gap-2 py-4 w-full md:w-auto md:py-4 md:px-4 bg-white rounded-lg"
+              className="motion-tile lg:col-span-3 col-span-6 flex flex-col items-center justify-center md:gap-4 gap-2 py-4 w-full md:w-auto md:py-4 md:px-4 bg-white rounded-lg"
               style={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
             >
-              <div className="md:text-4xl text-2xl text-blue-500">
+              <div className="motion-icon md:text-4xl text-2xl text-blue-500">
                 {industry.icon}
               </div>
               <h3 className="md:text-lg text-sm font-bold">{industry.title}</h3>
             </div>
           ))}
         </div>
-      </div>
-      <div className="mt-[110px] call-section flex flex-row justify-center items-center gap-12">
-        <div className="lg:h-[400px] px-6 py-8 lg:px-0 lg:py-0 lg:w-[75%] w-[90%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
+      </Reveal>
+      <Reveal className="mt-[110px] call-section flex flex-row justify-center items-center gap-12">
+        <div className="motion-card lg:h-[400px] px-6 py-8 lg:px-0 lg:py-0 lg:w-[75%] w-[90%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
           <h1 className="lg:text-5xl md:text-4xl text-3xl w-[90%] md:w-[85%] lg:w-full font-extrabold mt-4 text-center text-white">
             Ready to start a conversation ?
           </h1>
@@ -279,7 +301,7 @@ const About = () => {
               href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
               target="_blank"
               rel="noopener noreferrer"
-              className={`cursor-pointer md:w-[250px] w-[80%] md:w-auto md:me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95 inline-block text-center`}
+              className="button-glow cursor-pointer md:w-[250px] w-[80%] md:w-auto md:me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95 inline-block text-center"
             >
               Schedule a Call
             </a>
@@ -287,13 +309,13 @@ const About = () => {
               href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
               target="_blank"
               rel="noopener noreferrer"
-              className={`cursor-pointer md:w-[250px] w-[80%] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black inline-block text-center`}
+              className="button-outline-motion cursor-pointer md:w-[250px] w-[80%] md:w-auto rounded-md md:px-4 py-2 lg:px-10 lg:py-3 md:text-lg text-sm border-3 bg-transparent border-white/40 font-semibold text-white transition-scale duration-200 hover:bg-black hover:border-black inline-block text-center"
             >
               Book Free Consultation
             </a>
           </div>
         </div>
-      </div>
+      </Reveal>
     </div>
   );
 };
