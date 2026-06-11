@@ -34,9 +34,6 @@ declare global {
   }
 }
 
-const consultationUrl =
-  import.meta.env.VITE_CONSULTATION_URL ||
-  "https://calendar.app.google/7gB3fnhRjGCBUptQ6";
 const tawkEmbedUrl = import.meta.env.VITE_TAWK_EMBED_URL;
 const tawkLoadDelayMs = Number(import.meta.env.VITE_TAWK_DELAY_MS || 2500);
 
@@ -182,13 +179,13 @@ const TawkChatWidget = () => {
   return (
     <div className="pointer-events-none fixed bottom-6 right-6 z-[60] flex max-w-[calc(100vw-3rem)] flex-col items-end gap-3 md:bottom-7 md:right-7">
       {isTeaserVisible && !isChatOpen ? (
-        <div className="pointer-events-auto w-[min(292px,calc(100vw-3rem))] overflow-hidden rounded-[22px] border border-slate-200/80 bg-white/95 p-4 shadow-[0_24px_60px_rgba(15,23,42,0.18)] backdrop-blur-md">
+        <div className="pointer-events-auto w-[min(270px,calc(100vw-3rem))] md:w-[min(292px,calc(100vw-3rem))] overflow-hidden rounded-[22px] border border-slate-200/80 bg-white/95 p-3.5 md:p-4 shadow-[0_24px_60px_rgba(15,23,42,0.18)] backdrop-blur-md">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-500">
+              <p className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.18em] md:tracking-[0.2em] text-blue-500">
                 Cogitation Works
               </p>
-              <h3 className="mt-2 text-[19px] leading-7 font-extrabold text-slate-900">
+              <h3 className="mt-1.5 md:mt-2 text-[15px] leading-6 md:text-[19px] md:leading-7 font-extrabold text-slate-900">
                 Hi there, need help building?
               </h3>
             </div>
@@ -204,54 +201,6 @@ const TawkChatWidget = () => {
               <FaXmark />
             </button>
           </div>
-
-          <p className="mt-3 text-sm leading-[1.65] text-slate-600">
-            We build apps, websites, hosting and domain setups, and turn ideas
-            into working digital products.
-          </p>
-
-          <div className="mt-3 flex flex-wrap gap-1.5 text-[11px] font-semibold text-slate-600">
-            {[
-              "App Development",
-              "Website Development",
-              "Hosting",
-              "Domains",
-            ].map((item) => (
-              <span
-                key={item}
-                className="rounded-full bg-blue-50 px-2.5 py-1 text-blue-600"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
-
-          <div className="mt-4 grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={openChat}
-              className="button-glow pointer-events-auto inline-flex min-h-10 items-center justify-center rounded-full bg-[#3B82F6] px-3 py-2 text-sm font-semibold text-white"
-            >
-              Chat Now
-            </button>
-            <a
-              href={consultationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button-outline-motion pointer-events-auto inline-flex min-h-10 items-center justify-center rounded-full border border-[#3B82F6]/25 bg-white px-3 py-2 text-center text-sm font-semibold leading-tight text-[#3B82F6]"
-            >
-              Book Consultation
-            </a>
-          </div>
-
-          <a
-            href={consultationUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 block text-center text-[11px] font-semibold text-slate-500 transition-colors hover:text-[#3B82F6]"
-          >
-            Schedule a call with our team
-          </a>
         </div>
       ) : null}
 

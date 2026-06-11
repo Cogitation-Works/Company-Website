@@ -342,7 +342,7 @@ const Home = () => {
               <div key={item.title} className="metric-node">
                 <div className="motion-icon metric-node-icon">{item.icon}</div>
 
-                <div className="flex flex-col md:items-center items-start relative z-10">
+                <div className="relative z-10 flex flex-col items-center text-center">
                   <h4 className="md:text-2xl text-xl font-bold text-black">
                     {item.title}
                   </h4>
@@ -500,7 +500,7 @@ const Home = () => {
       </Reveal>
       <Reveal className="mt-[110px] call-section flex flex-row justify-center items-center">
         <div className="motion-card lg:h-[380px] py-10 lg:py-0 w-[90%] lg:w-[65%] bg-blue-500 flex flex-col items-center justify-center rounded-[35px] shadow-lg">
-          <h1 className="lg:text-5xl md:text-4xl text-3xl w-full font-bold lg:font-extrabold lg:mt-4 text-center text-white">
+          <h1 className="lg:text-5xl md:text-4xl text-3xl w-[84%] md:w-[88%] lg:w-full font-bold lg:font-extrabold lg:mt-4 text-center leading-tight text-white">
             Ready to Build Something Great ?
           </h1>
           <p className="mt-6 text-white/80 font-normal md:text-lg text-base md:w-[60%] w-[90%] text-center">
@@ -512,7 +512,7 @@ const Home = () => {
               href="https://calendar.app.google/7gB3fnhRjGCBUptQ6"
               target="_blank"
               rel="noopener noreferrer"
-              className="button-glow cursor-pointer w-[220px] md:w-auto me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95 inline-block text-center"
+              className="button-glow cursor-pointer w-[220px] md:w-auto me-0 md:me-4 rounded-md bg-white md:px-4 py-2 lg:px-10 lg:py-3 text-lg border-3 border-white/50 font-semibold text-blue-500  transition-scale duration-200 hover:bg-white/90 hover:scale-95 inline-block text-center"
             >
               Get a Free Quote
             </a>

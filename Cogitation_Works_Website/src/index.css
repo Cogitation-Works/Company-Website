@@ -1820,7 +1820,23 @@ button {
   }
 
   .metric-node {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.85rem;
     min-height: 10rem;
+    padding: 1.35rem 1rem;
+    text-align: center;
+  }
+
+  .metric-node::before {
+    inset: 0.9rem;
+  }
+
+  .metric-node-icon {
+    width: 3.9rem;
+    font-size: 1.75rem;
   }
 
   .product-runway {
