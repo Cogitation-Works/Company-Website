@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Cursor from "@/components/ui/Cursor";
 import FluidCursor from "@/components/ui/FluidCursor";
+import FluidTuner from "@/components/ui/FluidTuner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -109,6 +110,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <SmoothScroll>
           <FluidCursor />
+          <FluidTuner />
           <Cursor />
           <Header />
           <main id="main">{children}</main>

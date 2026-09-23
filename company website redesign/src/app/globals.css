@@ -229,6 +229,26 @@ html.lenis body {
   filter: blur(0);
 }
 
+/* --- Magnifier lens ------------------------------------------------------
+   The Lens renders its children a SECOND time and scales that copy. The copy
+   is never observed by the reveal IntersectionObserver (which only ever sees
+   the original nodes), so without this every [data-reveal] inside the lens
+   would sit at opacity:0 and the magnifier would show nothing but background.
+   Inside the lens, everything is simply always visible. */
+
+.lens-zoom [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  transition: none !important;
+}
+/* The copy is decorative; keep it out of the accessibility tree and stop it
+   from stealing pointer events from the real content underneath. */
+.lens-zoom,
+.lens-zoom * {
+  pointer-events: none !important;
+}
+
 /* --- Shared keyframes ----------------------------------------------------- */
 
 @keyframes fade-rise {

@@ -35,10 +35,24 @@ const SIM_RES = 128;
 const DYE_RES = 512;
 const PRESSURE_ITERATIONS = 18;
 const CURL_STRENGTH = 28;
-const VELOCITY_DISSIPATION = 0.985;
-const DENSITY_DISSIPATION = 0.965;
-const SPLAT_RADIUS = 0.0022;
-const SPLAT_FORCE = 5200;
+const VELOCITY_DISSIPATION = 0.9965;
+const DENSITY_DISSIPATION = 0.9895;
+const SPLAT_RADIUS = 0.0030;
+const SPLAT_FORCE = 6600;
+
+/**
+ * Live-tunable parameters, read fresh every frame by the render loop.
+ * Exported so the dev tuning panel can mutate them in place — this look
+ * cannot be dialled in blind, it has to be watched on a real GPU.
+ */
+export const FLUID = {
+  densityDissipation: 0.978, // tail length — higher lasts longer
+  velocityDissipation: 0.992, // how long the flow keeps moving
+  curl: CURL_STRENGTH,                      // swirliness
+  splatForce: SPLAT_FORCE,                  // how hard the cursor pushes
+  splatRadius: SPLAT_RADIUS,                // stroke thickness
+  brightness: 0.26,                         // ink intensity
+};
 
 /* ------------------------------------------------------------------ shaders */
 
@@ -67,11 +81,25 @@ const SPLAT = F_HEAD + `
 uniform sampler2D uTarget;
 uniform float aspectRatio, radius;
 uniform vec3 color;
-uniform vec2 point;
+uniform vec2 point, prevPoint;
 void main () {
-  vec2 p = vUv - point;
-  p.x *= aspectRatio;
-  vec3 splat = exp(-dot(p, p) / radius) * color;
+  // Distance to the CAPSULE swept between the previous and current pointer,
+  // not to a single point. This is what Noomo's shader does, and it is why a
+  // fast flick paints one continuous stroke instead of a dotted line.
+  vec2 uv = vUv;  uv.x *= aspectRatio;
+  vec2 a = prevPoint; a.x *= aspectRatio;
+  vec2 b = point;     b.x *= aspectRatio;
+  vec2 ab = b - a;
+  float len = length(ab);
+  vec2 q;
+  if (len < 1e-4) {
+    q = uv - a;
+  } else {
+    vec2 n = ab / len;
+    float d = clamp(dot(uv - a, n), 0.0, len);
+    q = uv - (a + n * d);
+  }
+  vec3 splat = exp(-dot(q, q) / radius) * color;
   fragColor = vec4(texture(uTarget, vUv).rgb + splat, 1.0);
 }`;
 
@@ -290,28 +318,30 @@ export default function FluidCursor() {
     };
 
     /* ---------- pointer ---------- */
-    const pointer = { x: 0.5, y: 0.5, dx: 0, dy: 0, moved: false };
+    const pointer = { x: 0.5, y: 0.5, px: 0.5, py: 0.5, dx: 0, dy: 0, moved: false };
     let hue = Math.random();
 
     const onMove = (e: PointerEvent) => {
       const x = e.clientX / window.innerWidth;
       const y = 1 - e.clientY / window.innerHeight;
-      pointer.dx = (x - pointer.x) * SPLAT_FORCE;
-      pointer.dy = (y - pointer.y) * SPLAT_FORCE;
+      pointer.dx = (x - pointer.x) * FLUID.splatForce;
+      pointer.dy = (y - pointer.y) * FLUID.splatForce;
+      pointer.px = pointer.x; pointer.py = pointer.y;
       pointer.x = x;
       pointer.y = y;
       pointer.moved = Math.abs(pointer.dx) > 0.1 || Math.abs(pointer.dy) > 0.1;
     };
 
-    const splat = (x: number, y: number, dx: number, dy: number, color: [number, number, number]) => {
+    const splat = (x: number, y: number, px: number, py: number, dx: number, dy: number, color: [number, number, number]) => {
       gl.useProgram(progSplat.p);
       gl.uniform1i(progSplat.uniforms.uTarget!, 0);
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, velocity.read.tex);
       gl.uniform1f(progSplat.uniforms.aspectRatio!, canvas.width / canvas.height);
       gl.uniform2f(progSplat.uniforms.point!, x, y);
+      gl.uniform2f(progSplat.uniforms.prevPoint!, px, py);
       gl.uniform3f(progSplat.uniforms.color!, dx, dy, 0);
-      gl.uniform1f(progSplat.uniforms.radius!, SPLAT_RADIUS);
+      gl.uniform1f(progSplat.uniforms.radius!, FLUID.splatRadius);
       blit(velocity.write); velocity.swap();
 
       gl.activeTexture(gl.TEXTURE0);
@@ -361,7 +391,7 @@ export default function FluidCursor() {
       gl.uniform1i(progVorticity.uniforms.uCurl!, 1);
       gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, velocity.read.tex);
       gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, curl.tex);
-      gl.uniform1f(progVorticity.uniforms.curl!, CURL_STRENGTH);
+      gl.uniform1f(progVorticity.uniforms.curl!, FLUID.curl);
       gl.uniform1f(progVorticity.uniforms.dt!, dt);
       blit(velocity.write); velocity.swap();
 
@@ -399,14 +429,14 @@ export default function FluidCursor() {
       gl.uniform1i(progAdvect.uniforms.uSource!, 0);
       gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, velocity.read.tex);
       gl.uniform1f(progAdvect.uniforms.dt!, dt);
-      gl.uniform1f(progAdvect.uniforms.dissipation!, VELOCITY_DISSIPATION);
+      gl.uniform1f(progAdvect.uniforms.dissipation!, FLUID.velocityDissipation);
       blit(velocity.write); velocity.swap();
 
       gl.uniform1i(progAdvect.uniforms.uVelocity!, 0);
       gl.uniform1i(progAdvect.uniforms.uSource!, 1);
       gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, velocity.read.tex);
       gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, dye.read.tex);
-      gl.uniform1f(progAdvect.uniforms.dissipation!, DENSITY_DISSIPATION);
+      gl.uniform1f(progAdvect.uniforms.dissipation!, FLUID.densityDissipation);
       blit(dye.write); dye.swap();
     };
 
@@ -429,7 +459,7 @@ export default function FluidCursor() {
       if (pointer.moved) {
         pointer.moved = false;
         hue = (hue + 0.006) % 1;
-        splat(pointer.x, pointer.y, pointer.dx, pointer.dy, hsv(hue, 0.85, 0.32));
+        splat(pointer.x, pointer.y, pointer.px, pointer.py, pointer.dx, pointer.dy, hsv(hue, 0.85, FLUID.brightness));
       }
       step(dt);
       render();

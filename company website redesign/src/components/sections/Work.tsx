@@ -109,7 +109,7 @@ export default function Work() {
               <TiltCard max={5}>
                 <a
                   href={`/work/${w.client.toLowerCase().replace(/\s+/g, "-")}`}
-                  data-cursor="magnify"
+                  data-cursor="lens"
                   className="group relative flex h-full flex-col overflow-hidden rounded-card border border-line
                              bg-surface p-7 transition-[border-color,box-shadow] duration-500
                              hover:border-transparent hover:shadow-[0_28px_70px_-32px_rgba(11,15,20,0.3)] lg:p-9"
