@@ -1,4 +1,4 @@
-# Cogitation Works — Design Direction & Build Plan
+﻿# Cogitation Works — Design Direction & Build Plan
 
 **Status:** the plan. Supersedes the earlier version of this file.
 **Updated:** 23 September 2026
@@ -120,7 +120,7 @@ Per-industry pages are the highest-leverage SEO decision — Corgi runs 102 URLs
 | 8 | **Tech stack** | Monospace chips, four pillars |
 | 9 | **Client videos** | Muted autoplay wall, click to expand with sound |
 | 10 | **Achievements & expos** | Horizontal pinned timeline |
-| 11 | **Offices** | Dubai + Vellore, real photography, live local clocks |
+| 11 | **Offices** | UAE + Vellore, real photography, live local clocks |
 | 12 | **Testimonials** | Real quotes, real photos |
 | 13 | **CTA** | Tonal flip to dark, architecture call |
 | 14 | **Footer** | Full nav, oversized wordmark marquee |
@@ -190,7 +190,7 @@ CRM: a deal moving through stages · HRMS: biometric clock-in then payroll run �
 
 | Asset | Spec |
 |---|---|
-| Office — Dubai | 5–8 shots, ≥3000px |
+| Office — UAE | 5–8 shots, ≥3000px |
 | Office — Vellore | 5–8 shots, ≥3000px |
 | Expo / event photos | with event name + year for each |
 | Achievements | certificates, awards, partner badges, ≥1500px |

@@ -53,11 +53,11 @@ const WORK = [
   },
   {
     client: "Mega Connect",
-    sector: "Telecom · Dubai",
+    sector: "Telecom · UAE",
     title: "A UAE enterprise presence for an Etisalat channel partner, built for trust and speed",
     challenge: "Establishing high-trust corporate positioning in competitive UAE enterprise connectivity markets.",
     solution: "Performant custom web architecture with fast load and clear service presentation.",
-    tags: ["Dubai presence", "< 0.4s load", "Telecom services"],
+    tags: ["UAE presence", "< 0.4s load", "Telecom services"],
     accent: "#7c3aed",
   },
   {

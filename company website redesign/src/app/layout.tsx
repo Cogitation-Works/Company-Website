@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import Cursor from "@/components/ui/Cursor";
 import FluidCursor from "@/components/ui/FluidCursor";
 import FluidTuner from "@/components/ui/FluidTuner";
+import Lens from "@/components/ui/magnifier-lens";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,17 +32,17 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title: {
     default:
-      "Cogitation Works — Enterprise Software, ERP, CRM & IoT Platforms | Dubai & India",
+      "Cogitation Works — Enterprise Software, ERP, CRM & IoT Platforms | UAE & India",
     template: "%s | Cogitation Works",
   },
   description:
-    "Cogitation Works builds the systems that run operations — ERP, CRM, workforce, IoT and AI platforms for manufacturing, healthcare, fintech, telecom, logistics and agriculture. Offices in Dubai and Vellore, India.",
+    "Cogitation Works builds the systems that run operations — ERP, CRM, workforce, IoT and AI platforms for manufacturing, healthcare, fintech, telecom, logistics and agriculture. Offices in the UAE and Vellore, India.",
   keywords: [
     "enterprise software development",
     "custom ERP development",
     "CRM software company",
     "IoT solutions",
-    "software company Dubai",
+    "software company UAE",
     "software development India",
     "mobile app development",
     "AI automation",
@@ -73,7 +74,7 @@ const organizationJsonLd = {
   description:
     "Enterprise software engineering — ERP, CRM, workforce, IoT and AI platforms.",
   address: [
-    { "@type": "PostalAddress", addressLocality: "Dubai", addressCountry: "AE" },
+    { "@type": "PostalAddress", addressCountry: "AE" },
     {
       "@type": "PostalAddress",
       addressLocality: "Vellore",
@@ -110,10 +111,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <SmoothScroll>
           <FluidCursor />
-          <FluidTuner />
+          {/* Tuning panel is a development tool — it must never reach a
+              visitor. Dead-code-eliminated from the production bundle. */}
+          {process.env.NODE_ENV === "development" ? <FluidTuner /> : null}
           <Cursor />
           <Header />
-          <main id="main">{children}</main>
+          {/* The magnifier wraps the whole site, not just the home page — the
+              inner cursor circle IS the lens, so a page where it magnifies
+              nothing reads as broken. Hero guards itself against being mounted
+              twice; see the `inLensCopy` check there. */}
+          <Lens zoomFactor={1.75}>
+            <main id="main">{children}</main>
+          </Lens>
           <Footer />
         </SmoothScroll>
       </body>

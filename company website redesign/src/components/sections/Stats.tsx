@@ -13,7 +13,7 @@ import { CountUp, Marquee } from "@/components/ui/Interactions";
 const STATS = [
   { value: 10, suffix: "+", label: "Platforms delivered", note: "⟨TBC⟩" },
   { value: 6, suffix: "", label: "Sectors in production", note: "⟨TBC⟩" },
-  { value: 2, suffix: "", label: "Engineering hubs", note: "Dubai · Vellore" },
+  { value: 2, suffix: "", label: "Engineering hubs", note: "UAE · Vellore" },
   { value: 99.9, suffix: "%", decimals: 1, label: "Platform uptime", note: "⟨TBC⟩" },
 ];
 

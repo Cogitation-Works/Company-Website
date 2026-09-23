@@ -1,4 +1,4 @@
-# PROJECT — Cogitation Works Website Rebuild
+﻿# PROJECT — Cogitation Works Website Rebuild
 
 **The master working document.** Everything about how this project is being built lives here: decisions, content, structure, assets, prompts, what is still needed, and the running log.
 
@@ -26,7 +26,7 @@
 |---|---|
 | Name | **Cogitation Works** |
 | Business | IT services and software engineering |
-| Locations | **Dubai, UAE** · **Vellore, India** — "Dubai \| India \| Global" |
+| Locations | **UAE** · **Vellore, India** — "UAE \| India \| Global" |
 | Email | info@cogitationworks.com |
 | Phone / WhatsApp | +91 93608 89434 |
 | LinkedIn | linkedin.com/in/cogitation-works |
@@ -35,9 +35,74 @@
 
 **Services offered** (expanded, current): custom software · mobile apps (iOS + Android) · desktop applications · static and dynamic websites · web applications · e-commerce · UI/UX · SaaS · cloud · IT consulting · IoT · AI & automation · **SEO optimisation** · **digital marketing** · idea-to-concept product definition.
 
-**New directions being entered:** **agriculture** and **IoT**.
-
 **Positioning (decided):** Cogitation Works builds the operational nervous system — the systems that run factories, clinics, fleets, telecom networks, buildings and farms. Not "we make digital products."
+
+---
+
+## 1.5 Ventures — what the company is building next
+
+⚠️ **Standing rule for this entire section: today, Cogitation Works sells IT
+services and software only.** Everything below is upcoming or in development.
+None of it may be presented as a service a visitor can buy today. Every card,
+page and mention carries an explicit status label. A CTO evaluating an ERP
+vendor must never come away thinking this is a drone company or a meat shop —
+but they *should* come away thinking this company builds what it believes in.
+
+**Why give them space at all:** they are the honest answer to "where is this
+company going", and one of them is genuinely the best proof on the site — a
+software company that runs its own physical operation on its own software has
+something no case study can buy.
+
+### Venture 1 — Agri-IoT, drones and drone logistics
+
+Innovative IoT for agriculture, plus **drones for transport and delivery**.
+Directly continuous with the existing IoT service line and with the
+`/industries/agriculture` page, which is already flagged as the new direction.
+
+- **Status:** in development
+- **Links to:** the agriculture industry page, the IoT service, Cogitation ERP
+- **Asset:** the agriculture still is already shipping and serves this
+
+### Venture 2 — Sunday meat delivery, Vellore region
+
+A local direct-to-consumer operation: **orders taken Monday to Saturday,
+delivered on Sunday, without delay**, to specific serviceable areas near
+Vellore.
+
+- **Status:** upcoming, limited service area
+- **Must state plainly:** the delivery day, the order window, and that the area
+  is limited. A delivery promise with vague geography is a complaint generator.
+- **Why it belongs on an enterprise software site:** framed correctly, it is not
+  a side business — it is **the proof**. Ordering, routing, cold-chain windows
+  and last-mile scheduling are exactly what Cogitation ERP and HRMS do. Running
+  a real operation on our own stack is a claim almost no competitor can make.
+  Frame it as *"we run our own operation on our own software"*, never as
+  *"we also sell meat."*
+- ⟨TBC⟩ — the serviceable area list, the order cut-off time, whether there is a
+  brand name for it, and whether it is B2C, B2B or both
+
+### Venture 3 — Readers Club
+
+A book-reading community running **events in Chennai and Vellore**.
+
+- **Status:** running now, but as community, not commerce
+- **Placement:** this is **culture, not a service.** It belongs on `/about` and
+  on its own page. It must never appear in a services list or a pricing context.
+- ⟨TBC⟩ — how often events run, roughly how many members, whether there is a
+  signup, photographs from past sessions
+
+### Where each one goes
+
+| Venture | Home | Own page | Also appears |
+|---|---|---|---|
+| Agri-IoT & drones | Ventures strip | `/ventures/agri-iot` | `/industries/agriculture`, `/services/iot` |
+| Sunday meat delivery | Ventures strip | `/ventures/sunday-delivery` | `/about` (proof), `/products/erp` (as a live case) |
+| Readers Club | — | `/ventures/readers-club` | `/about` culture section, footer |
+
+The home page gets **one short strip**, low on the page, after the work and
+products but before the CTA — titled *"What we're building next"*, three cards,
+each with a status chip. It is deliberately not in the hero and not in the main
+nav's first rank; the nav reaches it under **About → Ventures**.
 
 ---
 
@@ -90,12 +155,12 @@ Description: custom software supporting production and operational processes; or
 - **Solution:** tailored business suite for production milestone dispatching, parts telemetry and field job allocation.
 - **Tags:** Structured (workflows) · Automated (production scheduling) · Seamless (business management)
 
-**5. Mega Connect — Telecom (Etisalat channel partner, Dubai)**
-Corporate Website. *"Dubai, UAE Presence · Fast Web Engine."*
-Description: professional Dubai-based corporate website for a channel partner associated with Etisalat, establishing digital presence and communicating networking and telecom solutions.
+**5. Mega Connect — Telecom (Etisalat channel partner, UAE)**
+Corporate Website. *"UAE Presence · Fast Web Engine."*
+Description: professional UAE-based corporate website for a channel partner associated with Etisalat, establishing digital presence and communicating networking and telecom solutions.
 - **Challenge:** establishing high-trust corporate positioning in competitive UAE enterprise connectivity markets.
 - **Solution:** performant custom web architecture with fast load and clear service presentation.
-- **Tags:** High-Trust (Dubai presence) · < 0.4s (load speed) · Showcased (telecom services)
+- **Tags:** High-Trust (UAE presence) · < 0.4s (load speed) · Showcased (telecom services)
 
 **6. RG Robotics — Elevators & IoT**
 Corporate Website & Digital Presence. *"Elevator & IoT Show."*
@@ -163,7 +228,7 @@ Requested for this rebuild, beyond what exists:
 | **Client review videos** | short video testimonials from real clients | 🔴 needs filming |
 | **Written testimonials** | real quotes, real names, real titles | 🔴 needs collecting |
 | **Reviews / ratings** | Clutch, Google, LinkedIn recommendations if any | ⟨TBC⟩ |
-| **Office imagery** | Dubai and Vellore — space, team, working | 🟡 partial assets exist |
+| **Office imagery** | UAE and Vellore — space, team, working | 🟡 partial assets exist |
 | **Achievements** | awards, certifications, partnerships, milestones | ⟨TBC⟩ |
 | **Expos & events** | which expos attended, when, where, photos, what was shown | ⟨TBC⟩ |
 | **Project detail pages** | per project: screens, how it works, what we built, outcome | 🟡 text exists, visuals needed |
@@ -198,11 +263,19 @@ Requested for this rebuild, beyond what exists:
   /industries/logistics
   /industries/elevators-iot
   /industries/agriculture      ← new direction
-/about                         story, team, Dubai + Vellore, achievements, expos
+/ventures                      index — what we are building next (§1.5)
+  /ventures/agri-iot           agriculture IoT, drones, drone logistics
+  /ventures/sunday-delivery    Vellore-region meat delivery — order Mon–Sat, deliver Sunday
+  /ventures/readers-club       book community, Chennai + Vellore events
+/about                         story, team, UAE + Vellore, achievements, expos, culture
 /testimonials                  video wall + written reviews
-/insights                      articles (the SEO engine)
+/blog                          articles (the SEO engine)
+  /blog/<slug>
 /contact                       form, offices, direct booking
 ```
+
+**`/insights` renamed `/blog`** — the client asked for "blogs" by name, and it is
+also the term buyers and search engines expect. No reason to be clever here.
 
 **Why per-industry pages:** this is the single highest-leverage SEO decision. One page per buyer intent. (Reference: Corgi runs 102 URLs that are almost entirely vertical landing pages; Lazarev runs 554.)
 
@@ -221,14 +294,20 @@ Requested for this rebuild, beyond what exists:
 7. **Client video wall** — real review videos, muted autoplay, click to expand with sound.
 8. **Tech stack matrix** — the four pillars, monospace chips.
 9. **Achievements & expos** — horizontal timeline / marquee of events and milestones.
-10. **Offices** — Dubai + Vellore, real photography, live local time in amber.
+10. **Offices** — UAE + Vellore, real photography, live local time in amber.
 11. **Written testimonials** — real quotes.
-12. **CTA block** — architecture call + catalogue download.
-13. **Footer** — full nav, newsletter, legal.
+12. **What we're building next** — three venture cards with status chips (§1.5). Low on the page, deliberately after the proof, never in the hero.
+13. **CTA block** — architecture call + catalogue download.
+14. **Footer** — full nav, newsletter, legal.
 
 ---
 
 ## 6. Asset register
+
+> ⚠️ **§6.2 and §6.3 below are superseded by [`ASSETS.md`](./ASSETS.md).** Those
+> prompts were written in a flat documentary register before the agriculture
+> shot established the cinematic one. Use `ASSETS.md` for anything new; the rest
+> of this section (6.1, 6.4–6.7) still stands.
 
 **Pipeline available to us:** Gemini Pro (image generation) → Figma AI (upscale / cleanup) → **Google Flow** (image-to-video) → optional frame-by-frame. For each asset below: the still prompt, then the motion prompt for Flow.
 
@@ -302,7 +381,7 @@ Free CC0 sources: **kenney.nl/assets** · **quaternius.com** · **sketchfab.com*
 | Asset | Spec |
 |---|---|
 | Client review videos | 1080p, landscape + a vertical crop, good audio, 30–60s each, subtitles needed |
-| Office — Dubai | 5–8 photos, ≥3000px, real space and team |
+| Office — UAE | 5–8 photos, ≥3000px, real space and team |
 | Office — Vellore | 5–8 photos, ≥3000px |
 | Expo / event photos | as many as exist, with event name + year for each |
 | Achievement proof | certificates, awards, partner badges, ≥1500px |
@@ -325,14 +404,14 @@ Free CC0 sources: **kenney.nl/assets** · **quaternius.com** · **sketchfab.com*
 
 Beyond the brief, things that would put this above the reference sites:
 
-1. **Live local time in both offices** — Dubai and Vellore, ticking, in amber. Tiny, cheap, and it makes a two-country company feel real.
+1. **Live local time in both offices** — UAE and Vellore, ticking, in amber. Tiny, cheap, and it makes a two-country company feel real.
 2. **An interactive "build your platform" configurator** — pick industry + modules, get an indicative architecture diagram and timeline. This is a lead magnet that also demonstrates the thing you sell. None of the 18 references has anything like it.
 3. **A real architecture diagram per case study** — an animated SVG that draws itself on scroll showing how the system actually works (devices → gateway → services → dashboard). This is your credibility made visible, and it is cheap (SVG, no 3D).
 4. **Number-led case cards** — lead with outcome, not project name, as Lazarev does.
 5. **The agriculture page as a statement piece** — since it is the new direction, give it the most ambitious treatment: the Operations Field in crop configuration, sensor telemetry animating across the field.
 6. **A "Systems we run" live counter** — aggregate uptime or transactions processed, if we can source it honestly.
 7. **PDF catalogue generated from the site content** so it never goes stale.
-8. **Bilingual readiness** — Arabic for the Dubai market is a genuine differentiator in UAE enterprise sales. Worth scoping even if deferred.
+8. **Bilingual readiness** — Arabic for the UAE market is a genuine differentiator in UAE enterprise sales. Worth scoping even if deferred.
 
 ---
 
@@ -384,10 +463,24 @@ Beyond the brief, things that would put this above the reference sites:
 | 2026-09-23 | **Removed `will-change` from the reveal primitive** — the measured reference set had Terminal at 157 and Lusion at 106 will-change elements; that layer memory is a main cause of scroll stutter on mid-range devices |
 | 2026-09-23 | **Measured frame pacing during a deliberately slow scroll: p50 6.9ms, p95 7.0ms, worst 20.8ms, ZERO frames over 32ms.** No dropped frames |
 | 2026-09-23 | Built interaction primitives: custom cursor (dot + lagging ring), magnetic buttons, 3D tilt cards with pointer-tracked specular sheen, scroll-linked count-up, word-by-word scrub text, marquee. All disabled under reduced-motion and on touch |
-| 2026-09-23 | Built sections: Header (direction-aware, real `<a href>` nav), Stats + capability marquee, Statement (scrub text), Work (6 real client cards, per-card accent, tilt + accent wash on hover), Products (hover-expand index, 4 platforms), Industries (animated SVG operations diagram with travelling amber pulse, agriculture flagged New), CTA (tonal flip to dark + live Dubai/Vellore clocks), Footer |
+| 2026-09-23 | Built sections: Header (direction-aware, real `<a href>` nav), Stats + capability marquee, Statement (scrub text), Work (6 real client cards, per-card accent, tilt + accent wash on hover), Products (hover-expand index, 4 platforms), Industries (animated SVG operations diagram with travelling amber pulse, agriculture flagged New), CTA (tonal flip to dark + live UAE/Vellore clocks), Footer |
 | 2026-09-23 | **Logo-as-hero idea dropped** — client correct that none of the 18 references animate a pictorial logo (Alche animates its *wordmark*, not an icon). Logo stays in header/footer only |
 | 2026-09-23 | **Analysed the shipped JavaScript of all 18 references** for technique signatures. Key findings: only 2 of 18 run a fluid simulation (Active Theory 27, Alche 17 `advect`/`divergence`/`vorticity`); **Lusion has 267 GLSL blocks + 61 noise functions, no physics engine, only 6 pointer handlers** — its motion is procedural noise, not simulation; Yambo has 94 springs + 185 pointer handlers and no fluid. Recorded in the research MD |
 | 2026-09-23 | **Built 3 hero options for comparison**, switchable live via a floating A/B/C control and `?hero=a\|b\|c`: **(A) Signal Field** — 7,000 points, cursor-velocity displacement, morphing into production line / field grid / network graph / fleet route; **(B) Liquid Chrome** — raymarched metaball, zero assets, procedural studio env; **(C) Deforming Grid** — wireframe plane denting under the cursor with amber pulses |
 | 2026-09-23 | **Built the refraction-lens cursor** — real `backdrop-filter` + SVG `feDisplacementMap` distortion of live page content, displacement scaling with pointer velocity, squash-and-stretch along travel direction. Feature-detected with a glass-disc fallback |
 | 2026-09-23 | Bugs fixed on the way: DeformGrid failed program validation (`uPointerVel` highp in vertex / mediump in fragment); SignalField used `300.0 / -mv.z` for point size, making 7,000 points merge into a solid black mass over the whole hero |
-| | *next: client picks a hero (A/B/C), then The Descent + horizontal work reveal + video finale* |
+| 2026-09-23 | **Watched 15 new client screen recordings** (~14 min) by extracting contact sheets through Chrome's decoder — no ffmpeg available, so `playwright-core` + a loopback HTTP server + `requestVideoFrameCallback`. Sites: Kode Immersive, Fame Estate, Noomo (agency / labs / beat / storytelling / glass playground / work index), Hashgraph Ventures, Alche, Peachweb, **BMW M3 E30**, Lusion (home + projects) |
+| 2026-09-23 | **Hero decided: A stays on home, C moves to `/industries`, B retired** (two chrome objects on one site is one too many) |
+| 2026-09-23 | **`ASSETS.md` written** — full asset brief replacing §6.2/§6.3. The strongest reference found is the **BMW M3 page**: scroll rotates the object while specs count beside it — that becomes the `/products/*` template, reusing the Core frame-scrub pipeline. Second strongest: **Lusion's project index is all video cards**, not stills, which costs us only screen-recording time |
+| 2026-09-23 | **Dubai → UAE everywhere** in copy, metadata, JSON-LD and the hub clock label. The IANA zone id `Asia/Dubai` is left alone — it is a technical identifier, not a label |
+| 2026-09-23 | **Ventures recorded and placed** (§1.5): agri-IoT & drone logistics, Sunday delivery in the Vellore region, Readers Club. Standing rule set — the company sells IT services and software today, so every venture surface carries a status chip and the qualifying sentence. Sunday delivery is framed as *proof of the ERP*, never as a second business; Readers Club is culture and never appears near a services list |
+| 2026-09-23 | **Content layer extracted to `src/content/`** — `site`, `services`, `products`, `work`, `industries`, `ventures`, `blog`. Single source for the pages, the nav, the footer and the sitemap, so a footer link can no longer point at a route that does not exist |
+| 2026-09-23 | **Whole site built out: 33 routes, all statically generated.** `/services` + 4 pillars (Kode chapter pattern, R1) · `/products` + 4 platforms (**BMW pattern, R13** — sticky `SpecScroller` rotates the object while specs count beside it) · `/work` + 6 case studies (Lusion/Noomo index pattern, R15/R7) · `/industries` + 7 sectors · `/ventures` + 3 · `/about` · `/contact` · `/blog` + template · `sitemap.xml` · `robots.txt` |
+| 2026-09-23 | **Eleven services collapsed into the four pillars the company already uses for its own tech-stack matrix.** Eleven thin pages would compete for the same searches; four substantial ones do not, and every individual service still appears by name inside its pillar |
+| 2026-09-23 | **Magnifier lens moved to the root layout** so it works on every page, not just home. Hero now detects `.lens-zoom` and falls back to its static poster inside the duplicate — without that guard the copy mounted a second WebGL context and a second 60-frame sequence |
+| 2026-09-23 | **FluidTuner and the A/B/C hero switcher gated to `NODE_ENV === "development"`.** Both were shipping to production |
+| 2026-09-23 | **Footer had 8 dead links** (6 stale service slugs, `/insights`, `/privacy`) — found by crawling every internal href, not by reading. Now derived from the content modules |
+| 2026-09-23 | **Agriculture watermark removed properly.** Cropping could not do it — the mark and the white sensor mast occupy overlapping vertical bands, so any crop that cleared the mark beheaded the mast. Sampled, hard-blurred and composited back under a soft radial mask |
+| 2026-09-23 | **Manufacturing still processed** — but the source was only 1024×572. Fine for the card, soft in the full-bleed hero. Flagged for regeneration at 2560px |
+| 2026-09-23 | **Verified in a real browser:** 33 routes crawled, 0 non-200s, 0 pages missing an `h1`, 32 unique titles, no console or page errors. Frame pacing on the heaviest new page (`/products/erp`, sticky scroller) — **p50 7.0ms, p95 10.2ms, worst 18.8ms, zero frames over 32ms** |
+| | *next: client regenerates the manufacturing still at 2560px, generates the 4 remaining industry stills, and records the six client platforms* |

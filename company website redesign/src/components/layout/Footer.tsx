@@ -1,43 +1,35 @@
 import { Marquee } from "@/components/ui/Interactions";
+import { COMPANY } from "@/content/site";
+import { PILLARS } from "@/content/services";
+import { PRODUCTS } from "@/content/products";
+import { INDUSTRIES } from "@/content/industries";
 
-const COLUMNS = [
+/**
+ * Every column is derived from the content modules, so a footer link can never
+ * point at a route that does not exist. The previous hand-written list had
+ * eight dead links in it — six old service slugs, /insights and /privacy — all
+ * of which a crawler would have found before a visitor did.
+ */
+const COLUMNS: { title: string; links: [string, string][] }[] = [
   {
     title: "Services",
-    links: [
-      ["Custom software", "/services/custom-software"],
-      ["Web & mobile apps", "/services/web-mobile"],
-      ["Cloud & DevOps", "/services/cloud"],
-      ["IoT & telemetry", "/services/iot"],
-      ["AI & automation", "/services/ai-automation"],
-      ["SEO & digital marketing", "/services/seo"],
-    ],
+    links: PILLARS.map((p) => [p.name, `/services/${p.slug}`]),
   },
   {
     title: "Platforms",
-    links: [
-      ["Cogitation CRM", "/products/crm"],
-      ["HRMS Pro", "/products/hrms"],
-      ["Cogitation ERP", "/products/erp"],
-      ["Cogi AI", "/products/cogi-ai"],
-    ],
+    links: PRODUCTS.map((p) => [p.name, `/products/${p.slug}`]),
   },
   {
     title: "Industries",
-    links: [
-      ["Manufacturing", "/industries/manufacturing"],
-      ["Healthcare", "/industries/healthcare"],
-      ["Fintech", "/industries/fintech"],
-      ["Telecom", "/industries/telecom"],
-      ["Elevators & IoT", "/industries/elevators-iot"],
-      ["Agriculture", "/industries/agriculture"],
-    ],
+    links: INDUSTRIES.map((i) => [i.name, `/industries/${i.slug}`]),
   },
   {
     title: "Company",
     links: [
       ["About", "/about"],
       ["Work", "/work"],
-      ["Insights", "/insights"],
+      ["Ventures", "/ventures"],
+      ["Blog", "/blog"],
       ["Contact", "/contact"],
     ],
   },
@@ -49,7 +41,7 @@ export default function Footer() {
       <div className="border-b border-line py-8">
         <Marquee speed={64} reverse>
           <span className="mx-8 inline-flex shrink-0 items-center gap-8 text-[clamp(2rem,6vw,4.5rem)] font-[560] tracking-[-0.035em] text-ink/8">
-            Dubai · Vellore · Global —&nbsp;
+            UAE · Vellore · Global —&nbsp;
           </span>
         </Marquee>
       </div>
@@ -100,13 +92,15 @@ export default function Footer() {
 
         <div className="mt-16 flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="label-mono">
-            © {new Date().getFullYear()} Cogitation Works — Dubai · India · Global
+            © {new Date().getFullYear()} Cogitation Works — UAE · India · Global
           </p>
           <div className="flex gap-6">
+            {/* A privacy link belongs here, but pointing at a page that does
+                not exist is worse than not linking it. Add it back with the
+                route. */}
             {[
-              ["LinkedIn", "https://www.linkedin.com/in/cogitation-works/"],
-              ["Instagram", "https://www.instagram.com/cogitation_works/"],
-              ["Privacy", "/privacy"],
+              ["LinkedIn", COMPANY.linkedin],
+              ["Instagram", COMPANY.instagram],
             ].map(([label, href]) => (
               <a
                 key={label}

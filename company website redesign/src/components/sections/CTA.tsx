@@ -119,7 +119,9 @@ export default function CTA() {
           data-reveal
           style={{ "--reveal-delay": "340ms" } as React.CSSProperties}
         >
-          <HubClock city="Dubai" timeZone="Asia/Dubai" />
+          {/* IANA zone ids are technical identifiers, not labels — "Asia/Dubai"
+              stays as-is while the visible label reads UAE. */}
+          <HubClock city="UAE" timeZone="Asia/Dubai" />
           <HubClock city="Vellore" timeZone="Asia/Kolkata" />
           <span className="label-mono !text-white/40">
             NDA guaranteed · 45-minute consultation

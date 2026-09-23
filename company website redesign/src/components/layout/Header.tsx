@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Magnetic } from "@/components/ui/Interactions";
+import { NAV } from "@/content/site";
 
 /**
  * Direction-aware header: hides on scroll down, returns on scroll up.
@@ -11,14 +12,6 @@ import { Magnetic } from "@/components/ui/Interactions";
  * Every nav item is a real <a href>. The current live site uses
  * <button onClick={navigate}>, which is why Google finds zero internal links.
  */
-
-const NAV = [
-  { label: "Services", href: "/services" },
-  { label: "Work", href: "/work" },
-  { label: "Products", href: "/products" },
-  { label: "Industries", href: "/industries" },
-  { label: "About", href: "/about" },
-];
 
 export default function Header() {
   const [hidden, setHidden] = useState(false);

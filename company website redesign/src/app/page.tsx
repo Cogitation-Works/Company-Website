@@ -4,26 +4,26 @@ import Statement from "@/components/sections/Statement";
 import Work from "@/components/sections/Work";
 import Products from "@/components/sections/Products";
 import Industries from "@/components/sections/Industries";
+import Ventures from "@/components/sections/Ventures";
 import CTA from "@/components/sections/CTA";
-import Lens from "@/components/ui/magnifier-lens";
 
+/**
+ * The magnifier Lens now wraps every page from the root layout, so this page
+ * no longer wraps itself. Hero detects when it is inside the lens copy and
+ * falls back to its static poster rather than mounting a second WebGL context.
+ */
 export default function Home() {
   return (
     <>
-      {/* The hero is excluded from the Lens on purpose: the Lens works by
-          rendering its children a SECOND time, and duplicating the hero would
-          mean a second WebGL canvas and a second copy of the frame sequence.
-          Everything below it is plain DOM, so duplicating is cheap. */}
       <Hero />
-
-      <Lens zoomFactor={1.75}>
-        <Stats />
-        <Statement />
-        <Work />
-        <Products />
-        <Industries />
-        <CTA />
-      </Lens>
+      <Stats />
+      <Statement />
+      <Work />
+      <Products />
+      <Industries />
+      {/* Ventures sits after the proof, never before it — PROJECT.md §1.5. */}
+      <Ventures />
+      <CTA />
     </>
   );
 }

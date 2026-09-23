@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useEffect, useRef, useState } from "react";
 import { useMediaQuery, usePrefersReducedMotion } from "@/lib/motion";
 import { Magnetic } from "@/components/ui/Interactions";
 import { useHeroVariant, HeroSwitcher } from "@/components/hero/HeroCanvas";
@@ -67,11 +68,26 @@ export default function Hero() {
   // downloading to a phone on a patchy connection. Phones get the poster.
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const reduced = usePrefersReducedMotion();
-  const render3D = isDesktop && !reduced;
   const [variant, setVariant] = useHeroVariant();
 
+  /* The magnifier renders the page a SECOND time inside `.lens-zoom`. Without
+     this guard that copy would mount a second WebGL context and a second copy
+     of the 60-frame sequence — two of the most expensive things on the site,
+     for a duplicate nobody reads. Inside the copy we fall back to the static
+     poster, which magnifies perfectly well. */
+  const rootRef = useRef<HTMLElement>(null);
+  const [inLensCopy, setInLensCopy] = useState(false);
+  useEffect(() => {
+    setInLensCopy(!!rootRef.current?.closest(".lens-zoom"));
+  }, []);
+
+  const render3D = isDesktop && !reduced && !inLensCopy;
+
   return (
-    <section className="relative isolate overflow-hidden bg-deep pt-24 pb-16 text-on-deep lg:min-h-[100svh] lg:pt-28">
+    <section
+      ref={rootRef}
+      className="relative isolate overflow-hidden bg-deep pt-24 pb-16 text-on-deep lg:min-h-[100svh] lg:pt-28"
+    >
       {/* Technical grid field, very faint */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.30]"
@@ -120,7 +136,7 @@ export default function Hero() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-live opacity-75" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-live" />
           </span>
-          Dubai · Vellore — systems running in six sectors
+          UAE · Vellore — systems running in six sectors
         </p>
 
         <h1 className="max-w-[18ch] text-balance text-[clamp(2.5rem,7.2vw,5.5rem)] font-[560] leading-[0.94] tracking-[-0.035em] text-on-deep">
@@ -201,11 +217,15 @@ export default function Hero() {
         style={{ "--reveal-delay": "760ms" } as React.CSSProperties}
       >
         <span className="label-mono !text-on-deep-muted">Scroll</span>
-        <span className="label-mono !text-on-deep-muted">Est. 2024 — Dubai · India · Global</span>
+        <span className="label-mono !text-on-deep-muted">Est. 2024 — UAE · India · Global</span>
       </div>
 
-      {/* Temporary comparison control — removed once a hero is chosen. */}
-      {render3D && <HeroSwitcher variant={variant} onChange={setVariant} />}
+      {/* The hero is decided: A (Signal Field) here, C (Deform Grid) on
+          /industries, B retired. The switcher stays for development only so
+          the variants can still be compared side by side. */}
+      {render3D && process.env.NODE_ENV === "development" && (
+        <HeroSwitcher variant={variant} onChange={setVariant} />
+      )}
     </section>
   );
 }
