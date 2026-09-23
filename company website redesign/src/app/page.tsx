@@ -16,7 +16,7 @@ export default function Home() {
           Everything below it is plain DOM, so duplicating is cheap. */}
       <Hero />
 
-      <Lens zoomFactor={1.6} lensSize={230}>
+      <Lens zoomFactor={1.75}>
         <Stats />
         <Statement />
         <Work />

@@ -146,10 +146,17 @@ export default function CoreSequence({
 
     const onScroll = () => {
       const vh = window.innerHeight || 1;
-      // Finish the open well before the hero leaves the screen — the sequence
-      // completes in the first ~45% of a viewport of scroll, so it has fully
-      // played by the time the next section arrives.
-      const p = Math.min(1, Math.max(0, window.scrollY / (vh * 0.45)));
+
+      // How much scroll one full open takes. Smaller = faster scrub.
+      const OPEN_DISTANCE = vh * 0.28;
+
+      // Triangle wave: the shell opens over the first OPEN_DISTANCE, then
+      // CLOSES again over the next one, and repeats. So it never dead-ends on
+      // the last frame — keep scrolling and it plays back in reverse.
+      const cycles = window.scrollY / OPEN_DISTANCE;
+      const phase = ((cycles % 2) + 2) % 2;          // 0..2, safe for negatives
+      const p = phase <= 1 ? phase : 2 - phase;      // 0→1 open, 1→0 close
+
       // Clamp to what has actually decoded, so early scrolls still move.
       target = Math.min(p * (FRAME_COUNT - 1), Math.max(0, loadedCount - 1));
       onProgress?.(p);

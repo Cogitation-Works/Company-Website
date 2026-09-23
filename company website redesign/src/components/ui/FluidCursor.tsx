@@ -46,8 +46,8 @@ const SPLAT_FORCE = 6600;
  * cannot be dialled in blind, it has to be watched on a real GPU.
  */
 export const FLUID = {
-  densityDissipation: 0.978, // tail length — higher lasts longer
-  velocityDissipation: 0.992, // how long the flow keeps moving
+  densityDissipation: 0.958, // tail length — higher lasts longer
+  velocityDissipation: 0.985, // how long the flow keeps moving
   curl: CURL_STRENGTH,                      // swirliness
   splatForce: SPLAT_FORCE,                  // how hard the cursor pushes
   splatRadius: SPLAT_RADIUS,                // stroke thickness

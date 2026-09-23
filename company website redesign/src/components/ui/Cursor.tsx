@@ -2,38 +2,35 @@
 
 import { useEffect, useRef } from "react";
 import { usePrefersReducedMotion, useMediaQuery } from "@/lib/motion";
+import { LENS_SIZE } from "./magnifier-lens";
 
 /**
- * Cursor — a glass magnifying lens that follows the pointer.
+ * Cursor — exactly two circles. No more.
  *
- * The fluid simulation (FluidCursor) supplies the flowing trail. This is the
- * solid object riding on top of it: a real glassmorphism lens, not a flat
- * translucent disc.
+ *   OUTER ring  large, thin, LAGS behind the pointer. Purely a cursor; it does
+ *               not magnify anything. The lag is what gives it weight.
+ *   INNER ring  sits exactly on the pointer and IS the magnifying glass. Its
+ *               rim frames the zoomed pixels that magnifier-lens.tsx renders
+ *               underneath at the same diameter (LENS_SIZE).
  *
- * How the glass is built, outside-in:
- *   • a bright 1px rim and an inner shadow give the bevel a thickness
- *   • a specular highlight sits upper-left, a weaker bounce lower-right
- *   • `backdrop-filter` genuinely samples the page beneath and magnifies the
- *     saturation/contrast, so it reads as optics rather than a sticker
- *   • a faint chromatic ring at the edge — real lenses fringe at the rim
+ * magnifier-lens.tsx deliberately draws no ring of its own, so a third circle
+ * cannot appear — an earlier version did, which is what stacked up on screen.
+ * The inner circle here is the only rim.
  *
- * Over a card it grows moderately (96px → 128px). Everywhere else it stays
- * the same lens; the size change is the only difference, as asked.
- *
- * The native cursor is deliberately left visible, which is what
- * storytelling.noomoagency.com does.
+ * The native cursor stays visible, as on storytelling.noomoagency.com.
  */
 
 export default function Cursor() {
   const fine = useMediaQuery("(pointer: fine)");
   const reduced = usePrefersReducedMotion();
-  const lensRef = useRef<HTMLDivElement>(null);
+  const outerRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!fine || reduced) return;
 
     const pos = { x: innerWidth / 2, y: innerHeight / 2 };
-    const lens = { ...pos };
+    const outer = { ...pos };
     let vel = 0;
     let last = { ...pos };
     let raf = 0;
@@ -43,31 +40,26 @@ export default function Cursor() {
       pos.y = e.clientY;
       vel = Math.min(1, vel * 0.8 + Math.hypot(pos.x - last.x, pos.y - last.y) * 0.012);
       last = { x: pos.x, y: pos.y };
-
-      const el = e.target as HTMLElement | null;
-      // Over an element that owns a REAL magnifier (components/ui/magnifier-lens),
-      // this decorative glass ball hides so the two don't stack.
-      lensRef.current?.setAttribute(
-        "data-hidden",
-        String(!!el?.closest?.('[data-cursor="lens"]')),
-      );
     };
 
     const tick = () => {
       raf = requestAnimationFrame(tick);
-      // Light lag — enough to feel like a physical object being dragged,
-      // not so much that it detaches from the pointer.
-      lens.x += (pos.x - lens.x) * 0.14;
-      lens.y += (pos.y - lens.y) * 0.14;
+      // Outer lags. Inner is exact, so it stays registered with the zoom
+      // window — any lag there and the rim would slide off the magnified area.
+      outer.x += (pos.x - outer.x) * 0.13;
+      outer.y += (pos.y - outer.y) * 0.13;
       vel *= 0.92;
 
-      const el = lensRef.current;
-      if (!el) return;
-      // Squash along the direction of travel, like real glass with mass.
-      const angle = Math.atan2(pos.y - lens.y, pos.x - lens.x) * 57.2958;
-      el.style.transform =
-        `translate3d(${lens.x}px,${lens.y}px,0) translate(-50%,-50%) ` +
-        `rotate(${angle}deg) scale(${1 + vel * 0.16}, ${1 - vel * 0.1})`;
+      if (outerRef.current) {
+        const angle = Math.atan2(pos.y - outer.y, pos.x - outer.x) * 57.2958;
+        outerRef.current.style.transform =
+          `translate3d(${outer.x}px,${outer.y}px,0) translate(-50%,-50%) ` +
+          `rotate(${angle}deg) scale(${1 + vel * 0.22}, ${1 - vel * 0.14})`;
+      }
+      if (innerRef.current) {
+        innerRef.current.style.transform =
+          `translate3d(${pos.x}px,${pos.y}px,0) translate(-50%,-50%)`;
+      }
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
@@ -81,47 +73,50 @@ export default function Cursor() {
   if (!fine || reduced) return null;
 
   return (
-    <div
-      ref={lensRef}
-      data-hidden="false"
-      aria-hidden="true"
-      className="group pointer-events-none fixed left-0 top-0 z-[198] h-40 w-40 rounded-full
-                 will-change-transform transition-[opacity,transform] duration-400
-                 ease-[cubic-bezier(0.16,1,0.3,1)]
-                 data-[hidden=true]:scale-0 data-[hidden=true]:opacity-0"
-      style={{
-        // The optics: magnify saturation and contrast, lift brightness a touch.
-        // NOTE: backdrop-filter cannot scale, so true optical zoom is done by
-        // the scaled page clone inside this element (see below). The filter
-        // here only adds the glass's own tint and micro-contrast.
-        backdropFilter: "saturate(1.35) contrast(1.06) brightness(1.04)",
-        WebkitBackdropFilter: "saturate(1.35) contrast(1.06) brightness(1.04)",
-        // Bevel: bright rim, deep inner shadow, soft drop shadow for lift.
-        boxShadow: [
-          "inset 0 0 0 1px rgba(255,255,255,0.55)",
-          "inset 0 8px 20px rgba(255,255,255,0.30)",
-          "inset 0 -10px 22px rgba(0,0,0,0.18)",
-          "0 18px 48px -16px rgba(0,0,0,0.45)",
-        ].join(", "),
-        // Two speculars — strong upper-left, weak lower-right bounce.
-        background: [
-          "radial-gradient(circle at 30% 24%, rgba(255,255,255,0.42), transparent 44%)",
-          "radial-gradient(circle at 72% 80%, rgba(255,255,255,0.16), transparent 40%)",
-        ].join(", "),
-      }}
-    >
-      {/* Chromatic fringe at the rim — real lenses split colour at the edge. */}
-      <span
-        className="absolute inset-0 rounded-full opacity-70"
-        style={{
-          background:
-            "conic-gradient(from 210deg, rgba(255,120,180,0.0) 0deg, rgba(255,120,180,0.35) 60deg, rgba(120,200,255,0.35) 180deg, rgba(255,215,140,0.3) 290deg, rgba(255,120,180,0.0) 360deg)",
-          WebkitMask:
-            "radial-gradient(circle, transparent 0 calc(50% - 2.5px), #000 calc(50% - 2.5px))",
-          mask: "radial-gradient(circle, transparent 0 calc(50% - 2.5px), #000 calc(50% - 2.5px))",
-          mixBlendMode: "screen",
-        }}
+    <>
+      {/* ---- OUTER: plain trailing ring. Behaves normally, no magnification. */}
+      <div
+        ref={outerRef}
+        aria-hidden="true"
+        className="pointer-events-none fixed left-0 top-0 z-[198] h-[10.5rem] w-[10.5rem] rounded-full
+                   border border-white/30 mix-blend-difference will-change-transform"
       />
-    </div>
+
+      {/* ---- INNER: the magnifying glass rim.
+           Exactly LENS_SIZE across, so it frames the zoom window precisely. */}
+      <div
+        ref={innerRef}
+        aria-hidden="true"
+        className="pointer-events-none fixed left-0 top-0 z-[199] rounded-full will-change-transform"
+        style={{
+          width: LENS_SIZE,
+          height: LENS_SIZE,
+          boxShadow: [
+            "inset 0 0 0 1px rgba(255,255,255,0.70)",
+            "inset 0 8px 22px rgba(255,255,255,0.26)",
+            "inset 0 -12px 26px rgba(0,0,0,0.20)",
+            "0 20px 52px -18px rgba(0,0,0,0.50)",
+          ].join(", "),
+          background: [
+            "radial-gradient(circle at 30% 24%, rgba(255,255,255,0.26), transparent 44%)",
+            "radial-gradient(circle at 74% 82%, rgba(255,255,255,0.10), transparent 40%)",
+          ].join(", "),
+        }}
+      >
+        {/* Chromatic fringe ON the rim — part of the inner circle, not a
+            separate one. */}
+        <span
+          className="absolute inset-0 rounded-full"
+          style={{
+            background:
+              "conic-gradient(from 210deg, rgba(255,120,180,0) 0deg, rgba(255,120,180,.40) 60deg, rgba(120,200,255,.40) 180deg, rgba(255,215,140,.30) 290deg, rgba(255,120,180,0) 360deg)",
+            WebkitMask:
+              "radial-gradient(circle, transparent 0 calc(50% - 2.5px), #000 calc(50% - 2.5px))",
+            mask: "radial-gradient(circle, transparent 0 calc(50% - 2.5px), #000 calc(50% - 2.5px))",
+            mixBlendMode: "screen",
+          }}
+        />
+      </div>
+    </>
   );
 }

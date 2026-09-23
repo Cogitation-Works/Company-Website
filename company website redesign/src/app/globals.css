@@ -236,6 +236,14 @@ html.lenis body {
    would sit at opacity:0 and the magnifier would show nothing but background.
    Inside the lens, everything is simply always visible. */
 
+.lens-zoom {
+  /* Opaque backdrop. Without it the zoom layer is transparent and the
+     ORIGINAL text underneath reads through the magnified copy, so both sizes
+     appear at once. Sections with their own background (bg-surface) paint over
+     this in the duplicate; transparent sections fall back to the page colour. */
+  background: var(--color-canvas);
+}
+
 .lens-zoom [data-reveal] {
   opacity: 1 !important;
   transform: none !important;
