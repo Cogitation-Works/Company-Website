@@ -8,6 +8,7 @@ import Cursor from "@/components/ui/Cursor";
 import FluidCursor from "@/components/ui/FluidCursor";
 import FluidTuner from "@/components/ui/FluidTuner";
 import Lens from "@/components/ui/magnifier-lens";
+import SoundToggle from "@/components/ui/SoundToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -123,6 +124,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Lens zoomFactor={1.75}>
             <main id="main">{children}</main>
           </Lens>
+          <SoundToggle />
           <Footer />
         </SmoothScroll>
       </body>

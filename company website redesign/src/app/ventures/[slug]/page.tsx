@@ -3,7 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageHero from "@/components/layout/PageHero";
 import { Section, StatusChip, NextLink, Tbc } from "@/components/layout/Blocks";
+import ScrollStory from "@/components/scroll/ScrollStory";
+import StickyConcept from "@/components/scroll/StickyConcept";
+import Parallax from "@/components/scroll/Parallax";
+import { PlateGrid } from "@/components/media/MediaPlate";
 import { VENTURES, getVenture } from "@/content/ventures";
+import { READERS, VENTURE_FILMS } from "@/content/media";
 
 export function generateStaticParams() {
   return VENTURES.map((v) => ({ slug: v.slug }));
@@ -54,8 +59,22 @@ export default async function VenturePage({
         </div>
       </PageHero>
 
+      {/* The scroll-scrubbed story. Runs on a designed holding plate until the
+          footage arrives — the choreography, timing and copy are all live now,
+          so only the pixels are missing. */}
+      <ScrollStory
+        label={`${v.name} — how it works`}
+        stages={v.story}
+        frames={v.frames}
+        accent={v.accent}
+        note={VENTURE_FILMS[v.slug]}
+      />
+
+      {/* Body copy drifts against the scroll so it separates from the section
+          above and below it. Small value — past about 0.15 it stops reading as
+          depth and starts reading as a glitch. */}
       <Section>
-        <div className="max-w-[62ch] space-y-7">
+        <Parallax speed={-0.06} className="max-w-[62ch] space-y-7">
           {v.body.map((para, i) => (
             <p
               key={i}
@@ -65,7 +84,16 @@ export default async function VenturePage({
               {para}
             </p>
           ))}
-        </div>
+        </Parallax>
+      </Section>
+
+      {/* The concept, step by step — visual sticks, copy scrolls past it. */}
+      <Section
+        tone="surface"
+        label="The concept"
+        heading="How it actually works"
+      >
+        <StickyConcept steps={v.concept} accent={v.accent} />
       </Section>
 
       <Section tone="surface" label="Detail">
@@ -100,6 +128,20 @@ export default async function VenturePage({
           </Link>
         ) : null}
       </Section>
+
+      {/* The Readers Club is the one venture with real photography to show —
+          the meets already happen. The other two have nothing to photograph
+          yet, and an empty gallery would say more than no gallery. */}
+      {v.slug === "readers-club" ? (
+        <Section
+          tone="surface"
+          label="The meets"
+          heading="Chennai and Vellore"
+          lead="Photographs from recent sessions."
+        >
+          <PlateGrid plates={READERS} cols="md:grid-cols-2" />
+        </Section>
+      ) : null}
 
       <div className="container-page">
         <NextLink kicker="Next" label={next.name} href={`/ventures/${next.slug}`} />

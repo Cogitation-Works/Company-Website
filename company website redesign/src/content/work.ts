@@ -30,7 +30,49 @@ export type CaseStudy = {
   /** Silent loop of the real product. See ASSETS.md Tier 0.4. */
   video?: string;
   poster?: string;
+  /**
+   * Screens from the delivered platform. A case study without a picture of the
+   * thing is a press release — these are what make it evidence.
+   */
+  screens: {
+    id: string;
+    kind: "photo" | "video";
+    label: string;
+    brief: string;
+    src?: string;
+    video?: string;
+    accent?: string;
+    aspect?: string;
+  }[];
+  /** The client on camera. The single most persuasive asset a case study has. */
+  review: {
+    id: string;
+    kind: "video";
+    label: string;
+    brief: string;
+    video?: string;
+    src?: string;
+    accent?: string;
+    aspect?: string;
+  };
 };
+
+/** Every case study gets the same three-screen shape plus a review. */
+const screensFor = (slug: string, accent: string, a: string, b: string, c: string) => [
+  { id: `${slug}-s1`, kind: "photo" as const, label: a, brief: `Screenshot from the delivered platform — ${a.toLowerCase()}.`, accent, aspect: "aspect-[16/10]" },
+  { id: `${slug}-s2`, kind: "photo" as const, label: b, brief: `Screenshot — ${b.toLowerCase()}.`, accent, aspect: "aspect-[16/10]" },
+  { id: `${slug}-s3`, kind: "video" as const, label: c, brief: `20–40s silent screen recording — ${c.toLowerCase()} in use.`, accent, aspect: "aspect-[16/10]" },
+];
+
+const reviewFor = (slug: string, client: string, accent: string) => ({
+  id: `${slug}-review`,
+  kind: "video" as const,
+  label: `${client} — on camera`,
+  brief:
+    "30–60s. Landscape plus a vertical crop, clean audio, subtitles. Real name and job title on screen.",
+  accent,
+  aspect: "aspect-[16/9]",
+});
 
 export const WORK: CaseStudy[] = [
   {
@@ -56,6 +98,8 @@ export const WORK: CaseStudy[] = [
       { label: "Communications", detail: "Multi-channel history against the customer timeline." },
     ],
     metrics: [],
+    screens: screensFor("fitings-zone", "#2563eb", "Unified customer view", "Service ticket queue", "Pipeline in use"),
+    review: reviewFor("fitings-zone", "Fitings Zone", "#2563eb"),
   },
   {
     slug: "elite-medical",
@@ -80,6 +124,8 @@ export const WORK: CaseStudy[] = [
       { label: "Pipeline", detail: "B2B sales stages tied directly to the billing record." },
     ],
     metrics: [],
+    screens: screensFor("elite-medical", "#0d9488", "B2B client portal", "Automated invoice run", "Billing reconciliation"),
+    review: reviewFor("elite-medical", "Elite Medical", "#0d9488"),
   },
   {
     slug: "uthmal-machinery",
@@ -104,6 +150,8 @@ export const WORK: CaseStudy[] = [
       { label: "Procurement", detail: "Purchase triggered by real demand rather than by schedule." },
     ],
     metrics: [],
+    screens: screensFor("uthmal-machinery", "#ea580c", "Shop-floor station view", "Bill of materials", "Production scheduling"),
+    review: reviewFor("uthmal-machinery", "Uthmal Machinery", "#ea580c"),
   },
   {
     slug: "dynamic-solar",
@@ -128,6 +176,8 @@ export const WORK: CaseStudy[] = [
       { label: "Workflow", detail: "One structured process replacing per-site spreadsheets." },
     ],
     metrics: [],
+    screens: screensFor("dynamic-solar", "#ca8a04", "Production milestones", "Field job allocation", "Parts telemetry"),
+    review: reviewFor("dynamic-solar", "Dynamic Solar", "#ca8a04"),
   },
   {
     slug: "mega-connect",
@@ -152,6 +202,8 @@ export const WORK: CaseStudy[] = [
       { label: "Enquiry flow", detail: "Short path from service page to a qualified conversation." },
     ],
     metrics: [],
+    screens: screensFor("mega-connect", "#7c3aed", "Homepage", "Service presentation", "The site scrolling"),
+    review: reviewFor("mega-connect", "Mega Connect", "#7c3aed"),
   },
   {
     slug: "rg-robotics",
@@ -176,6 +228,8 @@ export const WORK: CaseStudy[] = [
       { label: "Consultation flow", detail: "Fast route from interest to a technical conversation." },
     ],
     metrics: [],
+    screens: screensFor("rg-robotics", "#0891b2", "Solution breakdown", "IoT telemetry showcase", "The site scrolling"),
+    review: reviewFor("rg-robotics", "RG Robotics", "#0891b2"),
   },
 ];
 

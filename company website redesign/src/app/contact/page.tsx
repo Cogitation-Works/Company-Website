@@ -3,6 +3,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Blocks";
 import { COMPANY } from "@/content/site";
 import ContactForm from "@/components/contact/ContactForm";
+import ConfettiHero from "@/components/heroes/ConfettiHero";
 
 export const metadata: Metadata = {
   title: "Contact — book a solution architecture call",
@@ -15,6 +16,8 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
+        tall
+        figure={<ConfettiHero />}
         eyebrow="Contact"
         title="Tell us what the system has to do."
         lead="Our architects evaluate your functional requirements, analyse dependencies and return a production-ready technical roadmap. No obligation, and nothing you share leaves the room."

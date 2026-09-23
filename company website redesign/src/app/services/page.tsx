@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/layout/PageHero";
 import { NextLink } from "@/components/layout/Blocks";
+import StackHero from "@/components/heroes/StackHero";
+import DrawPath from "@/components/scroll/DrawPath";
 import { PILLARS } from "@/content/services";
 
 export const metadata: Metadata = {
@@ -23,6 +25,12 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero
+        tall
+        figure={
+          <StackHero
+            layers={PILLARS.map((p) => ({ name: p.name, accent: p.accent }))}
+          />
+        }
         eyebrow="Services"
         title={
           <>
@@ -39,7 +47,18 @@ export default function ServicesPage() {
         ]}
       />
 
-      <div className="container-page py-6 lg:py-10">
+      <div className="container-page relative py-6 lg:py-10">
+        {/* A spine that draws itself down the four chapters as you scroll, with
+            a pulse travelling on it. The route is the argument: four layers,
+            one stack. */}
+        <DrawPath
+          className="pointer-events-none absolute left-[calc(var(--spacing-gutter)+0.5rem)] top-0 hidden h-full w-16 text-ink lg:block"
+          viewBox="0 0 40 1000"
+          d="M 20 0 C 4 120, 36 240, 20 360 C 4 480, 36 600, 20 720 C 4 840, 30 930, 20 1000"
+          accent="var(--color-signal)"
+          width={1.25}
+        />
+
         {PILLARS.map((p, i) => (
           <article
             key={p.slug}

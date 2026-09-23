@@ -24,6 +24,8 @@ export default function PageHero({
   lead,
   meta,
   accent,
+  figure,
+  tall = false,
   children,
 }: {
   eyebrow: string;
@@ -33,11 +35,21 @@ export default function PageHero({
   /** Small key/value pairs shown along the bottom rule. */
   meta?: { label: string; value: string }[];
   accent?: string;
+  /**
+   * The page's own hero visual, absolutely positioned behind the copy. Every
+   * page gets a different one — a shared hero across eight pages made the site
+   * feel like one template with the words swapped.
+   */
+  figure?: React.ReactNode;
+  /** Gives the figure room to breathe on pages where it is the point. */
+  tall?: boolean;
   children?: React.ReactNode;
 }) {
   return (
     <section
-      className="relative overflow-hidden bg-deep pb-16 pt-32 text-on-deep lg:pb-20 lg:pt-44"
+      className={`relative isolate overflow-hidden bg-deep text-on-deep ${
+        tall ? "pb-20 pt-36 lg:min-h-[86svh] lg:pb-28 lg:pt-48" : "pb-16 pt-32 lg:pb-20 lg:pt-44"
+      }`}
       style={accent ? ({ "--accent": accent } as React.CSSProperties) : undefined}
     >
       {/* Faint technical grid, and an accent bloom anchored to the top-right.
@@ -63,7 +75,22 @@ export default function PageHero({
         }}
       />
 
-      <div className="container-page relative">
+      {/* The page's own visual. Sits behind the copy, never over it. */}
+      {figure ? <div className="absolute inset-0 z-0">{figure}</div> : null}
+
+      {/* Scrim so the headline stays legible whatever the figure is doing. */}
+      {figure ? (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-[1]"
+          style={{
+            background:
+              "linear-gradient(100deg, var(--color-deep) 6%, rgba(6,9,13,0.72) 42%, rgba(6,9,13,0.15) 78%)",
+          }}
+        />
+      ) : null}
+
+      <div className="container-page relative z-[2]">
         <p className="label-mono !text-on-deep-muted" data-reveal>
           {parent ? (
             <>

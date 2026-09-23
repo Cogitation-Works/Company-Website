@@ -4,6 +4,9 @@ import PageHero from "@/components/layout/PageHero";
 import { Section, NumberedList, NextLink, Tbc } from "@/components/layout/Blocks";
 import { PRODUCTS, getProduct } from "@/content/products";
 import SpecScroller from "@/components/products/SpecScroller";
+import ScrollStory from "@/components/scroll/ScrollStory";
+import StickyConcept from "@/components/scroll/StickyConcept";
+import Parallax from "@/components/scroll/Parallax";
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }));
@@ -75,20 +78,42 @@ export default async function ProductPage({
         accent={p.accent}
       />
 
-      <SpecScroller specs={p.specs} accent={p.accent} frames={p.frames} name={p.name} />
+      {/* 1 — the concept, as a scroll-scrubbed film. Runs on a holding plate
+             until the footage lands; the staging and copy are live now. */}
+      <ScrollStory
+        label={`${p.name} — the idea`}
+        stages={p.story}
+        frames={p.frames}
+        accent={p.accent}
+      />
 
+      {/* 2 — the numbers, counting beside the rotating object (BMW, R13). */}
+      <SpecScroller specs={p.specs} accent={p.accent} name={p.name} />
+
+      {/* 3 — the overview, drifting against the scroll. */}
       <Section label="Overview">
-        <p className="max-w-[62ch] text-[clamp(1.25rem,2.4vw,1.75rem)] leading-[1.42] tracking-[-0.02em] text-ink-soft">
-          {p.description}
-        </p>
+        <Parallax speed={-0.06}>
+          <p className="max-w-[62ch] text-[clamp(1.25rem,2.4vw,1.75rem)] leading-[1.42] tracking-[-0.02em] text-ink-soft">
+            {p.description}
+          </p>
+        </Parallax>
       </Section>
 
-      <Section tone="surface" label="Capabilities" heading="What is in the box">
+      {/* 4 — the product itself, one screen at a time. */}
+      <Section
+        tone="surface"
+        label="Inside the product"
+        heading="What you are actually looking at"
+      >
+        <StickyConcept steps={p.concept} accent={p.accent} side="right" />
+      </Section>
+
+      <Section label="Capabilities" heading="What is in the box">
         <div className="grid gap-px overflow-hidden rounded-card border border-line bg-line md:grid-cols-2">
           {p.features.map((f, i) => (
             <div
               key={f}
-              className="bg-canvas p-7 lg:p-9"
+              className="bg-surface p-7 lg:p-9"
               data-reveal
               style={{ "--reveal-delay": `${(i % 2) * 90}ms` } as React.CSSProperties}
             >
@@ -103,11 +128,11 @@ export default async function ProductPage({
         </div>
       </Section>
 
-      <Section label="Fit" heading="Built for">
+      <Section tone="surface" label="Fit" heading="Built for">
         <NumberedList items={p.builtFor} />
       </Section>
 
-      <Section tone="surface" label="Questions" heading="Before you ask us">
+      <Section label="Questions" heading="Before you ask us">
         <dl className="max-w-[72ch] divide-y divide-line border-y border-line">
           {p.faq.map((f) => (
             <div key={f.q} className="py-7" data-reveal>

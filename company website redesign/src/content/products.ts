@@ -9,6 +9,8 @@
  * rotates on scroll while these count up beside it.
  */
 
+import type { ConceptStep } from "./ventures";
+
 export type Product = {
   slug: string;
   name: string;
@@ -27,7 +29,11 @@ export type Product = {
   faq: { q: string; a: string }[];
   accent: string;
   /** Scroll-scrubbed frame sequence, once generated. See ASSETS.md §4.2. */
-  frames?: string;
+  frames?: { path: string; count: number };
+  /** Stages for the scroll-scrubbed concept film at the top of the page. */
+  story: { kicker: string; title: string; body?: string }[];
+  /** Sticky-visual walkthrough — the product explained one screen at a time. */
+  concept: ConceptStep[];
 };
 
 export const PRODUCTS: Product[] = [
@@ -73,6 +79,18 @@ export const PRODUCTS: Product[] = [
       },
     ],
     accent: "#2563eb",
+    story: [
+      { kicker: "The split", title: "Sales knows one customer. Service knows another.", body: "Two records, two systems, one company — and a customer who has to explain themselves twice." },
+      { kicker: "The merge", title: "One record, both teams", body: "The deal and the ticket attach to the same customer, so history travels with them." },
+      { kicker: "The cadence", title: "Follow-up stops depending on memory", body: "Triggers fire from what actually happened, not from a reminder somebody set." },
+      { kicker: "The view", title: "Turnaround becomes measurable", body: "End to end, in one place, for the first time." },
+    ],
+    concept: [
+      { kicker: "Timeline", title: "Everything this customer has ever done", body: "Calls, tickets, deals, invoices — one chronological record rather than four systems agreeing to disagree.", plate: { id: "crm-timeline", kind: "photo", label: "Customer timeline", brief: "Screenshot — the 360° customer timeline with mixed event types.", accent: "#2563eb", aspect: "aspect-[4/3]" } },
+      { kicker: "Pipeline", title: "Stages that mean something", body: "Deal stages, lead scoring and forecast rollup on one board, configured to how this business actually sells.", plate: { id: "crm-pipeline", kind: "photo", label: "Pipeline board", brief: "Screenshot — kanban pipeline with stages and deal values.", accent: "#2563eb", aspect: "aspect-[4/3]" } },
+      { kicker: "Service", title: "Tickets bound to the deal", body: "A service issue opens against the same customer record the salesperson is looking at. Nobody has to go and find out.", plate: { id: "crm-service", kind: "photo", label: "Service desk", brief: "Screenshot — ticket view showing the linked account and open deals.", accent: "#2563eb", aspect: "aspect-[4/3]" } },
+      { kicker: "In use", title: "A day in the system", body: "The fastest way to understand it is to watch somebody use it.", plate: { id: "crm-demo", kind: "video", label: "Live walkthrough", brief: "60–90s silent screen recording — one real workflow start to finish.", accent: "#2563eb", aspect: "aspect-[4/3]" } },
+    ],
   },
   {
     slug: "hrms",
@@ -116,6 +134,18 @@ export const PRODUCTS: Product[] = [
       },
     ],
     accent: "#0d9488",
+    story: [
+      { kicker: "Clock in", title: "Attendance starts where the work starts", body: "Biometric or geofenced, on the device the employee already carries." },
+      { kicker: "The roster", title: "Shifts that respond to reality", body: "Cover, skills and hours resolved together rather than patched by hand every week." },
+      { kicker: "Compliance", title: "Tax rules applied per jurisdiction", body: "At the point of calculation, not at the point of filing." },
+      { kicker: "Payday", title: "One click to the bank", body: "The month ends without a spreadsheet reconciliation." },
+    ],
+    concept: [
+      { kicker: "Clock-in", title: "Biometric and geofence", body: "Runs on the employee's phone, with biometric hardware supported where a site already has it. Location is verified, not trusted.", plate: { id: "hrms-clock", kind: "photo", label: "Clock-in", brief: "Phone mockup — geofenced clock-in screen with a site map.", accent: "#0d9488", aspect: "aspect-[4/3]" } },
+      { kicker: "Rostering", title: "Shifts solved, not shuffled", body: "The engine resolves cover, skills and legal hour limits together. Manual override is always available — it just stops being the default.", plate: { id: "hrms-roster", kind: "photo", label: "Shift roster", brief: "Screenshot — weekly roster grid with coverage highlighted.", accent: "#0d9488", aspect: "aspect-[4/3]" } },
+      { kicker: "Payroll", title: "From timesheet to bank in one pass", body: "Tax, deductions and disbursement run off the same attendance data nobody had to re-key.", plate: { id: "hrms-payroll", kind: "photo", label: "Payroll run", brief: "Screenshot — payroll summary before disbursement.", accent: "#0d9488", aspect: "aspect-[4/3]" } },
+      { kicker: "In use", title: "One pay cycle, compressed", body: "", plate: { id: "hrms-demo", kind: "video", label: "Live walkthrough", brief: "60–90s silent screen recording — clock-in through to payroll.", accent: "#0d9488", aspect: "aspect-[4/3]" } },
+    ],
   },
   {
     slug: "erp",
@@ -159,6 +189,18 @@ export const PRODUCTS: Product[] = [
       },
     ],
     accent: "#ea580c",
+    story: [
+      { kicker: "The order", title: "A job enters the system", body: "And from that moment its position is a fact anyone can look up, not a phone call." },
+      { kicker: "The BOM", title: "Demand is derived, not forecast", body: "The bill of materials drives procurement directly. Nobody argues about the forecast because there isn't one." },
+      { kicker: "The floor", title: "Each station reports as it finishes", body: "Stage completion recorded where the stage happens, in about the time it takes to mark a whiteboard." },
+      { kicker: "The audit", title: "Every movement has a trail", body: "Procurement, inventory and production reconcile continuously instead of monthly." },
+    ],
+    concept: [
+      { kicker: "Bill of materials", title: "Multi-level, and it drives buying", body: "Change the BOM and procurement changes with it. This is the difference between an ERP and a very expensive spreadsheet.", plate: { id: "erp-bom", kind: "photo", label: "Bill of materials", brief: "Screenshot — multi-level BOM tree with rolled-up quantities.", accent: "#ea580c", aspect: "aspect-[4/3]" } },
+      { kicker: "Shop floor", title: "Reporting at the station", body: "One screen, one job: mark the stage done. Anything slower than the whiteboard it replaces will lose to the whiteboard.", plate: { id: "erp-station", kind: "photo", label: "Station terminal", brief: "Tablet mockup on a shop floor — single-purpose stage-completion screen.", accent: "#ea580c", aspect: "aspect-[4/3]" } },
+      { kicker: "Inventory", title: "Accurate on days nobody counted", body: "Stock moves when production consumes it, so the number is right between stocktakes rather than only during one.", plate: { id: "erp-inventory", kind: "photo", label: "Inventory", brief: "Screenshot — warehouse stock view with live movements.", accent: "#ea580c", aspect: "aspect-[4/3]" } },
+      { kicker: "In use", title: "One order, front to back", body: "", plate: { id: "erp-demo", kind: "video", label: "Live walkthrough", brief: "60–90s silent screen recording — order through to dispatch.", accent: "#ea580c", aspect: "aspect-[4/3]" } },
+    ],
   },
   {
     slug: "cogi-ai",
@@ -202,6 +244,18 @@ export const PRODUCTS: Product[] = [
       },
     ],
     accent: "#7c3aed",
+    story: [
+      { kicker: "The input", title: "Telemetry, manuals, technician notes", body: "Three kinds of unstructured data that nobody can search and everybody needs." },
+      { kicker: "Retrieval", title: "Find the source before answering", body: "The agent retrieves from your own records first. Generation without retrieval is just a confident guess." },
+      { kicker: "The answer", title: "With a citation attached", body: "Every response points at the document it came from, so it can be checked." },
+      { kicker: "The action", title: "And then it does something", body: "Diagnosis becomes a scheduled job, not a paragraph somebody has to act on." },
+    ],
+    concept: [
+      { kicker: "Ingest", title: "The documents nobody can search", body: "Service manuals, spec sheets, historical job notes. The knowledge exists; it is just in PDFs.", plate: { id: "ai-ingest", kind: "photo", label: "Knowledge base", brief: "Screenshot — ingested document set with indexing status.", accent: "#7c3aed", aspect: "aspect-[4/3]" } },
+      { kicker: "Ground", title: "Retrieval before generation", body: "The agent finds the passage, then answers from it. This is the whole difference between useful and plausible.", plate: { id: "ai-rag", kind: "photo", label: "Grounded answer", brief: "Screenshot — an answer with its source passage shown alongside.", accent: "#7c3aed", aspect: "aspect-[4/3]" } },
+      { kicker: "Telemetry", title: "Reading the vehicle, not the ticket", body: "Diagnostic codes and sensor streams interpreted against the same knowledge base, so the answer accounts for the hardware.", plate: { id: "ai-telemetry", kind: "photo", label: "Telemetry view", brief: "Screenshot — live vehicle telemetry with an AI interpretation panel.", accent: "#7c3aed", aspect: "aspect-[4/3]" } },
+      { kicker: "In use", title: "Question to scheduled job", body: "", plate: { id: "ai-demo", kind: "video", label: "Live walkthrough", brief: "60–90s silent screen recording — a diagnostic question becoming a work order.", accent: "#7c3aed", aspect: "aspect-[4/3]" } },
+    ],
   },
 ];
 

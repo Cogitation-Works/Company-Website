@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/layout/PageHero";
 import { NextLink } from "@/components/layout/Blocks";
+import IndustriesField from "@/components/heroes/IndustriesField";
 import { INDUSTRIES } from "@/content/industries";
 
 export const metadata: Metadata = {
@@ -15,6 +16,8 @@ export default function IndustriesPage() {
   return (
     <>
       <PageHero
+        tall
+        figure={<IndustriesField />}
         eyebrow="Industries"
         title="Seven sectors. The same question in each one."
         lead="Where is the work right now, and what does the system do about it? The answer looks different on a shop floor than it does in a clinic, but the shape of the problem does not change."

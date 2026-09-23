@@ -25,12 +25,10 @@ export default function SpecScroller({
   specs,
   accent,
   name,
-  frames,
 }: {
   specs: { value: string; unit?: string; label: string; tbc?: boolean }[];
   accent: string;
   name: string;
-  frames?: string;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const objectRef = useRef<HTMLDivElement>(null);
@@ -127,10 +125,7 @@ export default function SpecScroller({
               className="relative aspect-square w-[min(78vw,30rem)] will-change-transform"
               aria-hidden="true"
             >
-              {frames ? (
-                /* Reserved for the scroll-scrubbed frame sequence. */
-                null
-              ) : (
+              {(
                 <>
                   {[0, 1, 2, 3].map((r) => (
                     <span
@@ -156,6 +151,9 @@ export default function SpecScroller({
                 </>
               )}
             </div>
+            {/* Note: the rotating object here is procedural. The scroll-scrubbed
+                frame sequence lives in the ScrollStory above it, so this stays
+                a cheap companion rather than a second heavy canvas. */}
           </div>
         </div>
 

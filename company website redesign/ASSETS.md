@@ -325,6 +325,220 @@ no people. Square 1:1, 2048×2048.
 
 ---
 
+## 4.5 The media register — every photo and video slot on the site
+
+Added 23 Sep. The shot list now lives in code, at
+`src/content/media.ts`, because that file **is** what renders. Every entry
+below already has a designed holding plate on the live site; filling in `src`
+or `video` on its entry replaces the plate with no layout change.
+
+Nothing here is generated. These are photographs of this company, and a stock
+photo of somebody else's office standing in for ours would look finished, quietly
+become permanent, and be a lie in a place where the whole page is arguing that
+the company is real.
+
+| Group | Slots | Where it renders |
+|---|---|---|
+| **Office** | 6 photos — UAE floor, UAE conversation, Vellore floor, Vellore build, the building, the team | `/about` |
+| **Expo & events** | 3 photos + 1 reel | `/about` |
+| **Achievements** | 3 photos — certifications, recognition, partnerships | `/about` |
+| **Readers Club** | 4 photos — a session, Chennai, Vellore, the books | `/about`, `/ventures/readers-club` |
+| **Client work** | 2 photos + 1 review video | `/about` |
+| **Company film** | 1 film, 60–90s | `/about` |
+
+**Photo spec:** ≥3000px, natural light, real people doing real work. No staged
+poses, no stock body language. Consent needed wherever a face is identifiable.
+
+**Video spec:** 1920×1080, 30fps, delivered as `.mp4`. Anything that
+scroll-scrubs gets sliced to webp frames before it ships — never played back
+directly, because scrubbing compressed video on scroll is exactly the judder
+you flagged on terminal-industries.com.
+
+### The three venture films · **Google Flow**
+
+Each drives a `ScrollStory` on its venture page — the copy stages and timing are
+already live, so this is the only missing piece.
+
+> **Common block** — append to each:
+> `Camera: a single continuous take at a perfectly constant speed. No cuts, no
+> transitions, no speed ramps, no handheld. Audio: none, silent. 1080p, 16:9,
+> 10 seconds. No text, no logos, no watermark.`
+
+| Venture | Subject & action |
+|---|---|
+| **Agri-IoT** | `A drone lifting off from a crop field at dawn and climbing steadily away, the rows falling below it, low sun and ground haze catching the light.` |
+| **Sunday delivery** | `An insulated cold box being loaded into the back of a small delivery van, the doors closing, and the van pulling away down a quiet rural road at first light.` |
+| **Readers Club** | `A slow push across a table covered in open books and notebooks, toward a group of people seated and reading in warm indoor light.` |
+
+---
+
+## 4.6 PRODUCT PAGES — the prompts you asked for
+
+Structure decided 23 Sep, from your note that **work and product are different
+things**:
+
+| | What it is | Page shape |
+|---|---|---|
+| **`/work/*`** | delivered **client** projects (6) | challenge → **product screens** → how it works → **client review video** → tags |
+| **`/products/*`** | the four software engines | **scroll film** → counting specs → overview → **sticky concept walkthrough** → capabilities → FAQ |
+| **`/ventures/*`** | **our own** things — meat shop, Readers Club, agri & IoT | same full-scroll shape as products |
+
+Statuses set to what you said: **Sunday delivery — in progress · Readers Club —
+in progress (meets running) · Agri & IoT — upcoming.**
+
+### ⚠️ Which of these can be generated, and which cannot
+
+**Cannot be generated, ever:** anything showing a screen. Every dashboard,
+pipeline board, roster, BOM tree and order screen has to be a real screenshot of
+real software. A rendered fake UI is the single most obvious tell on a software
+company's website, and it undermines the exact claim the page is making.
+
+**Can be generated:** the physical world — hardware, produce, vehicles,
+environments. Those are the five stills and three films below.
+
+---
+
+### 4.6.1 The three scroll films · **Google Flow** · one per venture
+
+These drive the scroll-scrubbed story at the top of each venture page. The
+staging and copy are **already live on the site** — only the footage is missing.
+
+> **Append this block to all three, unchanged:**
+> ```
+> Camera: one single continuous take at a perfectly constant speed. No cuts, no
+> transitions, no speed ramps, no zoom, no handheld shake. Lighting is identical
+> from the first frame to the last. Style: photoreal cinematic documentary, shot
+> on anamorphic glass, rich film-grade colour, high dynamic range, visible
+> atmospheric haze carrying the light. Audio: none, silent. 1080p, 16:9, 10
+> seconds. No people's faces, no text, no signage, no logos, no watermark.
+> ```
+
+**① AGRI-IOT & DRONE LOGISTICS**
+```
+A cargo drone lifts vertically out of a crop field at dawn and climbs steadily
+away from the camera, the neat parallel rows of the field falling away beneath
+it and converging toward a distant vanishing point. A low sun sits just above
+the horizon behind thin ground mist, rimming the drone's arms in warm amber
+light. A single small unbranded white sensor mast stands in the lower-left of
+the field, catching one hard specular highlight as the drone passes over it.
+Warm amber key against cool blue shadow.
+```
+
+**② SUNDAY DELIVERY**
+```
+An insulated white cold box is lifted into the open rear doors of a small clean
+delivery van parked on a quiet rural road at first light, the doors swing closed,
+and the van pulls away from the camera down the road toward a distant vanishing
+point between fields. Low morning sun behind light ground mist turns the air into
+visible shafts of light across the road. The van is plain white with no markings
+of any kind. Warm amber key against cool blue shadow.
+```
+
+**③ READERS CLUB**
+```
+A slow steady push forward across a large wooden table covered with open books,
+notebooks and glasses of tea, moving toward a group of people seated around the
+far end of the table reading together. Warm low indoor light from a window on
+the left rakes across the table surface, catching the edges of the pages and the
+dust in the air. Faces are soft and out of focus in the background. Warm amber
+key against deep neutral shadow.
+```
+
+---
+
+### 4.6.2 Five product stills · **Gemini** · 2560px minimum
+
+The other slots in the concept walkthroughs need real screenshots. These five
+are the physical ones, and they are the ones worth generating.
+
+**① AGRI — FIELD SENSOR** · `aspect 4:3`
+```
+A product photograph of a weather-sealed white agricultural sensor unit mounted
+on a slim brushed-steel mast, standing in a crop row. The unit is a clean
+unbranded cylinder with a small solar panel angled at the top and a short
+antenna. Shot from slightly below eye level so the mast reads against the sky.
+The crop rows run away behind it and converge toward a distant vanishing point.
+Low golden morning sun from behind and to the left rims the sensor housing and
+catches one hard specular highlight on the steel. Thin ground mist makes the
+light readable in the air. Shallow depth of field, the sensor sharp and the
+field softening behind it. Cinematic product photography, rich film-grade
+colour, high dynamic range. No text, no branding, no logos, no watermark, no
+people. 4:3.
+```
+
+**② AGRI — TRANSPORT DRONE** · `aspect 4:3`
+```
+A large unbranded cargo drone in matte white and dark grey hovering low over a
+harvested field, carrying a sealed cylindrical payload slung beneath its frame.
+Six rotor arms, clean industrial design, no markings of any kind. Shot from
+ground level looking slightly upward so the drone reads against a dawn sky. The
+field rows converge behind and beneath it. Low golden sun from the left rims the
+rotor arms and the payload; dust lifted by the downwash hangs in the beam and
+makes the light visible. Cinematic product photography, shallow depth of field,
+rich film-grade colour, high dynamic range. No text, no branding, no logos, no
+watermark, no people. 4:3.
+```
+
+**③ MEAT — PREPARATION** · `aspect 4:3`
+```
+A spotless stainless steel preparation counter in a small clean butchery,
+photographed from a high three-quarter angle. Neatly portioned fresh cuts are
+arranged in a precise row on white trays, each tray with a plain unprinted white
+label. A digital scale and a stack of clean trays sit further along the counter,
+receding toward a vanishing point. Cool daylight from a window on the left, warm
+amber from a ceiling lamp on the right; thin condensation haze in the cold air
+makes the light readable. Immaculately clean and orderly — this is a photograph
+about process control, not about food. Cinematic documentary photography, rich
+film-grade colour, high dynamic range, shallow depth of field. No text, no
+branding, no logos, no watermark, no people, no blood. 4:3.
+```
+
+**④ MEAT — COLD CHAIN** · `aspect 4:3`
+```
+A sealed white insulated delivery crate photographed close, three-quarter view,
+with its lid secured and a small unbranded digital temperature logger clipped to
+the side showing a plain numeric readout. Cold vapour spills slowly over the rim
+and pools at the base. Set on a stainless steel loading bench with more identical
+crates receding out of focus behind it. Cool blue-white light from above, one
+warm amber accent light from the right edge. Cinematic product photography,
+shallow depth of field, crisp specular highlights on the plastic and steel, rich
+film-grade colour, high dynamic range. No text on the logger beyond digits, no
+branding, no logos, no watermark, no people. 4:3.
+```
+
+**⑤ MEAT — SUNDAY DELIVERY** · `aspect 4:3`
+```
+A small plain white delivery van parked on a narrow road outside a modest home
+at sunrise, its rear doors open, a white insulated crate on the ground beside
+the rear bumper. Palms and low buildings line the road, which recedes toward a
+distant vanishing point. Low golden sun directly behind the van rims its roofline
+and the open doors; thick morning haze turns the sunlight into visible shafts
+across the road. Warm amber key against cool blue shadow in the foreground.
+Cinematic documentary photography, wide angle, deep depth of field, rich
+film-grade colour, high dynamic range. No text, no branding, no number plate, no
+logos, no watermark, no people. 4:3.
+```
+
+---
+
+### 4.6.3 What still has to be real, not generated
+
+| Slot | Page | Why it cannot be generated |
+|---|---|---|
+| 12 product screenshots (3 per engine) | `/products/*` | A rendered fake UI is the most obvious tell there is |
+| 4 product demo recordings | `/products/*` | Same |
+| 18 client screens (3 × 6 case studies) | `/work/*` | It is the evidence; inventing it defeats the page |
+| **6 client review videos** | `/work/*` | ⭐ the most persuasive asset on the whole site |
+| 3 Readers Club galleries | `/ventures/readers-club` | The meets already happen — just photograph one |
+| Agri telemetry + dispatch screens | `/ventures/agri-iot` | Real UI |
+| Meat order + routing screens | `/ventures/sunday-delivery` | Real UI |
+
+Every one of those has a designed holding plate on the live site right now, with
+its brief printed on the plate. Filling one in is a one-line change in
+`src/content/`.
+
+---
+
 ## 5. TIER 2 — after the pages exist
 
 ### 5.1 The Descent · **Flow** · the Peachweb transition
@@ -355,7 +569,16 @@ Single continuous take, constant speed, no cuts, no transitions, no text, no
 logos, no watermark. 1080p, 16:9, 10 seconds.
 ```
 
-### 5.2 Ambient audio · **Google AI Studio**
+### 5.2 Ambient audio · **Google AI Studio** — *partly done*
+
+**Sound is now built and shipping, off by default,** with a toggle bottom-left.
+Rather than ship a dead button waiting on a file, the drone and the UI click are
+**synthesised with the Web Audio API** — two detuned sines through a low-pass,
+plus a short triangle blip on links and buttons. Zero bytes of download, and the
+context is only created on the click that turns it on.
+
+A recorded bed would still be better. When one exists it replaces `startDrone`
+in `src/components/ui/SoundToggle.tsx` and nothing else changes.
 
 Recordings `131408` (Hashgraph) and `131531` (Alche) both gate entry on
 **"ENTER WITH AUDIO / enter without audio"**. It costs one small file and it

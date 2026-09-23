@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PageHero from "@/components/layout/PageHero";
 import { Section, NextLink } from "@/components/layout/Blocks";
+import { MediaPlate, PlateGrid } from "@/components/media/MediaPlate";
+import Parallax from "@/components/scroll/Parallax";
 import { WORK, getCase } from "@/content/work";
 import { getIndustry } from "@/content/industries";
 
@@ -101,12 +103,22 @@ export default async function CaseStudyPage({
         </div>
       </Section>
 
-      <Section tone="surface" label="How it works" heading="Inside the system">
+      {/* The product itself. A case study without a picture of the thing is a
+          press release — these are what turn it into evidence. */}
+      <Section
+        tone="surface"
+        label="The product"
+        heading="What we handed over"
+      >
+        <PlateGrid plates={w.screens} cols="md:grid-cols-3" />
+      </Section>
+
+      <Section label="How it works" heading="Inside the system">
         <ol className="grid gap-px overflow-hidden rounded-card border border-line bg-line md:grid-cols-2">
           {w.build.map((b, i) => (
             <li
               key={b.label}
-              className="bg-canvas p-7 lg:p-9"
+              className="bg-surface p-7 lg:p-9"
               data-reveal
               style={{ "--reveal-delay": `${(i % 2) * 90}ms` } as React.CSSProperties}
             >
@@ -139,6 +151,19 @@ export default async function CaseStudyPage({
           </dl>
         </Section>
       ) : null}
+
+      {/* The client, on camera. The most persuasive thing a case study can
+          contain, and the one thing no amount of design substitutes for. */}
+      <Section
+        tone="surface"
+        label="In their words"
+        heading={`${w.client} on the result`}
+        lead="Written testimonials are easy to produce and easy to discount. A person on camera is neither."
+      >
+        <Parallax speed={-0.05} className="mx-auto max-w-4xl">
+          <MediaPlate plate={w.review} />
+        </Parallax>
+      </Section>
 
       <Section tone="deep">
         <div className="flex flex-wrap gap-3">
