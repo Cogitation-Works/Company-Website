@@ -1,0 +1,358 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Cogitation Works — design system
+   Direction: "Live System" — instrument-grade light interface.
+   See DESIGN-DIRECTION.md
+   ========================================================================== */
+
+@theme {
+  /* --- Colour -------------------------------------------------------------
+     Rule: Signal Blue is the brand. Live Amber is ONLY ever used on something
+     that is actually moving or updating (a counting number, a live status dot,
+     an active telemetry line). Never decorative. That rationing is what makes
+     it read as "live".                                                      */
+
+  --color-canvas: #f4f5f7;
+  --color-surface: #ffffff;
+  --color-raised: #fafbfc;
+
+  --color-ink: #0b0f14;
+  --color-ink-soft: #2b333d;
+  --color-muted: #5a6472;
+  --color-faint: #8b95a3;
+
+  --color-line: #e2e6eb;
+  --color-line-strong: #cdd4dd;
+
+  --color-signal: #2563eb;
+  --color-signal-hover: #1d4ed8;
+  --color-signal-soft: #dbe6fe;
+
+  /* Warmed to match the approved Core render (the object is the brand's
+     loudest element, so the token follows it rather than fighting it). */
+  --color-live: #f0a500;
+  --color-live-soft: #fdf0d5;
+
+  /* --- Deep field ----------------------------------------------------------
+     The ANIMATED sections live here. Particles, fog, shaders and glass are
+     invisible on near-white — every reference site animates on dark and
+     switches to light only for static content (Lusion's hero journey is dark,
+     its work index is #F0F1FA). The site is a tonal journey, not one tone. */
+  --color-deep: #06090d;
+  --color-deep-raised: #0e141b;
+  --color-deep-line: #1e2731;
+  --color-on-deep: #eef2f6;
+  --color-on-deep-muted: #93a1b0;
+
+  /* --- Type ---------------------------------------------------------------
+     One sans for the interface, one mono reserved for data, labels, counters
+     and technical readouts. That split is what makes it read as engineering
+     rather than marketing.                                                  */
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Display scale — measured from the reference set:
+     h1 72–88px, −2 to −3px tracking, weight 500–600.                        */
+  --text-display: 5.5rem;
+  --text-display--line-height: 0.94;
+  --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: 560;
+
+  --text-h1: 4rem;
+  --text-h1--line-height: 0.98;
+  --text-h1--letter-spacing: -0.032em;
+  --text-h1--font-weight: 560;
+
+  --text-h2: 2.75rem;
+  --text-h2--line-height: 1.04;
+  --text-h2--letter-spacing: -0.028em;
+  --text-h2--font-weight: 560;
+
+  --text-h3: 1.75rem;
+  --text-h3--line-height: 1.15;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h3--font-weight: 560;
+
+  --text-lead: 1.25rem;
+  --text-lead--line-height: 1.55;
+  --text-lead--letter-spacing: -0.011em;
+
+  /* Monospace label — small caps-ish technical readout */
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.14em;
+
+  /* --- Motion -------------------------------------------------------------
+     Durations and easings derived from the measured reference curves:
+     ~50% of distance in the first 200ms, ~90% by 500ms, settle ~1.0s.       */
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+  --duration-fast: 180ms;
+  --duration-base: 420ms;
+  --duration-slow: 760ms;
+  --duration-reveal: 1000ms;
+
+  /* --- Layout ------------------------------------------------------------ */
+  --spacing-gutter: 1.5rem;
+  --container-page: 84rem;
+
+  --radius-card: 1.25rem;
+  --radius-pill: 999px;
+}
+
+/* --- Base ---------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+  /* Set by the scroll progress hook; used by decorative elements. */
+  --scroll-progress: 0;
+}
+
+html {
+  /* Lenis drives scrolling; never double up with CSS smooth scroll. */
+  scroll-behavior: auto;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  /* `clip`, not `hidden`. `overflow-x: hidden` makes <body> a scroll
+     container, which breaks window scrolling and leaves Lenis fighting it —
+     scroll would stick partway down the page. `clip` suppresses horizontal
+     overflow without creating a scroll port. */
+  overflow-x: clip;
+}
+
+::selection {
+  background-color: var(--color-signal);
+  color: #fff;
+}
+
+/* Visible, branded focus. Never removed. */
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* --- Lenis --------------------------------------------------------------- */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* --- Utilities ----------------------------------------------------------- */
+
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+/* Technical monospace label used across the site */
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--text-label--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+/* Tabular numerals — mandatory on any counting or measured figure,
+   otherwise digits jitter as they change. */
+@utility num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Fine technical grid, used at very low opacity behind sections. */
+@utility grid-field {
+  background-image:
+    linear-gradient(to right, var(--color-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* --- Reveal primitive ----------------------------------------------------
+   Elements opt in with data-reveal; the observer sets data-revealed.
+   Stagger via --reveal-delay. Pure CSS so it costs nothing.               */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition:
+    opacity var(--duration-slow) var(--ease-out-expo),
+    transform var(--duration-slow) var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+  /* NOTE: deliberately NO `will-change` here.
+     Promoting every reveal element to its own GPU layer is exactly what makes
+     heavy sites stutter — the measured reference set had one site with 157
+     will-change elements and another with 106. Layers cost memory, and on a
+     mid-range phone that memory pressure is the stutter. These elements
+     animate once and then never again, so a layer buys nothing. */
+}
+[data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+/* Drop the transform once revealed so the element returns to normal flow
+   painting and stops being a compositing candidate at all. */
+[data-reveal][data-revealed="true"]:not([data-reveal="blur"]) {
+  transform: none;
+}
+[data-reveal="blur"] {
+  filter: blur(8px);
+  transition:
+    opacity var(--duration-slow) var(--ease-out-expo),
+    transform var(--duration-slow) var(--ease-out-expo),
+    filter var(--duration-slow) var(--ease-out-expo);
+}
+[data-reveal="blur"][data-revealed="true"] {
+  filter: blur(0);
+}
+
+/* --- Shared keyframes ----------------------------------------------------- */
+
+@keyframes fade-rise {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* --- Tilt card -----------------------------------------------------------
+   The transform is driven by two CSS variables written from a pointermove
+   handler. Only the hovered card ever gets a compositing layer, and only
+   while the pointer is inside it. */
+
+.tilt-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --sheen-x: 50%;
+  --sheen-y: 50%;
+  position: relative;
+  transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  transition: transform 480ms var(--ease-out-expo);
+}
+.tilt-card:hover {
+  /* Layer promotion scoped to hover only — never global. */
+  will-change: transform;
+  transition-duration: 120ms;
+}
+/* Specular sheen that follows the pointer across the surface. */
+.tilt-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 320ms var(--ease-out-expo);
+  background: radial-gradient(
+    380px circle at var(--sheen-x) var(--sheen-y),
+    rgb(255 255 255 / 0.5),
+    transparent 62%
+  );
+}
+.tilt-card:hover::after {
+  opacity: 1;
+}
+
+/* --- Marquee -------------------------------------------------------------
+   One transform animation on a single track element. Pauses on hover. */
+
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll linear infinite;
+}
+.marquee[data-reverse="true"] .marquee-track {
+  animation-direction: reverse;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* --- Link underline wipe -------------------------------------------------- */
+
+@utility link-wipe {
+  position: relative;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  transition: background-size 420ms var(--ease-out-expo);
+}
+.link-wipe:hover {
+  background-size: 100% 1px;
+}
+
+/* --- Accessibility -------------------------------------------------------
+   Honoured everywhere. Only 7 of the 18 reference sites bothered.         */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .tilt-card {
+    transform: none;
+  }
+  .tilt-card::after {
+    display: none;
+  }
+}
