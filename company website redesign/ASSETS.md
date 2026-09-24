@@ -41,8 +41,7 @@ Read this once before generating anything.
 |---|---|
 | Core frame sequence, 60 × webp | ✅ shipping, scroll-scrubbed in the hero |
 | Core poster, 2 sizes × 3 formats | ✅ shipping |
-| Agriculture still, 2 widths × AVIF/WebP | ✅ shipping — **this is the reference register**. Watermark patched out 23 Sep |
-| Manufacturing still, 2 widths × AVIF/WebP | ⚠️ shipping, but **source was only 1024×572** — fine on the card, soft in the full-bleed hero. **Regenerate at 2560px** using the §4.1 ① prompt |
+| **All seven industry stills**, 2 widths × AVIF/WebP | ✅ shipping — generated 24 Sep to the §4.1 prompts, 2400×1350 each |
 
 **The site is now built: 33 routes, all statically generated.** Every page
 exists, every route returns 200, and every missing asset has a slot waiting for
@@ -116,6 +115,28 @@ is cut off on the industry page.
 **Deliver** each as 2560×1440 PNG or JPEG. They get converted to AVIF + WebP at
 two widths (1600 and 2400) and dropped into `public/industries/<slug>-<width>.<ext>`;
 the filename stem must match the `image` field in `content/industries.ts`.
+
+#### The watermark — and why Figma is not needed
+
+Gemini returns **2752×1536**, which is already above the 2560 asked for here, so
+**nothing needs upscaling**. It stamps a small four-point sparkle at roughly
+**x 2427–2603, y 1246–1341** — the right-hand margin.
+
+So the watermark is removed by **cropping, not retouching**: taking the left
+**2400×1350** (offset y 93) drops the sparkle with ~27px to spare and lands
+exactly on 16:9 at exactly the width the largest variant needs. The biggest
+export is therefore a 1:1 crop with no resampling, and nothing in the picture is
+cloned, blurred or invented.
+
+The only cost is ~13% off the right edge, which the register can absorb: the
+vanishing point is central and the hardware prop sits at x < 0.85. **When
+generating replacements, keep both of those out of the right-hand eighth.**
+
+Anything that must keep the full frame can be un-watermarked instead — the
+sparkle is alpha-blended at a fixed place, so averaging many images recovers
+its alpha map and the blend can be inverted. That was built and tested, and it
+restores detail cleanly on textured ground, but leaves faint wisps on large
+flat bright areas. The crop is better, so the crop is what ships.
 
 ---
 
@@ -710,9 +731,7 @@ assets:
 1. **0.4 — screen-record the six client platforms.** Free, fastest, highest
    credibility gain on the whole site.
 2. **0.1 — the logo SVG.** Three files are waiting on it.
-3. **§4.1 — the industry stills.** Five missing (healthcare, fintech, telecom,
-   elevators & IoT, energy) plus manufacturing regenerated at 2560px. One at a
-   time.
+3. ~~**§4.1 — the industry stills.**~~ ✅ done 24 Sep, all seven.
 4. **0.2 — product screenshots.**
 5. **§4.2 — the four product objects.**
 6. **§4.3 — the four service pillars.**

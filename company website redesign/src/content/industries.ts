@@ -3,9 +3,10 @@
  * (PROJECT.md §4). Each maps to real delivered work where it exists, so no
  * industry page makes a claim the /work section cannot support.
  *
- * `image` points at a processed still in /public/industries. Only agriculture
- * and manufacturing exist so far; the rest render a graphite placeholder until
- * their still lands. See ASSETS.md §4.1.
+ * `image` points at a processed still in /public/industries. All seven are in
+ * place: generated to the §4.1 prompts, cropped to 2400×1350 (the crop also
+ * removes the generator's corner watermark) and exported as AVIF + WebP at two
+ * widths. See ASSETS.md §4.1.
  */
 
 export type Industry = {
@@ -41,10 +42,8 @@ export const INDUSTRIES: Industry[] = [
     ],
     systems: ["Cogitation ERP", "HRMS Pro", "Custom MES integration"],
     cases: ["uthmal-machinery"],
-    // ⚠️ Source was only 1024px wide — good enough for the card, soft in the
-    // full-bleed hero. Regenerate at 2560px and add 2400 here. See ASSETS.md §4.1.
     image: "manufacturing",
-    imageWidths: [1024, 1600],
+    imageWidths: [1600, 2400],
     accent: "#ea580c",
   },
   {
@@ -61,6 +60,8 @@ export const INDUSTRIES: Industry[] = [
     ],
     systems: ["Cogitation CRM", "Custom B2B billing portal"],
     cases: ["elite-medical"],
+    image: "healthcare",
+    imageWidths: [1600, 2400],
     accent: "#0d9488",
   },
   {
@@ -77,6 +78,8 @@ export const INDUSTRIES: Industry[] = [
     ],
     systems: ["Cogitation CRM", "Cogi AI"],
     cases: ["fitings-zone"],
+    image: "fintech",
+    imageWidths: [1600, 2400],
     accent: "#2563eb",
   },
   {
@@ -93,6 +96,8 @@ export const INDUSTRIES: Industry[] = [
     ],
     systems: ["Custom web architecture", "SEO & technical performance"],
     cases: ["mega-connect"],
+    image: "telecom",
+    imageWidths: [1600, 2400],
     accent: "#7c3aed",
   },
   {
@@ -109,6 +114,8 @@ export const INDUSTRIES: Industry[] = [
     ],
     systems: ["Cogitation ERP", "HRMS Pro", "Field dispatch"],
     cases: ["dynamic-solar"],
+    image: "energy",
+    imageWidths: [1600, 2400],
     accent: "#ca8a04",
   },
   {
@@ -125,6 +132,8 @@ export const INDUSTRIES: Industry[] = [
     ],
     systems: ["IoT telemetry platform", "Interactive technical UI"],
     cases: ["rg-robotics"],
+    image: "elevators-iot",
+    imageWidths: [1600, 2400],
     accent: "#0891b2",
   },
   {
