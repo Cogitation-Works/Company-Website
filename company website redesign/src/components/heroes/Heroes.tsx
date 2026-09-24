@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ClipReveal, ScrambleText } from "@/components/scroll/Effects";
 import { ScrubText, Marquee } from "@/components/ui/Interactions";
 import HeroTheme from "@/components/layout/HeroTheme";
+import Object3D from "@/components/three/Object3D";
 
 /**
  * One hero per page, and no two the same SHAPE.
@@ -40,6 +41,13 @@ export function ChapterHero({
       <section className="relative isolate overflow-hidden pb-20 pt-32 lg:pb-24 lg:pt-40"
         style={{ background: "var(--color-signal)" }}
       >
+        {/* A chrome ribbon turning slowly behind the type. Transparent canvas,
+            so the flat blue reads through it. */}
+        <Object3D
+          variant="ribbon"
+          accent="#ffffff"
+          className="pointer-events-none absolute -right-[8%] top-[6%] hidden h-[34rem] w-[34rem] opacity-40 lg:block"
+        />
         {/* Flat saturated colour, not black. Kode runs its whole hero on one
             orange; the colour IS the design, which is why it needs no texture. */}
         <div
@@ -81,7 +89,7 @@ export function ChapterHero({
           <div className="order-1 text-white lg:order-2 lg:col-span-9">
             <ClipReveal from="bottom">
               <h1 className="text-[clamp(3rem,9vw,7.5rem)] font-[560] leading-[0.88] tracking-[-0.045em]">
-                Four disciplines.
+                Six disciplines.
                 <br />
                 <span className="text-white/55">One operating system.</span>
               </h1>
@@ -99,7 +107,7 @@ export function ChapterHero({
         <div className="relative mt-16 overflow-hidden lg:mt-24">
           <Marquee speed={74}>
             <span className="mx-8 inline-flex shrink-0 whitespace-nowrap text-[clamp(3rem,10vw,8rem)] font-[560] tracking-[-0.05em] text-white/12">
-              FRONTEND · BACKEND · MOBILE · AI &amp; INFRASTRUCTURE ·&nbsp;
+              FRONTEND · BACKEND · DEVOPS · MOBILE · DESKTOP · AI · IoT · MARKETING · MANAGED TEAMS ·&nbsp;
             </span>
           </Marquee>
         </div>
@@ -124,8 +132,14 @@ export function IndexHero({
       <HeroTheme value="light" />
       <section className="relative overflow-hidden bg-canvas pb-10 pt-36 lg:pb-14 lg:pt-44">
         {/* Light, and no band at all — the type is the hero. Lusion's projects
-            index does exactly this and it is the calmest page on that site. */}
-        <div className="container-page">
+            index does exactly this and it is the calmest page on that site.
+            The shard field drifts behind the wordmark, faintly. */}
+        <Object3D
+          variant="shards"
+          accent="#2563eb"
+          className="pointer-events-none absolute right-[-6%] top-[-10%] hidden h-[38rem] w-[44rem] opacity-[0.5] lg:block"
+        />
+        <div className="container-page relative">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <ClipReveal from="bottom">
               <h1 className="text-[clamp(3.5rem,14vw,12rem)] font-[560] leading-[0.82] tracking-[-0.055em]">
@@ -404,6 +418,13 @@ export function OpenHero({
         {/* Light and open — the form is visible almost immediately, because a
             contact page that makes you scroll to find the form is a bad
             contact page however good the hero is. */}
+        {/* A slow wave field behind the headline — the only motion on an
+            otherwise deliberately calm page. */}
+        <Object3D
+          variant="wave"
+          accent="#2563eb"
+          className="pointer-events-none absolute inset-x-0 top-[18%] mx-auto hidden h-[30rem] w-full max-w-5xl opacity-[0.35] lg:block"
+        />
         <div className="container-page relative text-center">
           {/* The headline fills word by word as it scrubs into place — the
               colour-fill effect, used where it actually lands rather than
