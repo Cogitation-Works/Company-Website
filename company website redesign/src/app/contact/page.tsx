@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import PageHero from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Blocks";
+import { OpenHero } from "@/components/heroes/Heroes";
 import { COMPANY } from "@/content/site";
 import ContactForm from "@/components/contact/ContactForm";
 import ConfettiHero from "@/components/heroes/ConfettiHero";
@@ -15,17 +15,10 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <PageHero
-        tall
+      <OpenHero
         figure={<ConfettiHero />}
-        eyebrow="Contact"
         title="Tell us what the system has to do."
         lead="Our architects evaluate your functional requirements, analyse dependencies and return a production-ready technical roadmap. No obligation, and nothing you share leaves the room."
-        meta={[
-          { label: "Consultation", value: "45 minutes, free" },
-          { label: "Confidentiality", value: "NDA guaranteed" },
-          { label: "Hubs", value: "UAE · Vellore" },
-        ]}
       />
 
       <Section>

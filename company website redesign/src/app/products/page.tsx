@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PageHero from "@/components/layout/PageHero";
 import { NextLink, Tbc } from "@/components/layout/Blocks";
+import { FanHero } from "@/components/heroes/Heroes";
 import { PRODUCTS } from "@/content/products";
 
 export const metadata: Metadata = {
@@ -14,15 +14,10 @@ export const metadata: Metadata = {
 export default function ProductsPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Products"
+      <FanHero
+        cards={PRODUCTS.map((p) => ({ name: p.name, accent: p.accent }))}
         title="Four engines you do not have to build from zero."
         lead="Pre-architected, battle-tested platforms that are configured to an operation rather than written for it. Where a custom build is the right answer, we say so — but most of what companies ask us for has been built before."
-        meta={[
-          { label: "Platforms", value: "4" },
-          { label: "Architecture", value: "Cloud native · High concurrency" },
-          { label: "Deployment", value: "Managed or single-tenant" },
-        ]}
       />
 
       <div className="container-page py-6 lg:py-10">

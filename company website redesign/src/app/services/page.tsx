@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PageHero from "@/components/layout/PageHero";
 import { NextLink } from "@/components/layout/Blocks";
-import StackHero from "@/components/heroes/StackHero";
+import { ChapterHero } from "@/components/heroes/Heroes";
 import DrawPath from "@/components/scroll/DrawPath";
+import { StackCards } from "@/components/scroll/Effects";
 import { PILLARS } from "@/content/services";
 
 export const metadata: Metadata = {
@@ -24,27 +24,13 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <PageHero
-        tall
-        figure={
-          <StackHero
-            layers={PILLARS.map((p) => ({ name: p.name, accent: p.accent }))}
-          />
-        }
-        eyebrow="Services"
-        title={
-          <>
-            Four disciplines.
-            <br />
-            One operating system for your business.
-          </>
-        }
-        lead="We are usually brought in when something has outgrown the tool it started in — a spreadsheet, a generic CRM, a process held together by one person who knows it. These are the four layers we work across."
-        meta={[
-          { label: "Disciplines", value: "4 pillars" },
-          { label: "Capabilities", value: "18 services" },
-          { label: "Delivery", value: "UAE · India · Global" },
-        ]}
+      <ChapterHero
+        chapters={PILLARS.map((p) => ({
+          index: p.index,
+          name: p.name,
+          accent: p.accent,
+          slug: p.slug,
+        }))}
       />
 
       <div className="container-page relative py-6 lg:py-10">
@@ -59,54 +45,62 @@ export default function ServicesPage() {
           width={1.25}
         />
 
-        {PILLARS.map((p, i) => (
-          <article
-            key={p.slug}
-            className="group grid gap-8 border-b border-line py-14 lg:grid-cols-12 lg:gap-10 lg:py-20"
-            data-reveal
-            style={{ "--reveal-delay": `${i * 60}ms` } as React.CSSProperties}
-          >
-            <div className="lg:col-span-3">
-              <span
-                className="block text-[clamp(3rem,7vw,5rem)] font-[560] leading-none tracking-[-0.045em]"
-                style={{ color: p.accent }}
+        {/* The four pillars stack: each card pins, the next slides over it, and
+            the one underneath scales down and dims. A list of four would have
+            been four scrolls of nothing happening. */}
+        <StackCards
+          items={PILLARS.map((p) => ({
+            id: p.slug,
+            node: (
+              <article
+                className="group grid gap-8 rounded-card border border-line bg-surface p-8 shadow-[0_30px_80px_-40px_rgba(11,15,20,0.35)] lg:grid-cols-12 lg:gap-10 lg:p-12"
+                style={{ "--accent": p.accent } as React.CSSProperties}
               >
-                {p.index}
-              </span>
-              <span className="label-mono mt-3 block">{p.tagline}</span>
-            </div>
+                <div className="lg:col-span-3">
+                  <span
+                    className="block text-[clamp(3rem,7vw,5rem)] font-[560] leading-none tracking-[-0.045em]"
+                    style={{ color: p.accent }}
+                  >
+                    {p.index}
+                  </span>
+                  <span className="label-mono mt-3 block">{p.tagline}</span>
+                </div>
 
-            <div className="lg:col-span-6">
-              <h2 className="text-[clamp(1.75rem,3.6vw,2.5rem)] font-[560] leading-[1.06] tracking-[-0.03em]">
-                <Link href={`/services/${p.slug}`} className="link-wipe" data-cursor>
-                  {p.name}
-                </Link>
-              </h2>
-              <p className="mt-5 max-w-[52ch] text-lead text-muted">{p.summary}</p>
-              <Link
-                href={`/services/${p.slug}`}
-                data-cursor
-                className="mt-7 inline-flex items-center gap-2 text-[0.9375rem] font-medium"
-              >
-                Explore {p.name}
-                <span className="transition-transform duration-300 group-hover:translate-x-1.5">
-                  →
-                </span>
-              </Link>
-            </div>
+                <div className="lg:col-span-6">
+                  <h2 className="text-[clamp(1.75rem,3.6vw,2.5rem)] font-[560] leading-[1.06] tracking-[-0.03em]">
+                    <Link href={`/services/${p.slug}`} className="link-wipe" data-cursor>
+                      {p.name}
+                    </Link>
+                  </h2>
+                  <p className="mt-5 max-w-[52ch] text-lead text-muted">
+                    {p.summary}
+                  </p>
+                  <Link
+                    href={`/services/${p.slug}`}
+                    data-cursor
+                    className="mt-7 inline-flex items-center gap-2 text-[0.9375rem] font-medium"
+                  >
+                    Explore {p.name}
+                    <span className="transition-transform duration-300 group-hover:translate-x-1.5">
+                      →
+                    </span>
+                  </Link>
+                </div>
 
-            <ul className="space-y-3 lg:col-span-3">
-              {p.services.map((s) => (
-                <li
-                  key={s.name}
-                  className="border-t border-line pt-3 text-[0.875rem] text-ink-soft"
-                >
-                  {s.name}
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
+                <ul className="space-y-3 lg:col-span-3">
+                  {p.services.map((s) => (
+                    <li
+                      key={s.name}
+                      className="border-t border-line pt-3 text-[0.875rem] text-ink-soft"
+                    >
+                      {s.name}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ),
+          }))}
+        />
 
         <NextLink
           kicker="Next"

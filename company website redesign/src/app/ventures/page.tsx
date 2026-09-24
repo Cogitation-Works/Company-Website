@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PageHero from "@/components/layout/PageHero";
 import { StatusChip, NextLink } from "@/components/layout/Blocks";
+import { CentreHero } from "@/components/heroes/Heroes";
 import OrbitHero from "@/components/heroes/OrbitHero";
 import { VENTURES } from "@/content/ventures";
 
@@ -25,21 +25,15 @@ export default function VenturesPage() {
 
   return (
     <>
-      <PageHero
-        tall
+      <CentreHero
         figure={
           <OrbitHero
             nodes={VENTURES.map((v) => ({ label: v.name, accent: v.accent }))}
           />
         }
-        eyebrow="Ventures"
+        kicker="Ventures · our own operations"
         title="What we are building next."
-        lead="Cogitation Works sells IT services and software. Everything on this page is in development or upcoming — none of it is a service you can buy today. It is here because it is the honest answer to where this company is going."
-        meta={[
-          { label: "In development", value: "2 ventures" },
-          { label: "Running now", value: "1 community" },
-          { label: "Sold today", value: "Software & services only" },
-        ]}
+        lead="Cogitation Works sells IT services and software. Everything on this page is in progress or upcoming — none of it is a service you can buy today. It is here because it is the honest answer to where this company is going."
       />
 
       <div className="container-page py-16 lg:py-24">

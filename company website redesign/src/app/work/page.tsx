@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PageHero from "@/components/layout/PageHero";
 import { NextLink } from "@/components/layout/Blocks";
+import { IndexHero } from "@/components/heroes/Heroes";
+import { ParallaxCards } from "@/components/scroll/Effects";
 import { WORK } from "@/content/work";
 
 export const metadata: Metadata = {
@@ -25,19 +26,16 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Work"
-        title="Six systems, running in production."
+      <IndexHero
+        title="WORK"
+        count="06"
         lead="Every one of these replaced something that was working — a spreadsheet, a manual process, a tool that had been outgrown. That is the harder job, and it is the only one worth writing up."
-        meta={[
-          { label: "Platforms", value: "6 delivered" },
-          { label: "Sectors", value: "6" },
-          { label: "Regions", value: "UAE · India" },
-        ]}
       />
 
       <div className="container-page py-16 lg:py-24">
-        <div className="grid gap-x-8 gap-y-16 md:grid-cols-2 lg:gap-y-24">
+        {/* Each card drifts at its own rate, so the grid breathes instead of
+            arriving as one slab. */}
+        <ParallaxCards className="grid gap-x-8 gap-y-16 md:grid-cols-2 lg:gap-y-24" amount={52}>
           {WORK.map((w, i) => (
             <article
               key={w.slug}
@@ -105,7 +103,7 @@ export default function WorkPage() {
               </Link>
             </article>
           ))}
-        </div>
+        </ParallaxCards>
 
         <div className="mt-16">
           <NextLink

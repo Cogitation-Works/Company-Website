@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PageHero from "@/components/layout/PageHero";
 import { Section, StatusChip, NextLink, Tbc } from "@/components/layout/Blocks";
+import { SplitHero } from "@/components/heroes/Heroes";
 import RouteHero from "@/components/heroes/RouteHero";
 import DrawPath from "@/components/scroll/DrawPath";
 import { MediaPlate, PlateGrid } from "@/components/media/MediaPlate";
@@ -29,10 +29,8 @@ export default function AboutPage() {
 
   return (
     <>
-      <PageHero
-        tall
+      <SplitHero
         figure={<RouteHero hubs={COMPANY.hubs} />}
-        eyebrow="About"
         title="We build the systems that run the operation."
         lead="Not the brochure, and not the app on top. The thing the business actually runs on — where an order lives, what a shift costs, where the stock is, which machine is down."
         meta={[

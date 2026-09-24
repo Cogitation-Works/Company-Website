@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Magnetic } from "@/components/ui/Interactions";
 import { NAV } from "@/content/site";
+import { useHeroTheme } from "@/components/layout/HeroTheme";
 
 /**
  * Direction-aware header: hides on scroll down, returns on scroll up.
@@ -18,6 +19,10 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const lastY = useRef(0);
+  // Several pages now open on a LIGHT hero. On those the header has to be dark
+  // from the first pixel, not only once the page scrolls.
+  const heroTheme = useHeroTheme();
+  const onLight = scrolled || heroTheme === "light";
 
   useEffect(() => {
     const onScroll = () => {
@@ -50,7 +55,9 @@ export default function Header() {
           className={`transition-colors duration-300 ${
             scrolled
               ? "border-b border-line bg-canvas/85 text-ink backdrop-blur-xl"
-              : "border-b border-transparent text-on-deep"
+              : onLight
+                ? "border-b border-transparent text-ink"
+                : "border-b border-transparent text-on-deep"
           }`}
         >
           <div className="container-page flex h-16 items-center justify-between gap-6 lg:h-20">
@@ -84,7 +91,7 @@ export default function Header() {
                 <a
                   href="/contact"
                   className={`inline-flex h-10 items-center rounded-pill px-5 text-[0.875rem] font-medium
-                              transition-colors ${scrolled ? "bg-ink text-white hover:bg-signal" : "bg-white text-ink hover:bg-live"}`}
+                              transition-colors ${onLight ? "bg-ink text-white hover:bg-signal" : "bg-white text-ink hover:bg-live"}`}
                 >
                   Book a call
                 </a>

@@ -9,6 +9,7 @@ import FluidCursor from "@/components/ui/FluidCursor";
 import FluidTuner from "@/components/ui/FluidTuner";
 import Lens from "@/components/ui/magnifier-lens";
 import SoundToggle from "@/components/ui/SoundToggle";
+import Loader from "@/components/ui/Loader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -110,6 +111,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        {/* Sits over the top rather than gating render, so the page behind is
+            already painted and interactive the moment it lifts. Once per
+            session; never under prefers-reduced-motion. */}
+        <Loader />
         <SmoothScroll>
           <FluidCursor />
           {/* Tuning panel is a development tool — it must never reach a

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PageHero from "@/components/layout/PageHero";
 import { NextLink } from "@/components/layout/Blocks";
-import IndustriesField from "@/components/heroes/IndustriesField";
+import { FrameHero } from "@/components/heroes/Heroes";
+import { ParallaxCards } from "@/components/scroll/Effects";
 import { INDUSTRIES } from "@/content/industries";
 
 export const metadata: Metadata = {
@@ -15,21 +15,20 @@ export const metadata: Metadata = {
 export default function IndustriesPage() {
   return (
     <>
-      <PageHero
-        tall
-        figure={<IndustriesField />}
-        eyebrow="Industries"
+      <FrameHero
+        image="agriculture"
+        width={2400}
         title="Seven sectors. The same question in each one."
         lead="Where is the work right now, and what does the system do about it? The answer looks different on a shop floor than it does in a clinic, but the shape of the problem does not change."
-        meta={[
-          { label: "Sectors", value: "7" },
-          { label: "Delivered in", value: "6" },
-          { label: "New direction", value: "Agriculture" },
-        ]}
+        items={INDUSTRIES.map((i) => ({
+          name: i.name,
+          slug: i.slug,
+          isNew: i.isNew,
+        }))}
       />
 
       <div className="container-page py-16 lg:py-24">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <ParallaxCards className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" amount={40}>
           {INDUSTRIES.map((ind, i) => (
             <Link
               key={ind.slug}
@@ -101,7 +100,7 @@ export default function IndustriesPage() {
               </div>
             </Link>
           ))}
-        </div>
+        </ParallaxCards>
 
         <div className="mt-16">
           <NextLink

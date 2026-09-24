@@ -1,8 +1,15 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import { usePrefersReducedMotion } from "@/lib/motion";
+import { usePrefersReducedMotion, useMediaQuery } from "@/lib/motion";
 import { Tbc } from "@/components/layout/Blocks";
+
+/* Three.js never enters the main bundle — it loads only for the viewers who
+   actually get the 3D object. */
+const GlassObject = dynamic(() => import("@/components/three/GlassObject"), {
+  ssr: false,
+});
 
 /**
  * The BMW pattern (research R13): scroll rotates the object while the
@@ -34,6 +41,16 @@ export default function SpecScroller({
   const objectRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
   const reduced = usePrefersReducedMotion();
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const [inLensCopy, setInLensCopy] = useState(false);
+
+  /* Same guard as the home hero: the magnifier renders the page twice, and the
+     copy must not mount a second WebGL context. */
+  useEffect(() => {
+    setInLensCopy(!!wrapRef.current?.closest(".lens-zoom"));
+  }, []);
+
+  const render3D = isDesktop && !reduced && !inLensCopy;
 
   useEffect(() => {
     if (reduced) {
@@ -125,7 +142,12 @@ export default function SpecScroller({
               className="relative aspect-square w-[min(78vw,30rem)] will-change-transform"
               aria-hidden="true"
             >
-              {(
+              {render3D ? (
+                /* Refractive glass with an amber core — drei transmission,
+                   using the values measured off Noomo's public playground.
+                   Procedural geometry: no .glb, no textures, no HDRI. */
+                <GlassObject accent={accent} className="h-full w-full" />
+              ) : (
                 <>
                   {[0, 1, 2, 3].map((r) => (
                     <span

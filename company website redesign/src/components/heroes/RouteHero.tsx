@@ -84,11 +84,11 @@ export default function RouteHero({
   }, [reduced]);
 
   return (
-    /* Constrained to the right half on large screens. Full-bleed, the city
-       labels and clocks landed on top of the lead paragraph and the meta row —
-       the arc is an accent, not a background, so it gets its own territory. */
+    /* Fills its container. It used to be clamped to 54% of the viewport width
+       because it shared space with the copy; now SplitHero gives it a column of
+       its own, so clamping it again just made it tiny. */
     <div
-      className="pointer-events-none absolute inset-y-0 right-0 w-full overflow-hidden opacity-70 lg:left-auto lg:w-[54%] lg:opacity-100"
+      className="pointer-events-none absolute inset-0 overflow-hidden"
       aria-hidden="true"
     >
       <svg
