@@ -72,9 +72,18 @@ function ensureLoaded(onFirst: () => void) {
 export default function CoreSequence({
   className,
   onProgress,
+  pinRef,
 }: {
   className?: string;
   onProgress?: (p: number) => void;
+  /**
+   * The tall wrapper the hero is pinned inside. Scrolling through it is what
+   * drives the sequence: frame 0 at the top, the last frame at the bottom,
+   * and the page only moves off the hero once the sequence has finished.
+   * Scrolling back up runs the same mapping backwards, so the shell closes
+   * and the hero is handed back exactly as it was found.
+   */
+  pinRef?: React.RefObject<HTMLElement | null>;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ready, setReady] = useState(() => !!cache[0]);
@@ -145,17 +154,22 @@ export default function CoreSequence({
     };
 
     const onScroll = () => {
-      const vh = window.innerHeight || 1;
+      let p: number;
 
-      // How much scroll one full open takes. Smaller = faster scrub.
-      const OPEN_DISTANCE = vh * 0.28;
-
-      // Triangle wave: the shell opens over the first OPEN_DISTANCE, then
-      // CLOSES again over the next one, and repeats. So it never dead-ends on
-      // the last frame — keep scrolling and it plays back in reverse.
-      const cycles = window.scrollY / OPEN_DISTANCE;
-      const phase = ((cycles % 2) + 2) % 2;          // 0..2, safe for negatives
-      const p = phase <= 1 ? phase : 2 - phase;      // 0→1 open, 1→0 close
+      const pin = pinRef?.current;
+      if (pin) {
+        // Progress across the pinned range. The hero is stuck to the viewport
+        // for exactly this distance, so the sequence is guaranteed to reach
+        // its last frame before the page scrolls on — and to be back at frame
+        // 0 by the time the hero is released upwards.
+        const rect = pin.getBoundingClientRect();
+        const travel = rect.height - window.innerHeight;
+        p = travel > 0 ? Math.min(1, Math.max(0, -rect.top / travel)) : 0;
+      } else {
+        // Unpinned fallback (mobile, or any other caller): one viewport of
+        // scroll plays it once and it holds on the last frame.
+        p = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight || 1)));
+      }
 
       // Clamp to what has actually decoded, so early scrolls still move.
       target = Math.min(p * (FRAME_COUNT - 1), Math.max(0, loadedCount - 1));
@@ -182,7 +196,7 @@ export default function CoreSequence({
       // NOTE: bitmaps are deliberately NOT closed — the cache is shared and
       // survives remounts.
     };
-  }, [ready, onProgress]);
+  }, [ready, onProgress, pinRef]);
 
   return (
     <canvas

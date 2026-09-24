@@ -30,10 +30,19 @@ const CoreSequence = dynamic(() => import("@/components/hero/CoreSequence"), {
  * overlapping an object on a phone-width column buries the text.
  */
 
-function CoreVisual({ render3D }: { render3D: boolean }) {
+function CoreVisual({
+  render3D,
+  pinRef,
+}: {
+  render3D: boolean;
+  pinRef: React.RefObject<HTMLDivElement | null>;
+}) {
   if (render3D) {
     return (
-      <CoreSequence className="h-[min(64vh,640px)] w-[min(64vh,640px)] -translate-y-[4%] lg:-translate-y-[6%]" />
+      <CoreSequence
+        pinRef={pinRef}
+        className="h-[min(64vh,640px)] w-[min(64vh,640px)] -translate-y-[4%] lg:-translate-y-[6%]"
+      />
     );
   }
   // Static poster: mobile, reduced-motion, or no WebGL.
@@ -84,10 +93,31 @@ export default function Hero() {
 
   const render3D = isDesktop && !reduced && !inLensCopy;
 
+  /* PINNING.
+     Where the sequence runs, the hero is stuck to the viewport for a tall
+     wrapper's worth of scroll. Scrolling down plays the sequence to its last
+     frame and only then releases the page onto the next section; scrolling
+     back up re-pins the hero and runs the sequence backwards to frame 0. No
+     scroll hijacking is involved — it is `position: sticky` inside a tall
+     box, so the scrollbar, keyboard, Find-in-page and reduced-motion all keep
+     behaving normally.
+
+     PIN_TRAVEL is the scroll spent on the sequence, on top of the one
+     viewport the hero itself occupies. */
+  const PIN_TRAVEL = "120svh";
+  const pinRef = useRef<HTMLDivElement>(null);
+
   return (
+    <div
+      ref={pinRef}
+      className="relative"
+      style={render3D ? { height: `calc(100svh + ${PIN_TRAVEL})` } : undefined}
+    >
     <section
       ref={rootRef}
-      className="relative isolate overflow-hidden bg-deep pt-24 pb-16 text-on-deep lg:min-h-[100svh] lg:pt-28"
+      className={`relative isolate overflow-hidden bg-deep pt-24 pb-16 text-on-deep lg:pt-28 ${
+        render3D ? "sticky top-0 h-[100svh]" : "lg:min-h-[100svh]"
+      }`}
     >
       {/* The home hero is dark. Claimed explicitly so arriving from a light
           page (/work, /blog, /contact) does not leave the header light. */}
@@ -126,7 +156,7 @@ export default function Hero() {
                    lg:absolute lg:inset-0 lg:mb-0 lg:items-center lg:justify-end lg:pr-[4vw]"
         aria-hidden="true"
       >
-        <CoreVisual render3D={render3D} />
+        <CoreVisual render3D={render3D} pinRef={pinRef} />
       </div>
 
       {/* --- Content ------------------------------------------------------- */}
@@ -231,5 +261,6 @@ export default function Hero() {
         <HeroSwitcher variant={variant} onChange={setVariant} />
       )}
     </section>
+    </div>
   );
 }

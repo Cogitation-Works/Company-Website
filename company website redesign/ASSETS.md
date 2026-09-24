@@ -95,9 +95,27 @@ rather than evidenced. **These are worth more than everything in Tier 1.**
 
 ## 4. TIER 1 — generate now
 
-### 4.1 Five industry stills · **Gemini** · 16:9, 2560×1440 minimum
+### 4.1 Seven industry stills · **Gemini** · 16:9, 2560×1440 minimum
 
-Same register as agriculture. One at a time. Check each before the next.
+One per industry in `content/industries.ts` — seven, no more, no fewer. Same
+register (§2) in every one. Generate one at a time and check it before the next.
+
+**Each still is used in three places, so it has to survive all three:**
+
+| Where | Crop | Size on screen |
+|---|---|---|
+| `/industries` card | filled to a portrait-ish box, 55% opacity under text | ~400–760px wide |
+| `/industries/<slug>` band | **21:9 — the top and bottom of the 16:9 frame are cut off** | full width |
+| `/industries` page hero (agriculture only) | 16:9 | full width, 2400px |
+
+⚠️ **Keep the subject in the middle band.** A 21:9 crop of a 16:9 frame loses
+roughly the top and bottom eighth. Anything that matters — the horizon, the
+sensor module, the vanishing point — must sit inside the middle two-thirds or it
+is cut off on the industry page.
+
+**Deliver** each as 2560×1440 PNG or JPEG. They get converted to AVIF + WebP at
+two widths (1600 and 2400) and dropped into `public/industries/<slug>-<width>.<ext>`;
+the filename stem must match the `image` field in `content/industries.ts`.
 
 ---
 
@@ -193,10 +211,57 @@ No people, no text, no branding, no logos, no watermark. 16:9.
 
 ---
 
-**Optional ⑥ LOGISTICS · ⑦ ENERGY** — only if you want 7 industries rather than
-6. Energy/solar will look very close to the agriculture shot (rows converging to
-a low sun); if you generate it, push it to dusk with the trackers silhouetted so
-the two do not read as duplicates.
+**⑥ ENERGY** — *Dynamic Solar* · `energy`
+
+> Solar at a low sun is the one shot that can come back looking like the
+> agriculture still — same rows, same haze, same amber. So this one is pushed to
+> **dusk after the sun has gone**, with the trackers as silhouettes and the sky
+> doing the work. Cold blue land, hot amber sky, no visible sun disc.
+
+```
+A high aerial view along a vast solar tracker farm at dusk, minutes after
+sunset. Long parallel rows of tilted photovoltaic panels run away from the
+camera and converge on a distant vanishing point at the horizon. The sun is
+already below the horizon, leaving a low band of intense amber and rose light
+under a deep blue sky, and thick ground haze sits between the rows so the
+furthest rows fade into it. The panels read as dark blue-grey silhouettes with a
+thin amber rim along every leading edge and a soft reflection of the sky in the
+glass. In the lower-left foreground, a single small unbranded white inverter
+cabinet with one slim mast stands at the end of the nearest row, catching one
+hard specular highlight. Cool blue-black land against a warm amber sky.
+Cinematic drone photography, wide angle, deep depth of field, rich film-grade
+colour, high dynamic range. No people, no text, no branding, no logos, no
+watermark. 16:9.
+```
+
+---
+
+**⑦ AGRICULTURE** — *the reference shot* · `agriculture`
+
+> ✅ **Already shipping.** Use this only to regenerate it at 2560px, or to judge
+> whether a new still matches the family. This is a reconstruction of the
+> register from the image itself, not the original prompt — so if the first
+> result does not match what is on the site, iterate against the existing file
+> rather than trusting the wording.
+
+```
+A low aerial view across a vast cultivated field at sunrise. Long parallel crop
+rows run away from the camera and converge on a distant vanishing point at the
+horizon. The low sun sits just above the tree line and backlights a thick layer
+of morning haze and mist lying between the rows, so the light reads as visible
+depth and the furthest rows dissolve into it. In the lower-right foreground, a
+single small unbranded white field sensor station on a slim metal mast stands
+among the crop, catching one hard specular highlight. Warm amber sunlight
+against cool blue-green shadow in the crop and deep blue sky above. Cinematic
+drone photography, wide angle, deep depth of field, rich film-grade colour, high
+dynamic range. No people, no text, no branding, no logos, no watermark. 16:9.
+```
+
+---
+
+**Not an industry, so no still:** logistics. Drone delivery and the Sunday meat
+run live under Products, not here, and `content/industries.ts` has seven entries.
+Generating an eighth would leave an image with nowhere to go.
 
 ---
 
@@ -645,7 +710,9 @@ assets:
 1. **0.4 — screen-record the six client platforms.** Free, fastest, highest
    credibility gain on the whole site.
 2. **0.1 — the logo SVG.** Three files are waiting on it.
-3. **§4.1 — the five industry stills.** One at a time.
+3. **§4.1 — the industry stills.** Five missing (healthcare, fintech, telecom,
+   elevators & IoT, energy) plus manufacturing regenerated at 2560px. One at a
+   time.
 4. **0.2 — product screenshots.**
 5. **§4.2 — the four product objects.**
 6. **§4.3 — the four service pillars.**
