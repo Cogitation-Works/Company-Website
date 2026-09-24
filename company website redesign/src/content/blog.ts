@@ -123,3 +123,117 @@ export const POSTS: Post[] = [
 /** Public index shows published posts only. */
 export const PUBLISHED = POSTS.filter((p) => !p.draft);
 export const getPost = (slug: string) => POSTS.find((p) => p.slug === slug);
+
+/* ------------------------------------------------------------------------ */
+/* THE EDITORIAL PLAN                                                        */
+/* ------------------------------------------------------------------------ */
+
+/**
+ * What to write, and why.
+ *
+ * The blog exists for two readers and they want different things:
+ *
+ *   1. **The buyer mid-evaluation** — an operations director or CTO deciding
+ *      whether we understand their problem. They arrive from a service or
+ *      industry page and want evidence of judgement, not a feature list.
+ *   2. **The search engine** — this is the only part of the site that can
+ *      grow indefinitely, and it is how a company with six case studies
+ *      competes with one that has sixty.
+ *
+ * The rule that keeps it useful: **write only what we have actually learned
+ * doing the work.** Every piece below comes from something this company has
+ * built, run or measured. A post assembled from research anyone could do is
+ * worth nothing to either reader.
+ *
+ * Cadence: one substantial piece a month beats four thin ones. Four thin ones
+ * is how a blog dies.
+ */
+
+export type Pillar = {
+  id: string;
+  name: string;
+  why: string;
+  reader: string;
+  accent: string;
+  ideas: { title: string; angle: string }[];
+};
+
+export const PILLARS: Pillar[] = [
+  {
+    id: "operations",
+    name: "Operations in practice",
+    why: "The strongest position we have: we build systems AND run our own operation on them. Almost no software company can write this honestly.",
+    reader: "Operations directors evaluating ERP and workforce platforms",
+    accent: "#ea580c",
+    ideas: [
+      { title: "Why ERP rollouts stall at the shop floor", angle: "Drafted. The whiteboard is not resistance — it is faster." },
+      { title: "What running our own delivery operation taught us about our own ERP", angle: "Sunday delivery as the case study. The bugs you only find by being the customer." },
+      { title: "One delivery day is a harder promise than seven", angle: "Why narrowing the promise made the routing problem tractable." },
+      { title: "Cold chain as a routing constraint, not a checkbox", angle: "Modelling a physical deadline inside a scheduler." },
+      { title: "The stocktake problem: inventory that is only true once a month", angle: "Deriving stock from consumption instead of counting it." },
+    ],
+  },
+  {
+    id: "iot",
+    name: "IoT & telemetry",
+    why: "Ties the existing IoT service line to the agri venture, and separates us from vendors who stop at a dashboard.",
+    reader: "Plant and facilities engineers, agri operators",
+    accent: "#16a34a",
+    ideas: [
+      { title: "Telemetry is not a dashboard", angle: "Drafted. Ask what decision the reading changes." },
+      { title: "Choosing a threshold is a design decision with a cost on both sides", angle: "Too tight and it becomes noise; too loose and it arrives late." },
+      { title: "What a sensor has to survive in a field", angle: "Solar, sealing, and the fact that nobody is going out to service it." },
+      { title: "Sensor to work order: closing the loop", angle: "The integration is the project; the hardware is the easy part." },
+    ],
+  },
+  {
+    id: "buying",
+    name: "Buying software",
+    why: "Highest-intent search traffic on the site. Someone reading this has budget.",
+    reader: "Anyone about to commission a build",
+    accent: "#2563eb",
+    ideas: [
+      { title: "Nine questions to ask before commissioning custom software", angle: "Drafted. None of them are technical." },
+      { title: "Who owns the code? — and the other half of that question", angle: "Owning the app but not the pipeline is not ownership." },
+      { title: "Build, buy, or configure: an honest decision tree", angle: "Including when we tell people not to hire us." },
+      { title: "What a good handover actually contains", angle: "Runbooks, IaC, and a team that can operate it without us." },
+      { title: "Reading a software proposal: what the omissions tell you", angle: "A proposal that excludes nothing has not been thought about." },
+    ],
+  },
+  {
+    id: "craft",
+    name: "Engineering craft",
+    why: "Proves capability to technical readers, and this site is itself the evidence.",
+    reader: "CTOs, engineering leads, other developers",
+    accent: "#7c3aed",
+    ideas: [
+      { title: "Your enterprise buyer is on a mid-range phone", angle: "Drafted. Test on the device, not the simulation." },
+      { title: "Why heavy sites stutter: compositing layers, not animation", angle: "Measured across 23 award-winning sites — one had 157 will-change elements." },
+      { title: "Scroll-scrubbing without the judder", angle: "Decode once to ImageBitmap; never seek compressed video." },
+      { title: "Building the glass: a raymarched bubble from scratch", angle: "How the products hero works, with the shader explained." },
+      { title: "An accessibility pass is not a retrofit", angle: "Reduced-motion, keyboard paths and focus, designed in." },
+    ],
+  },
+  {
+    id: "growth",
+    name: "Growth & measurement",
+    why: "Supports the new Growth & Marketing pillar, and demonstrates the analytics rigour we sell.",
+    reader: "Founders and marketing leads",
+    accent: "#db2777",
+    ideas: [
+      { title: "Instrument before you spend", angle: "Attribution cannot be added retrospectively." },
+      { title: "The landing page is where the campaign money is lost", angle: "Conversion work on the page the ad points at." },
+      { title: "Local SEO for businesses whose customers search by place", angle: "Google Business Profile, done properly." },
+      { title: "Reporting that survives scrutiny", angle: "Including the channels that did not work." },
+    ],
+  },
+];
+
+/** Formats worth rotating through, so the blog is not 40 identical essays. */
+export const FORMATS = [
+  { name: "Field note", detail: "800–1,200 words from one real problem. The backbone." },
+  { name: "Teardown", detail: "We take something apart and show how it works, with measurements." },
+  { name: "Decision guide", detail: "A framework the reader can use without hiring us." },
+  { name: "Build log", detail: "How a specific thing on this site or in a product was made." },
+  { name: "Numbers post", detail: "Something we measured, with the method stated." },
+];

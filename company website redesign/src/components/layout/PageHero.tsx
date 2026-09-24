@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HeroTheme from "@/components/layout/HeroTheme";
 
 /**
  * The standard top band for every inner page.
@@ -52,6 +53,9 @@ export default function PageHero({
       }`}
       style={accent ? ({ "--accent": accent } as React.CSSProperties) : undefined}
     >
+      {/* Claim the header theme. HeroTheme no longer resets on unmount, so
+          every page has to say what it is rather than relying on a default. */}
+      <HeroTheme value="dark" />
       {/* Faint technical grid, and an accent bloom anchored to the top-right.
           Both are pure CSS — no canvas, so this costs nothing on mobile. */}
       <div

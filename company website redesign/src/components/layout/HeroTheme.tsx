@@ -19,10 +19,21 @@ import { useEffect, useState } from "react";
 export default function HeroTheme({ value }: { value: "light" | "dark" }) {
   useEffect(() => {
     document.documentElement.dataset.heroTheme = value;
-    return () => {
-      // Back to the default so a page that does not declare one gets dark.
-      document.documentElement.dataset.heroTheme = "dark";
-    };
+
+    /* ⚠️ DELIBERATELY NO CLEANUP.
+     *
+     * The magnifier renders the page a SECOND time, so on a light page there
+     * are two of these mounted. Resetting on unmount meant that when the lens
+     * copy went away — which happens the moment the pointer leaves the Lens
+     * container, e.g. moving up to the navigation — its cleanup flipped the
+     * theme back to "dark" while the original was still mounted. The header
+     * turned white-on-white and the nav appeared blank. Measured: link colour
+     * went rgb(11,15,20) → rgb(238,242,246) on exactly that move.
+     *
+     * Instead, every page claims its own theme on mount and simply overwrites
+     * whatever the last one set. PageHero claims "dark" so the common case is
+     * covered without each page remembering to.
+     */
   }, [value]);
 
   return null;

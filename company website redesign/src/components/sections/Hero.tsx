@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useMediaQuery, usePrefersReducedMotion } from "@/lib/motion";
 import { Magnetic } from "@/components/ui/Interactions";
 import { useHeroVariant, HeroSwitcher } from "@/components/hero/HeroCanvas";
+import HeroTheme from "@/components/layout/HeroTheme";
 
 // The interactive field sits BEHIND everything and never enters the main bundle.
 const HeroCanvas = dynamic(() => import("@/components/hero/HeroCanvas"), {
@@ -88,6 +89,9 @@ export default function Hero() {
       ref={rootRef}
       className="relative isolate overflow-hidden bg-deep pt-24 pb-16 text-on-deep lg:min-h-[100svh] lg:pt-28"
     >
+      {/* The home hero is dark. Claimed explicitly so arriving from a light
+          page (/work, /blog, /contact) does not leave the header light. */}
+      <HeroTheme value="dark" />
       {/* Technical grid field, very faint */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.30]"

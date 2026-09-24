@@ -123,20 +123,27 @@ const FRAG = /* glsl */ `
      than the other, moving the pointer pulls the blob into a teardrop and it
      settles back — the whole sense of liquid weight comes from this. */
   float field(vec3 p){
-    float a = length(p - vec3(uM1, 0.0)) - (uSize - 0.045);
+    /* Radii are in SCREEN units now that the projection is orthographic —
+       uv.y spans ±0.5, so uSize is a fraction of half the hero height. */
+    float a = length(p - vec3(uM1, 0.0)) - uSize * 0.94;
     float b = length(p - vec3(uM2, 0.0)) - uSize;
-    return smin(a, b, 0.22);
+    return smin(a, b, uSize * 0.32);
   }
 
   /* Perlin displacement at two frequencies — one slow and large, one faster
      and finer, so the surface reads as a liquid rather than as a bumpy ball. */
   vec3 displace(vec3 p){
-    float t = uTime * 0.16;
-    float big   = cnoise(p * 1.15 + vec3(0.0, 0.0, t));
-    float fine  = cnoise(p * 2.60 - vec3(t * 1.4, t, 0.0));
-    /* Gentle. A soap bubble is round — it breathes, it does not churn. The
-       earlier amplitudes turned the silhouette into a lumpy teardrop. */
-    return p + normalize(p + 1e-5) * (big * 0.040 + fine * 0.013);
+    /* Three octaves, and the time scale raised from 0.16 to 0.55. At the old
+       settings the surface technically moved but you could not see it — the
+       bubble read as a static object. A soap film is never still: it drifts,
+       thins and swirls continuously. The third octave with a lateral drift is
+       what makes it churn rather than just breathe. */
+    float t = uTime * 0.55;
+    float big  = cnoise(p * 1.05 + vec3(0.0, 0.0, t * 0.7));
+    float mid  = cnoise(p * 2.10 - vec3(t * 0.9, t * 0.5, 0.0));
+    float fine = cnoise(p * 4.30 + vec3(t * 1.3, -t * 0.8, t * 0.4));
+    return p + normalize(p + 1e-5)
+      * (big * 0.062 + mid * 0.026 + fine * 0.010);
   }
 
   float map(vec3 p){ return field(displace(p)); }
@@ -238,11 +245,20 @@ const FRAG = /* glsl */ `
   void main(){
     vec2 uv = (vUv - 0.5) * vec2(uRes.x / uRes.y, 1.0);
 
-    vec3 ro = vec3(0.0, 0.0, 2.0);
-    vec3 rd = normalize(vec3(uv, -1.0));
+    /* ORTHOGRAPHIC rays — all parallel, no divergence from a focal point.
+       With perspective rays (normalize(vec3(uv,-1))) a sphere moved toward the
+       edge of frame is struck at an increasingly oblique angle and visibly
+       swells; the blob looked small in the middle and bulky in the corner.
+       Parallel rays give a constant silhouette wherever it sits.
+
+       It also makes the screen mapping 1:1 — the sphere centre lands exactly
+       at its uv coordinate — so the pointer no longer needs the factor of 2,
+       and pushing it to the edge lets it hang off the side properly. */
+    vec3 ro = vec3(uv, 2.0);
+    vec3 rd = vec3(0.0, 0.0, -1.0);
 
     float t = 0.0;
-    float tMax = 3.4;
+    float tMax = 4.0;
     bool hit = false;
     /* Sphere tracing. The field is convex enough that this converges in few
        steps; the cap is what keeps a noisy raymarch affordable. */
@@ -282,7 +298,7 @@ const FRAG = /* glsl */ `
        behind the bubble bends AND splits into colour, hardest at the edge
        where the surface curves most. This is the thing that makes it read as
        a lens instead of as a ring laid over the page. */
-    float bend = 0.42;
+    float bend = 0.16;
     vec2 bR = uv + rr.xy * bend;
     vec2 bG = uv + rg.xy * bend;
     vec2 bB = uv + rb.xy * bend;
@@ -379,19 +395,36 @@ function Blob({
   accentA,
   accentB,
   opacity,
+  active,
 }: {
   size: number;
   accentA: string;
   accentB: string;
   opacity: number;
+  /** False = parked in its corner. True = following the pointer. */
+  active: boolean;
 }) {
   const mat = useRef<THREE.ShaderMaterial>(null);
   const { size: vp, gl } = useThree();
 
-  /* Two followers with different lag. The gap between them is the wobble. */
-  const target = useRef(new THREE.Vector2(0, 0));
-  const m1 = useRef(new THREE.Vector2(0, 0));
-  const m2 = useRef(new THREE.Vector2(0, 0));
+  /* Where it waits before you pick it up, as a FRACTION of the hero — 80%
+     across, 74% down, i.e. the lower-right corner.
+     Held as fractions rather than as fixed uv coordinates because uv.x spans
+     ±aspect/2: a hard-coded x that sits at 80% on a wide monitor lands past
+     the edge on a narrow one. Resolved against the live aspect every frame. */
+  const PARK_X = 0.8;
+  const PARK_Y = 0.74;
+  const park = useRef(new THREE.Vector2(0, 0));
+  const placed = useRef(false);
+
+  /* Two followers with different lag. The gap between them is the wobble.
+     All three START at the park position: initialised at the origin, the blob
+     visibly slid in from the middle of the hero on every page load. */
+  const pointer = useRef(park.current.clone());
+  const pointerInside = useRef(false);
+  const target = useRef(park.current.clone());
+  const m1 = useRef(park.current.clone());
+  const m2 = useRef(park.current.clone());
 
   /**
    * ⚠ï¸ The pointer is read from the WINDOW, not from R3F's `state.pointer`.
@@ -412,17 +445,17 @@ function Blob({
       const r = el.getBoundingClientRect();
       if (!r.width || !r.height) return;
 
+      /* 1:1 with screen uv, now that the rays are parallel — the sphere centre
+         lands exactly under the cursor. No clamping of the position either, so
+         at the edges the blob genuinely hangs off the side of the hero instead
+         of being held inside it. */
+      const aspect = r.width / r.height;
       const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
       const ny = -(((e.clientY - r.top) / r.height) * 2 - 1);
 
-      /* Only follows while the pointer is INSIDE the hero. Outside it, the
-         target returns to centre and the blob drifts home, rather than being
-         yanked around by a cursor three sections down the page. */
-      const inside = nx >= -1 && nx <= 1 && ny >= -1 && ny <= 1;
-      if (inside) {
-        target.current.set(nx * 0.62, ny * 0.40);
-      } else {
-        target.current.set(0, 0);
+      pointerInside.current = nx >= -1 && nx <= 1 && ny >= -1 && ny <= 1;
+      if (pointerInside.current) {
+        pointer.current.set((nx * aspect) / 2, ny * 0.5);
       }
     };
     window.addEventListener("pointermove", onMove, { passive: true });
@@ -451,13 +484,41 @@ function Blob({
     u.uTime.value += delta;
     u.uRes.value.set(vp.width, vp.height);
 
+    // Park resolved against the live aspect, so it is the same corner at any width.
+    const aspect = vp.width / Math.max(1, vp.height);
+    park.current.set(
+      (PARK_X * 2 - 1) * (aspect / 2),
+      -(PARK_Y * 2 - 1) * 0.5,
+    );
+
+    /* Snap to the corner on the first frame. The park position is not known
+       until the canvas has been measured, so without this the blob visibly
+       slides in from the centre of the hero on every page load. */
+    if (!placed.current) {
+      placed.current = true;
+      target.current.copy(park.current);
+      m1.current.copy(park.current);
+      m2.current.copy(park.current);
+      pointer.current.copy(park.current);
+    }
+
+    /* Active and the pointer is in the hero → chase the cursor. Otherwise go
+       back and sit in the corner. */
+    if (active && pointerInside.current) {
+      target.current.copy(pointer.current);
+    } else {
+      target.current.lerp(park.current, 0.06);
+    }
+
     /* Two lerp rates, deliberately far apart. The leading sphere catches up
-       quickly, the trailing one lags — so moving the pointer pulls the blob
-       into a teardrop and it settles back. Close the gap and it stops looking
-       like liquid and starts looking like a ball on a string.
-       Both raised sharply: at 0.085/0.026 it crawled after the cursor. */
-    m1.current.lerp(target.current, 0.30);
-    m2.current.lerp(target.current, 0.115);
+       first, the trailing one lags — so moving the pointer pulls the blob into
+       a teardrop and it settles back. Close the gap and it stops looking like
+       liquid and starts looking like a ball on a string.
+       Eased back twice — 0.34/0.14 was pinned to the cursor with no weight,
+       0.16/0.062 still read as quick. At these rates it drifts after the
+       pointer and keeps drifting for a moment once you stop. */
+    m1.current.lerp(target.current, 0.085);
+    m2.current.lerp(target.current, 0.030);
     u.uM1.value.copy(m1.current);
     u.uM2.value.copy(m2.current);
   });
@@ -479,16 +540,18 @@ function Blob({
 
 export default function LiquidBlob({
   className = "",
-  size = 0.78,
+  size = 0.34,
   accentA = "#2563eb",
   accentB = "#f0a500",
   opacity = 1,
+  active = false,
 }: {
   className?: string;
   size?: number;
   accentA?: string;
   accentB?: string;
   opacity?: number;
+  active?: boolean;
 }) {
   return (
     <Canvas
@@ -499,7 +562,13 @@ export default function LiquidBlob({
       gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
       style={{ pointerEvents: "none" }}
     >
-      <Blob size={size} accentA={accentA} accentB={accentB} opacity={opacity} />
+      <Blob
+        size={size}
+        accentA={accentA}
+        accentB={accentB}
+        opacity={opacity}
+        active={active}
+      />
     </Canvas>
   );
 }

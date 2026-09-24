@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { NextLink } from "@/components/layout/Blocks";
-import { Marquee } from "@/components/ui/Interactions";
+import { NextLink, Section } from "@/components/layout/Blocks";
 import HeroTheme from "@/components/layout/HeroTheme";
-import { ClipReveal } from "@/components/scroll/Effects";
-import { PUBLISHED, POSTS } from "@/content/blog";
+import NotesHero from "@/components/heroes/NotesHero";
+import { ClipReveal, ParallaxCards } from "@/components/scroll/Effects";
+import { PUBLISHED, POSTS, PILLARS, FORMATS } from "@/content/blog";
 
 export const metadata: Metadata = {
   title: "Blog — notes on enterprise software, ERP, IoT and performance",
@@ -30,24 +30,10 @@ export default function BlogPage() {
           three marquees of the vocabulary, running in alternating directions
           BEHIND the headline rather than as a band above it. This is the one
           page where a 3D object would be showing off for no reason. */}
+      {/* Light, editorial, and you write on it — see NotesHero. */}
       <HeroTheme value="light" />
-      <section className="relative isolate overflow-hidden bg-canvas pb-14 pt-36 lg:pb-20 lg:pt-44">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 flex flex-col justify-center gap-4 opacity-[0.055]"
-        >
-          {[
-            ["ERP", "SHOP FLOOR", "PROCUREMENT", "BILL OF MATERIALS", "INVENTORY"],
-            ["IoT", "TELEMETRY", "THRESHOLDS", "DISPATCH", "SENSORS"],
-            ["PERFORMANCE", "FRAME PACING", "COMPOSITING", "DECODE ONCE"],
-          ].map((row, i) => (
-            <Marquee key={i} speed={92 + i * 28} reverse={i % 2 === 1}>
-              <span className="mx-6 inline-flex shrink-0 items-center gap-6 whitespace-nowrap text-[clamp(2.5rem,7vw,5rem)] font-[560] tracking-[-0.04em] text-ink">
-                {row.join(" · ")} ·&nbsp;
-              </span>
-            </Marquee>
-          ))}
-        </div>
+      <section className="relative isolate min-h-[62svh] overflow-hidden bg-canvas pb-14 pt-36 lg:pb-20 lg:pt-44">
+        <NotesHero />
 
         <div className="container-page relative">
           <ClipReveal from="left">
@@ -111,9 +97,82 @@ export default function BlogPage() {
           </ul>
         )}
 
-        <div className="mt-16">
-          <NextLink kicker="Next" label="See the work instead" href="/work" />
+      </div>
+
+      {/* ---- The editorial plan.
+           An empty blog that says "nothing yet" wastes the page. This shows
+           what is being written and why, which is useful to a reader deciding
+           whether we understand their problem — and it is the brief the writer
+           works from. Lives in src/content/blog.ts. */}
+      <Section
+        tone="surface"
+        label="The plan"
+        heading="What we are writing"
+        lead="Five pillars, and only things we have actually learned doing the work. A post assembled from research anyone could do is worth nothing to a reader deciding whether to hire us."
+      >
+        <ParallaxCards className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" amount={34}>
+          {PILLARS.map((p) => (
+            <article
+              key={p.id}
+              className="group relative flex flex-col overflow-hidden rounded-card border border-line bg-canvas p-7"
+              style={{ "--accent": p.accent } as React.CSSProperties}
+            >
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute left-0 top-0 h-px w-0 transition-[width] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full"
+                style={{ background: p.accent }}
+              />
+              <h3
+                className="text-[1.25rem] font-[560] leading-[1.18] tracking-[-0.022em]"
+                style={{ color: p.accent }}
+              >
+                {p.name}
+              </h3>
+              <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">
+                {p.why}
+              </p>
+              <p className="label-mono mt-5">For — {p.reader}</p>
+
+              <ul className="mt-5 space-y-3 border-t border-line pt-5">
+                {p.ideas.map((idea) => (
+                  <li key={idea.title}>
+                    <span className="block text-[0.9375rem] font-[560] leading-snug tracking-[-0.012em]">
+                      {idea.title}
+                    </span>
+                    <span className="mt-1 block text-[0.8125rem] leading-snug text-faint">
+                      {idea.angle}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </ParallaxCards>
+
+        <div className="mt-14">
+          <p className="label-mono mb-5">Formats to rotate through</p>
+          <div className="grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
+            {FORMATS.map((f) => (
+              <div key={f.name} className="bg-canvas p-6" data-reveal>
+                <h4 className="text-[1rem] font-[560] tracking-[-0.018em]">
+                  {f.name}
+                </h4>
+                <p className="mt-2 text-[0.8125rem] leading-snug text-muted">
+                  {f.detail}
+                </p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-8 max-w-[60ch] text-[0.9375rem] leading-relaxed text-muted">
+            <strong className="font-[560] text-ink">Cadence:</strong> one
+            substantial piece a month beats four thin ones. Four thin ones is how
+            a blog dies.
+          </p>
         </div>
+      </Section>
+
+      <div className="container-page">
+        <NextLink kicker="Next" label="See the work instead" href="/work" />
       </div>
     </>
   );
