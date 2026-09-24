@@ -165,6 +165,18 @@ function Ribbon({ accent }: { accent: string }) {
 
 /* ---------------------------------------------------------------- shards */
 
+/* One shard per client project, in that project's own accent — so the field
+   above /work is literally the six case studies tumbling, not grey debris.
+   The greys that were here read as rubble on a page about delivered work. */
+const SHARD_COLOURS = [
+  "#2563eb", // Fitings Zone — fintech
+  "#0d9488", // Elite Medical — healthcare
+  "#ea580c", // Uthmal Machinery — manufacturing
+  "#ca8a04", // Dynamic Solar — energy
+  "#7c3aed", // Mega Connect — telecom
+  "#0891b2", // RG Robotics — elevators & IoT
+];
+
 function Shards({ accent }: { accent: string }) {
   const group = useRef<THREE.Group>(null);
   const plates = useMemo(
@@ -178,6 +190,7 @@ function Shards({ accent }: { accent: string }) {
         rot: [Math.random() * Math.PI, Math.random() * Math.PI, 0] as [number, number, number],
         scale: 0.3 + Math.random() * 0.55,
         speed: 0.2 + Math.random() * 0.5,
+        colour: SHARD_COLOURS[i % SHARD_COLOURS.length],
         i,
       })),
     [],
@@ -186,10 +199,15 @@ function Shards({ accent }: { accent: string }) {
   useFrame((state, delta) => {
     if (!group.current) return;
     group.current.rotation.y += delta * 0.07;
-    group.current.children.forEach((c, i) => {
-      c.rotation.x += delta * 0.1 * plates[i].speed;
-      c.position.y += Math.sin(state.clock.elapsedTime * plates[i].speed + i) * 0.0016;
-    });
+    /* Bounded by `plates.length`, not by children.length — the two lights are
+       children of this group too, and indexing past the plate array threw
+       "Cannot read properties of undefined (reading 'speed')" every frame. */
+    const kids = group.current.children;
+    for (let i = 0; i < plates.length && i < kids.length; i++) {
+      kids[i].rotation.x += delta * 0.1 * plates[i].speed;
+      kids[i].position.y +=
+        Math.sin(state.clock.elapsedTime * plates[i].speed + i) * 0.0016;
+    }
   });
 
   return (
@@ -197,14 +215,23 @@ function Shards({ accent }: { accent: string }) {
       {plates.map((p) => (
         <mesh key={p.i} position={p.pos} rotation={p.rot} scale={p.scale}>
           <boxGeometry args={[1, 1.4, 0.04]} />
+          {/* Emissive as well as coloured: on a light page a merely-tinted
+              metal plate still reads grey, because most of what you see is the
+              environment reflection rather than the base colour. */}
           <meshStandardMaterial
-            color={p.i % 4 === 0 ? accent : "#aab4c0"}
-            metalness={0.85}
-            roughness={0.25}
-            envMapIntensity={1.1}
+            color={p.colour}
+            emissive={p.colour}
+            emissiveIntensity={0.55}
+            metalness={0.55}
+            roughness={0.28}
+            envMapIntensity={1.2}
           />
         </mesh>
       ))}
+      {/* A warm and a cool key so the plates separate from each other rather
+          than all catching the same highlight. */}
+      <pointLight position={[3, 2, 4]} intensity={2.4} color="#ffffff" />
+      <pointLight position={[-3, -1, 2]} intensity={1.8} color={accent} />
     </group>
   );
 }

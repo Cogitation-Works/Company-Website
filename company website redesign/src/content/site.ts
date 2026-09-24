@@ -9,6 +9,16 @@
 
 export const SITE_URL = "https://www.cogitationworks.com";
 
+/**
+ * Contact details transcribed from the existing live site
+ * (`Cogitation_Works_Website/src/components/footer/Footer.tsx` and the
+ * "Book a call" links across its pages).
+ *
+ * ⚠️ There is NO postal address anywhere on the old site — it states only
+ * "Dubai | India | Global". So none is published here either. A street address
+ * for each hub has to be supplied before launch; inventing one would be the
+ * worst possible thing to guess at on a contact page.
+ */
 export type Hub = {
   city: string;
   timeZone: string;
@@ -24,6 +34,8 @@ export const COMPANY: {
   phone: string;
   linkedin: string;
   instagram: string;
+  whatsapp: string;
+  booking: string;
   positioning: string;
   hubs: Hub[];
 } = {
@@ -33,6 +45,9 @@ export const COMPANY: {
   phone: "+91 93608 89434",
   linkedin: "https://www.linkedin.com/in/cogitation-works/",
   instagram: "https://www.instagram.com/cogitation_works/",
+  whatsapp: "https://wa.me/919360889434",
+  // Every "Book a call" on the old site points here.
+  booking: "https://calendar.app.google/7gB3fnhRjGCBUptQ6",
   positioning:
     "We build the systems that run your operation.",
   hubs: [

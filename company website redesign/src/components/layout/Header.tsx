@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Magnetic } from "@/components/ui/Interactions";
-import { NAV } from "@/content/site";
+import { NAV, COMPANY } from "@/content/site";
 import { useHeroTheme } from "@/components/layout/HeroTheme";
 
 /**
@@ -88,8 +88,11 @@ export default function Header() {
 
             <div className="flex items-center gap-3">
               <Magnetic className="hidden lg:inline-block">
+                {/* Straight to the real booking calendar, as on the old site. */}
                 <a
-                  href="/contact"
+                  href={COMPANY.booking}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`inline-flex h-10 items-center rounded-pill px-5 text-[0.875rem] font-medium
                               transition-colors ${onLight ? "bg-ink text-white hover:bg-signal" : "bg-white text-ink hover:bg-live"}`}
                 >
@@ -143,7 +146,9 @@ export default function Header() {
             </a>
           ))}
           <a
-            href="/contact"
+            href={COMPANY.booking}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => setMenuOpen(false)}
             className="mt-8 inline-flex h-12 items-center justify-center rounded-pill bg-ink px-7
                        font-medium text-white"

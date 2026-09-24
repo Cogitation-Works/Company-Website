@@ -95,10 +95,20 @@ export function ChapterHero({
                 <span className="text-white/55">One operating system.</span>
               </h1>
             </ClipReveal>
-            <p className="mt-9 max-w-[46ch] text-[clamp(1.0625rem,1.8vw,1.375rem)] leading-[1.45] text-white/80">
+            <p className="mt-9 max-w-[48ch] text-[clamp(1.0625rem,1.8vw,1.375rem)] leading-[1.45] text-white/80">
               We are usually brought in when something has outgrown the tool it
               started in — a spreadsheet, a generic CRM, a process held together
               by one person who knows it.
+            </p>
+            {/* Custom build stated in the hero, not buried in a capability
+                list. It is the single thing most enquiries are actually for. */}
+            <p className="mt-6 max-w-[48ch] text-[clamp(1rem,1.6vw,1.1875rem)] leading-[1.5] text-white">
+              And if nothing off the shelf fits,{" "}
+              <span className="rounded bg-white/15 px-1.5 py-0.5 font-[560]">
+                we build it from scratch
+              </span>{" "}
+              — custom software written to your process rather than configured
+              around someone else&rsquo;s.
             </p>
           </div>
         </div>

@@ -88,10 +88,10 @@ const HRMS: OwnProduct = {
   slug: "hrms",
   name: "HRMS Pro",
   kicker: "Workforce, attendance & payroll suite",
-  stage: "live",
+  stage: "progress",
   family: "software",
   summary:
-    "Clock-in to payslip, across countries, without the month-end spreadsheet. Built, shipped and running.",
+    "Clock-in to payslip, across countries, without the month-end spreadsheet.",
   description:
     "Full lifecycle enterprise workforce platform: biometric and geofenced clock-in, multi-country tax compliance, dynamic shift scheduling and automated payroll processing. Designed for organisations whose headcount, shift patterns or jurisdictions have outgrown a generic HR tool.",
   metric: "50,000+",
@@ -340,7 +340,7 @@ const COGI_AI: OwnProduct = {
   slug: "cogi-ai",
   name: "Cogi AI",
   kicker: "Automotive & cognitive enterprise agent",
-  stage: "available",
+  stage: "progress",
   family: "software",
   summary:
     "An agent that reads telemetry, service manuals and unstructured records, and acts on them.",

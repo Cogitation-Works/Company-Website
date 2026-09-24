@@ -102,6 +102,47 @@ export default function ServicesPage() {
           }))}
         />
 
+        {/* Custom build, said plainly and given its own block. It is what most
+            enquiries are for, and it was previously one line inside pillar 002
+            where nobody would find it. */}
+        <section className="mt-16 rounded-card border border-line bg-deep p-8 text-on-deep lg:mt-20 lg:p-14">
+          <p className="label-mono !text-on-deep-muted">Most of what we do</p>
+          <h2 className="mt-5 max-w-[22ch] text-[clamp(1.75rem,4vw,2.75rem)] font-[560] leading-[1.06] tracking-[-0.03em]">
+            If nothing off the shelf fits, we build it from scratch.
+          </h2>
+          <p className="mt-6 max-w-[62ch] text-lead text-on-deep-muted">
+            Custom software is the majority of our work. A platform configured
+            around someone else&rsquo;s assumptions is cheaper on the invoice and
+            more expensive everywhere else — in the workarounds, the retraining,
+            and the process that quietly bends to fit the tool.
+          </p>
+          <ul className="mt-9 grid gap-px overflow-hidden rounded-card border border-white/10 bg-white/10 md:grid-cols-3">
+            {[
+              {
+                t: "Written to your process",
+                d: "We start from how the work is actually performed, not from how it is documented.",
+              },
+              {
+                t: "You own all of it",
+                d: "Code, infrastructure definitions and the deployment pipeline. Owning the app but not the means to ship it is not ownership.",
+              },
+              {
+                t: "We will say when not to",
+                d: "Where an existing platform genuinely fits, we say so. A custom build you did not need is the most expensive thing we could sell you.",
+              },
+            ].map((c) => (
+              <li key={c.t} className="bg-deep p-6 lg:p-7">
+                <h3 className="text-[1.0625rem] font-[560] tracking-[-0.018em]">
+                  {c.t}
+                </h3>
+                <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-on-deep-muted">
+                  {c.d}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <NextLink
           kicker="Next"
           label="See what these look like in production"

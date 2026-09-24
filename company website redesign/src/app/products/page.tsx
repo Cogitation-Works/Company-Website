@@ -8,7 +8,7 @@ import { OWN_PRODUCTS, BY_STAGE, STAGE_LABEL } from "@/content/products";
 export const metadata: Metadata = {
   title: "Products — what we have built for ourselves",
   description:
-    "Everything Cogitation Works built for itself: HRMS Pro and the Readers Club running now, CRM, ERP and Cogi AI available to deploy, Sunday delivery in progress, agri-IoT and robotics upcoming.",
+    "Everything Cogitation Works built for itself: Cogitation CRM and ERP available to deploy, HRMS Pro, Cogi AI and Sunday delivery in progress, the Readers Club running now, agri-IoT and robotics upcoming.",
   alternates: { canonical: "/products" },
 };
 
@@ -30,7 +30,7 @@ export default function ProductsPage() {
           accent: p.accent,
         }))}
         title="What we have built for ourselves."
-        lead="Software we license, and operations we run. Two of these are live right now, three are deployable today, and the rest are honest about not being finished. Work we have delivered for clients is kept separate."
+        lead="Software we license, and operations we run — grouped by how far along each one is, rather than by what kind of thing it is. Work we have delivered for clients is kept separate."
       />
 
       <div className="container-page py-16 lg:py-24">

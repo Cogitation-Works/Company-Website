@@ -46,11 +46,27 @@ export default function ContactPage() {
                 <dt className="text-[0.875rem] text-muted">Phone / WhatsApp</dt>
                 <dd className="mt-1">
                   <a
-                    href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
+                    href={COMPANY.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="link-wipe text-[1.0625rem]"
                     data-cursor
                   >
                     {COMPANY.phone}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[0.875rem] text-muted">Book directly</dt>
+                <dd className="mt-1">
+                  <a
+                    href={COMPANY.booking}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-wipe text-[1.0625rem]"
+                    data-cursor
+                  >
+                    45-minute consultation →
                   </a>
                 </dd>
               </div>
@@ -81,6 +97,11 @@ export default function ContactPage() {
                 </li>
               ))}
             </ul>
+            <p className="mt-5 text-[0.8125rem] leading-snug text-faint">
+              Street addresses are not published yet — the existing site lists
+              only &ldquo;Dubai | India | Global&rdquo;, so there is nothing to
+              carry over. Supply one per hub and it goes here.
+            </p>
           </aside>
         </div>
       </Section>
