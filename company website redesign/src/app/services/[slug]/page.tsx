@@ -137,14 +137,9 @@ export default async function PillarPage({
         tone="surface"
         label="What this covers"
         heading={`${pillar.services.length} capabilities`}
-        lead="Open any one to see what it involves and what clients have said about it."
+        lead="Open any one to see what it involves and how it actually works."
       >
-        <ServiceList
-          services={pillar.services}
-          reviews={pillar.reviews}
-          accent={pillar.accent}
-          pillarName={pillar.name}
-        />
+        <ServiceList services={pillar.services} accent={pillar.accent} />
       </Section>
 
       <Section label="How it runs" heading="The engagement">

@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageHero from "@/components/layout/PageHero";
 import { Section, NumberedList, NextLink, Tbc } from "@/components/layout/Blocks";
-import { PRODUCTS, getProduct } from "@/content/products";
+import { OWN_PRODUCTS, getProduct, STAGE_LABEL } from "@/content/products";
 import SpecScroller from "@/components/products/SpecScroller";
 import ScrollStory from "@/components/scroll/ScrollStory";
 import StickyConcept from "@/components/scroll/StickyConcept";
 import Parallax from "@/components/scroll/Parallax";
+import Object3D from "@/components/three/Object3D";
+import { Reviews, NextPhase, Variants } from "@/components/detail/DetailBlocks";
 
 export function generateStaticParams() {
-  return PRODUCTS.map((p) => ({ slug: p.slug }));
+  return OWN_PRODUCTS.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
@@ -28,13 +31,15 @@ export async function generateMetadata({
 }
 
 /**
- * Product page — the BMW M3 pattern (research R13).
+ * A product page, front to back:
  *
- * Object rotates on scroll, specs count up beside it, then the 3D is
- * interrupted by flat editorial rather than running for the whole page. The
- * object itself is pending (ASSETS.md §4.2); SpecScroller renders the specs
- * and a procedural stand-in until the frame sequence lands, so the page is
- * complete and the missing asset is a swap rather than a rebuild.
+ *   hero → scroll film → counting specs → overview (parallax) →
+ *   sticky concept walkthrough → capabilities → built for →
+ *   NEXT PHASE → VARIANTS → REVIEWS → FAQ
+ *
+ * The same shape as a client project page, because they are the same kind of
+ * document about two different kinds of thing. The difference is only that a
+ * project has a client and a product has a stage.
  */
 export default async function ProductPage({
   params,
@@ -45,11 +50,9 @@ export default async function ProductPage({
   const p = getProduct(slug);
   if (!p) notFound();
 
-  const idx = PRODUCTS.findIndex((x) => x.slug === slug);
-  const next = PRODUCTS[(idx + 1) % PRODUCTS.length];
+  const idx = OWN_PRODUCTS.findIndex((x) => x.slug === slug);
+  const next = OWN_PRODUCTS[(idx + 1) % OWN_PRODUCTS.length];
 
-  /* FAQPage structured data — only for questions with a real answer. A ⟨TBC⟩
-     answer must never be published as an answer to a search engine. */
   const answered = p.faq.filter((f) => !f.a.includes("⟨TBC⟩"));
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -76,10 +79,20 @@ export default async function ProductPage({
         title={p.name}
         lead={p.summary}
         accent={p.accent}
+        figure={
+          <Object3D
+            variant={p.family === "software" ? "glass" : "orbit"}
+            accent={p.accent}
+            className="pointer-events-none absolute right-0 top-0 h-full w-full lg:w-[52%]"
+          />
+        }
+        meta={[
+          { label: "Stage", value: STAGE_LABEL[p.stage] },
+          { label: "Kind", value: p.family },
+          { label: "Variants", value: String(p.variants.length) },
+        ]}
       />
 
-      {/* 1 — the concept, as a scroll-scrubbed film. Runs on a holding plate
-             until the footage lands; the staging and copy are live now. */}
       <ScrollStory
         label={`${p.name} — the idea`}
         stages={p.story}
@@ -87,10 +100,8 @@ export default async function ProductPage({
         accent={p.accent}
       />
 
-      {/* 2 — the numbers, counting beside the rotating object (BMW, R13). */}
       <SpecScroller specs={p.specs} accent={p.accent} name={p.name} />
 
-      {/* 3 — the overview, drifting against the scroll. */}
       <Section label="Overview">
         <Parallax speed={-0.06}>
           <p className="max-w-[62ch] text-[clamp(1.25rem,2.4vw,1.75rem)] leading-[1.42] tracking-[-0.02em] text-ink-soft">
@@ -99,16 +110,15 @@ export default async function ProductPage({
         </Parallax>
       </Section>
 
-      {/* 4 — the product itself, one screen at a time. */}
       <Section
         tone="surface"
-        label="Inside the product"
+        label="Inside it"
         heading="What you are actually looking at"
       >
         <StickyConcept steps={p.concept} accent={p.accent} side="right" />
       </Section>
 
-      <Section label="Capabilities" heading="What is in the box">
+      <Section label="Capabilities" heading="What is in it">
         <div className="grid gap-px overflow-hidden rounded-card border border-line bg-line md:grid-cols-2">
           {p.features.map((f, i) => (
             <div
@@ -121,7 +131,7 @@ export default async function ProductPage({
                 {String(i + 1).padStart(2, "0")}
               </span>
               <p className="mt-4 text-[1.0625rem] leading-[1.42] tracking-[-0.014em]">
-                {f}
+                {f.includes("⟨TBC⟩") ? <Tbc>Not defined</Tbc> : f}
               </p>
             </div>
           ))}
@@ -132,7 +142,30 @@ export default async function ProductPage({
         <NumberedList items={p.builtFor} />
       </Section>
 
-      <Section label="Questions" heading="Before you ask us">
+      {/* ---- Next phase */}
+      <Section
+        label="Roadmap"
+        heading="What ships next"
+        lead="A page with no answer to whether something is finished reads as either abandoned or oversold."
+      >
+        <NextPhase when={p.nextPhase.when} items={p.nextPhase.items} accent={p.accent} />
+      </Section>
+
+      {/* ---- Variants */}
+      <Section
+        tone="surface"
+        label="Options"
+        heading="Editions, limits and custom builds"
+      >
+        <Variants variants={p.variants} accent={p.accent} />
+      </Section>
+
+      {/* ---- Reviews */}
+      <Section label="In their words" heading="What people say about it">
+        <Reviews reviews={p.reviews} accent={p.accent} subject={p.name} />
+      </Section>
+
+      <Section tone="surface" label="Questions" heading="Before you ask us">
         <dl className="max-w-[72ch] divide-y divide-line border-y border-line">
           {p.faq.map((f) => (
             <div key={f.q} className="py-7" data-reveal>
@@ -145,11 +178,20 @@ export default async function ProductPage({
             </div>
           ))}
         </dl>
+        {p.relatedHref ? (
+          <Link
+            href={p.relatedHref.href}
+            data-cursor
+            className="link-wipe mt-10 inline-block text-[0.9375rem] font-medium"
+          >
+            Related — {p.relatedHref.label} →
+          </Link>
+        ) : null}
       </Section>
 
       <div className="container-page">
-        <NextLink kicker="Next platform" label={next.name} href={`/products/${next.slug}`} />
-        <NextLink kicker="Or" label="Request a live demo" href="/contact?intent=demo" />
+        <NextLink kicker="Next product" label={next.name} href={`/products/${next.slug}`} />
+        <NextLink kicker="Or" label="Work delivered for clients" href="/work" />
       </div>
     </>
   );

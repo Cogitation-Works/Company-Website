@@ -106,7 +106,7 @@ export default function IndustriesPage() {
           <NextLink
             kicker="Next"
             label="What we are building beyond software"
-            href="/ventures"
+            href="/products"
           />
         </div>
       </div>

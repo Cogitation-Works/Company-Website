@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Review } from "@/content/services";
-import ReviewCards from "@/components/reviews/ReviewCards";
+import CapabilityVisual from "./CapabilityVisual";
 
 /**
  * The capability list on a pillar page. Each row expands in place to show what
@@ -20,14 +19,10 @@ import ReviewCards from "@/components/reviews/ReviewCards";
  */
 export default function ServiceList({
   services,
-  reviews,
   accent,
-  pillarName,
 }: {
   services: { name: string; detail: string }[];
-  reviews: Review[];
   accent: string;
-  pillarName: string;
 }) {
   const [open, setOpen] = useState<number | null>(0);
 
@@ -35,10 +30,6 @@ export default function ServiceList({
     <ul className="border-t border-line">
       {services.map((s, i) => {
         const isOpen = open === i;
-        // Reviews naming this capability, otherwise the pillar's general ones.
-        const own = reviews.filter((r) => r.service === s.name);
-        const shown = own.length ? own : reviews.filter((r) => !r.service);
-
         return (
           <li key={s.name} className="border-b border-line">
             <button
@@ -100,17 +91,15 @@ export default function ServiceList({
                     />
                   </div>
 
+                  {/* A diagram of the mechanism, not a testimonial. Somebody
+                      reading a service page is deciding whether we understand
+                      their problem; eleven identical quote cards answered
+                      nothing, a picture of how the thing works does. */}
                   <div className="lg:col-span-7">
-                    <p className="label-mono mb-5">
-                      {shown.length
-                        ? `What clients say — ${s.name.toLowerCase()}`
-                        : "Client feedback"}
-                    </p>
-                    <ReviewCards
-                      reviews={shown}
-                      accent={accent}
-                      serviceName={shown.length ? s.name : pillarName}
-                    />
+                    <p className="label-mono mb-5">How it works</p>
+                    {isOpen ? (
+                      <CapabilityVisual name={s.name} accent={accent} />
+                    ) : null}
                   </div>
                 </div>
               </div>

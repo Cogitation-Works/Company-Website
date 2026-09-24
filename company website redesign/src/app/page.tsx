@@ -4,7 +4,6 @@ import Statement from "@/components/sections/Statement";
 import Work from "@/components/sections/Work";
 import Products from "@/components/sections/Products";
 import Industries from "@/components/sections/Industries";
-import Ventures from "@/components/sections/Ventures";
 import CTA from "@/components/sections/CTA";
 
 /**
@@ -21,8 +20,8 @@ export default function Home() {
       <Work />
       <Products />
       <Industries />
-      {/* Ventures sits after the proof, never before it — PROJECT.md §1.5. */}
-      <Ventures />
+      {/* The separate "Ventures" strip is gone: those things are now part of
+          Products, which is already on this page. One section, not two. */}
       <CTA />
     </>
   );

@@ -4,7 +4,6 @@ import { PILLARS } from "@/content/services";
 import { PRODUCTS } from "@/content/products";
 import { WORK } from "@/content/work";
 import { INDUSTRIES } from "@/content/industries";
-import { VENTURES } from "@/content/ventures";
 import { PUBLISHED } from "@/content/blog";
 
 /**
@@ -23,7 +22,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ["/work", 0.9],
     ["/industries", 0.9],
     ["/about", 0.7],
-    ["/ventures", 0.6],
     ["/blog", 0.6],
     ["/contact", 0.8],
   ];
@@ -39,7 +37,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...PRODUCTS.map((p) => ({ url: url(`/products/${p.slug}`), lastModified: now, priority: 0.8 })),
     ...WORK.map((w) => ({ url: url(`/work/${w.slug}`), lastModified: now, priority: 0.7 })),
     ...INDUSTRIES.map((i) => ({ url: url(`/industries/${i.slug}`), lastModified: now, priority: 0.8 })),
-    ...VENTURES.map((v) => ({ url: url(`/ventures/${v.slug}`), lastModified: now, priority: 0.4 })),
     ...PUBLISHED.map((p) => ({ url: url(`/blog/${p.slug}`), lastModified: new Date(p.date), priority: 0.6 })),
   ];
 }

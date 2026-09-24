@@ -4,6 +4,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Section, NextLink } from "@/components/layout/Blocks";
 import { MediaPlate, PlateGrid } from "@/components/media/MediaPlate";
 import Parallax from "@/components/scroll/Parallax";
+import { Reviews, NextPhase, Variants } from "@/components/detail/DetailBlocks";
 import { WORK, getCase } from "@/content/work";
 import { getIndustry } from "@/content/industries";
 
@@ -163,6 +164,32 @@ export default async function CaseStudyPage({
         <Parallax speed={-0.05} className="mx-auto max-w-4xl">
           <MediaPlate plate={w.review} />
         </Parallax>
+
+        <div className="mt-12">
+          <Reviews reviews={w.quotes} accent={w.accent} subject={w.client} />
+        </div>
+      </Section>
+
+      {/* ---- What this client has agreed next */}
+      <Section
+        label="Roadmap"
+        heading="What comes next for this platform"
+        lead="Delivered is not the same as finished. This is what is agreed or under discussion."
+      >
+        <NextPhase
+          when={w.nextPhase.when}
+          items={w.nextPhase.items}
+          accent={w.accent}
+        />
+      </Section>
+
+      {/* ---- Scope: delivered, optional, custom */}
+      <Section
+        tone="surface"
+        label="Scope"
+        heading="Delivered, and what can still be added"
+      >
+        <Variants variants={w.variants} accent={w.accent} />
       </Section>
 
       <Section tone="deep">

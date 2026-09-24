@@ -55,7 +55,26 @@ export type CaseStudy = {
     accent?: string;
     aspect?: string;
   };
+  /** Written quotes. Empty until real ones are supplied — see PROJECT.md §7. */
+  quotes: { quote: string; name: string; role: string; company: string }[];
+  /** What is agreed for this client next. */
+  nextPhase: { when: string; items: string[] };
+  /** Modules delivered, what was scoped out, and what can still be added. */
+  variants: { name: string; detail: string; note?: string }[];
 };
+
+/** Every project answers the same three questions, so the shape is shared. */
+const phaseFor = (items: string[]) => ({ when: "⟨TBC⟩", items });
+
+const variantsFor = (
+  delivered: string,
+  optional: string,
+): { name: string; detail: string; note?: string }[] => [
+  { name: "Delivered", detail: delivered, note: "Live" },
+  { name: "Available as an add-on", detail: optional },
+  { name: "Custom extension", detail: "Further modules written to this client's process rather than to a template." },
+  { name: "Support retainer", detail: "Ongoing operation and changes under an agreed response time.", note: "⟨TBC⟩ terms" },
+];
 
 /** Every case study gets the same three-screen shape plus a review. */
 const screensFor = (slug: string, accent: string, a: string, b: string, c: string) => [
@@ -100,7 +119,17 @@ export const WORK: CaseStudy[] = [
     metrics: [],
     screens: screensFor("fitings-zone", "#2563eb", "Unified customer view", "Service ticket queue", "Pipeline in use"),
     review: reviewFor("fitings-zone", "Fitings Zone", "#2563eb"),
-  },
+
+    quotes: [],
+    nextPhase: phaseFor([
+      "Quoting and proposal generation off the same customer record",
+      "WhatsApp as a first-class service channel",
+      "Field-service scheduling for on-site visits",
+    ]),
+    variants: variantsFor(
+      "Unified CRM with pipeline, service desk and real-time client tracking.",
+      "Cogi AI summarisation of the customer timeline before a call.",
+    ),  },
   {
     slug: "elite-medical",
     client: "Elite Medical",
@@ -126,7 +155,17 @@ export const WORK: CaseStudy[] = [
     metrics: [],
     screens: screensFor("elite-medical", "#0d9488", "B2B client portal", "Automated invoice run", "Billing reconciliation"),
     review: reviewFor("elite-medical", "Elite Medical", "#0d9488"),
-  },
+
+    quotes: [],
+    nextPhase: phaseFor([
+      "Automated dunning and payment reminders",
+      "Self-service statement download for clinical accounts",
+      "Integration with the incumbent accounting system ⟨TBC⟩",
+    ]),
+    variants: variantsFor(
+      "Centralised B2B portal with ledger, tax compliance and client dashboard.",
+      "Multi-entity consolidation for groups operating several clinics.",
+    ),  },
   {
     slug: "uthmal-machinery",
     client: "Uthmal Machinery",
@@ -152,7 +191,17 @@ export const WORK: CaseStudy[] = [
     metrics: [],
     screens: screensFor("uthmal-machinery", "#ea580c", "Shop-floor station view", "Bill of materials", "Production scheduling"),
     review: reviewFor("uthmal-machinery", "Uthmal Machinery", "#ea580c"),
-  },
+
+    quotes: [],
+    nextPhase: phaseFor([
+      "Machine-level telemetry from shop-floor hardware",
+      "Predictive reorder points from real consumption history",
+      "Supplier portal for inbound scheduling",
+    ]),
+    variants: variantsFor(
+      "Manufacturing execution ERP connecting BOM, stations and supply logs.",
+      "Quality-control checkpoints recorded per production stage.",
+    ),  },
   {
     slug: "dynamic-solar",
     client: "Dynamic Solar",
@@ -178,7 +227,17 @@ export const WORK: CaseStudy[] = [
     metrics: [],
     screens: screensFor("dynamic-solar", "#ca8a04", "Production milestones", "Field job allocation", "Parts telemetry"),
     review: reviewFor("dynamic-solar", "Dynamic Solar", "#ca8a04"),
-  },
+
+    quotes: [],
+    nextPhase: phaseFor([
+      "Mobile field app for technicians working away from a desk",
+      "Parts consumption tied to the production order automatically",
+      "Capacity planning across sites",
+    ]),
+    variants: variantsFor(
+      "Production milestone dispatch, parts telemetry and field job allocation.",
+      "Warranty and service history against each installed unit.",
+    ),  },
   {
     slug: "mega-connect",
     client: "Mega Connect",
@@ -204,7 +263,17 @@ export const WORK: CaseStudy[] = [
     metrics: [],
     screens: screensFor("mega-connect", "#7c3aed", "Homepage", "Service presentation", "The site scrolling"),
     review: reviewFor("mega-connect", "Mega Connect", "#7c3aed"),
-  },
+
+    quotes: [],
+    nextPhase: phaseFor([
+      "Arabic language edition for the UAE market",
+      "Service configurator so buyers can scope before enquiring",
+      "Case study section as delivery references accumulate",
+    ]),
+    variants: variantsFor(
+      "Performant custom web architecture with clear service presentation.",
+      "CRM integration so enquiries land directly in a pipeline.",
+    ),  },
   {
     slug: "rg-robotics",
     client: "RG Robotics",
@@ -230,7 +299,17 @@ export const WORK: CaseStudy[] = [
     metrics: [],
     screens: screensFor("rg-robotics", "#0891b2", "Solution breakdown", "IoT telemetry showcase", "The site scrolling"),
     review: reviewFor("rg-robotics", "RG Robotics", "#0891b2"),
-  },
+
+    quotes: [],
+    nextPhase: phaseFor([
+      "Live telemetry demo using anonymised sensor data",
+      "Technical specification downloads per product line",
+      "Partner and distributor area",
+    ]),
+    variants: variantsFor(
+      "Interactive solution breakdowns with rapid consultation enquiry flows.",
+      "Customer portal for maintenance schedules and service history.",
+    ),  },
 ];
 
 export const getCase = (slug: string) => WORK.find((w) => w.slug === slug);

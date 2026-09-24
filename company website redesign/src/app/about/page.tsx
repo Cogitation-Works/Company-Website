@@ -6,7 +6,7 @@ import RouteHero from "@/components/heroes/RouteHero";
 import DrawPath from "@/components/scroll/DrawPath";
 import { MediaPlate, PlateGrid } from "@/components/media/MediaPlate";
 import { COMPANY } from "@/content/site";
-import { VENTURES } from "@/content/ventures";
+import { OWN_PRODUCTS, STAGE_LABEL } from "@/content/products";
 import { PILLARS } from "@/content/services";
 import {
   OFFICE,
@@ -25,7 +25,12 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const readers = VENTURES.find((v) => v.slug === "readers-club");
+  const readers = OWN_PRODUCTS.find((p) => p.slug === "readers-club");
+  /* What the company is building for itself, newest first. Client work is at
+     /work and deliberately does not appear on this page. */
+  const building = OWN_PRODUCTS.filter(
+    (p) => p.stage === "progress" || p.stage === "upcoming",
+  );
 
   return (
     <>
@@ -136,15 +141,18 @@ export default function AboutPage() {
         {readers ? (
           <>
             <div className="max-w-[62ch]">
-              <StatusChip status={readers.status} accent={readers.accent} />
+              <StatusChip
+                status={STAGE_LABEL[readers.stage]}
+                accent={readers.accent}
+              />
               <p className="mt-6 text-[clamp(1.125rem,2.1vw,1.5rem)] leading-[1.48] tracking-[-0.016em] text-ink-soft">
-                {readers.body[0]}
+                {readers.summary}
               </p>
               <p className="mt-5 text-[1.0625rem] leading-relaxed text-muted">
-                {readers.body[1]}
+                {readers.description}
               </p>
               <Link
-                href="/ventures/readers-club"
+                href="/products/readers-club"
                 data-cursor
                 className="link-wipe mt-8 inline-block text-[0.9375rem] font-medium"
               >
@@ -158,23 +166,23 @@ export default function AboutPage() {
         ) : null}
       </Section>
 
-      {/* ---- Ventures ------------------------------------------------------ */}
+      {/* ---- What we are building for ourselves ---------------------------- */}
       <Section tone="deep" label="Next" heading="Where this is going">
-        <div className="grid gap-6 md:grid-cols-2">
-          {VENTURES.filter((v) => v.kind === "venture").map((v) => (
+        <div className="grid gap-6 md:grid-cols-3">
+          {building.map((p) => (
             <Link
-              key={v.slug}
-              href={`/ventures/${v.slug}`}
+              key={p.slug}
+              href={`/products/${p.slug}`}
               data-cursor
               className="group rounded-card border border-white/10 p-7 transition-colors hover:border-white/25"
               data-reveal
             >
-              <StatusChip status={v.status} accent={v.accent} />
+              <StatusChip status={STAGE_LABEL[p.stage]} accent={p.accent} />
               <h3 className="mt-5 text-[1.375rem] font-[560] tracking-[-0.024em]">
-                {v.name}
+                {p.name}
               </h3>
               <p className="mt-3 text-[0.9375rem] leading-relaxed text-on-deep-muted">
-                {v.summary}
+                {p.summary}
               </p>
             </Link>
           ))}
