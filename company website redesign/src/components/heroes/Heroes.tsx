@@ -5,6 +5,7 @@ import { ClipReveal, ScrambleText } from "@/components/scroll/Effects";
 import { ScrubText, Marquee } from "@/components/ui/Interactions";
 import HeroTheme from "@/components/layout/HeroTheme";
 import Object3D from "@/components/three/Object3D";
+import BlobGate from "@/components/three/BlobGate";
 
 /**
  * One hero per page, and no two the same SHAPE.
@@ -174,6 +175,16 @@ export function FanHero({
     <>
       <HeroTheme value="dark" />
       <section className="relative isolate overflow-hidden bg-deep pb-20 pt-32 text-on-deep lg:min-h-[92svh] lg:pb-24 lg:pt-40">
+        {/* The liquid glass blob sits IN FRONT of the card fan and behind the
+            type, so the headline reads through it. Full-bleed: the shape is
+            centred in its own canvas and the transparent centre lets the fan,
+            the cursor trail and the copy all show through. */}
+        <BlobGate
+          className="pointer-events-none absolute inset-0 z-[2]"
+          accentA="#3b82f6"
+          accentB="#f0a500"
+        />
+
         {/* An exploded fan of the four platforms in perspective — Peachweb
             fans ten device screens behind its headline, and it is the clearest
             way to say "these are four things" before a word is read. */}
