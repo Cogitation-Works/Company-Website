@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { usePrefersReducedMotion } from "@/lib/motion";
+import { usePrefersReducedMotion, usePinProgress } from "@/lib/motion";
 
 /**
  * Scroll-scrubbed video story — the Peachweb dive (research R12) crossed with
@@ -88,40 +88,21 @@ export default function ScrollStory({
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [progress, setProgress] = useState(0);
   const [ready, setReady] = useState(false);
   const reduced = usePrefersReducedMotion();
+
+  /* Shared with the magnifier's duplicate: the copy mirrors this instead of
+     measuring its own position inside the lens box, which would leave it
+     showing a different stage than the one actually on screen. It also
+     publishes the pinned child's offset for the copy to position against. */
+  const scrollProgress = usePinProgress("story", wrapRef, !reduced);
+  const progress = reduced ? 1 : scrollProgress;
 
   useEffect(() => {
     if (!frames || reduced) return;
     loadFrames(frames, () => setReady(true));
   }, [frames, reduced]);
 
-  /* Scroll → progress. One rAF, early exit when nothing moved, nothing written
-     to React state unless the value actually changed enough to matter. */
-  useEffect(() => {
-    if (reduced) {
-      setProgress(0);
-      return;
-    }
-    const wrap = wrapRef.current;
-    if (!wrap) return;
-    let raf = 0;
-    let last = -1;
-
-    const tick = () => {
-      raf = requestAnimationFrame(tick);
-      const rect = wrap.getBoundingClientRect();
-      const total = rect.height - window.innerHeight;
-      if (total <= 0) return;
-      const p = Math.min(1, Math.max(0, -rect.top / total));
-      if (Math.abs(p - last) < 0.0015) return;
-      last = p;
-      setProgress(p);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [reduced]);
 
   /* Draw the current frame. Separate from the scroll loop so a missing or
      still-decoding sequence never stalls the copy. */
@@ -160,8 +141,15 @@ export default function ScrollStory({
   return (
     <div
       ref={wrapRef}
+      data-pin="story"
       className="relative bg-deep text-on-deep"
-      style={{ height: `${(stages.length + 1) * 100}vh` }}
+      /* 75vh per stage, not 100. The films are 60 frames, and the scroll
+         distance divided by the frame count is what sets how finely the
+         footage steps: at 100vh per stage a three-stage story spent ~46px of
+         scroll on every frame, which reads as a slideshow. At 75vh it is
+         ~30px, and the page is a quarter shorter into the bargain. If a film
+         ever ships with many more frames, this can go back up. */
+      style={{ height: `${(stages.length + 1) * 75}vh` }}
     >
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
         {/* ---- Media plate */}

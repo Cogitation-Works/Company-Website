@@ -295,3 +295,30 @@ export const INDUSTRIES: Industry[] = [
 
 export const getIndustry = (slug: string) =>
   INDUSTRIES.find((i) => i.slug === slug);
+
+/**
+ * The scroll film for an industry page, as 60 WebP frames.
+ *
+ * Frames, never a `<video>`: scrubbing compressed video against scroll forces
+ * a keyframe decode on every scroll event, which is the judder the client
+ * flagged on terminal-industries.com. These decode once into ImageBitmaps and
+ * scrubbing is then a pure blit.
+ *
+ * Listed explicitly rather than assumed for every slug — an industry with no
+ * film should fall back to its designed holding plate, not request 60 files
+ * that do not exist.
+ */
+const WITH_FILM = new Set([
+  "manufacturing",
+  "healthcare",
+  "fintech",
+  "telecom",
+  "energy",
+  "elevators-iot",
+  "agriculture",
+]);
+
+export const industryFilm = (slug: string) =>
+  WITH_FILM.has(slug)
+    ? { path: `/industries/films/${slug}/`, count: 60 }
+    : undefined;

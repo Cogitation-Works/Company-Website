@@ -42,6 +42,7 @@ Read this once before generating anything.
 | Core frame sequence, 60 × webp | ✅ shipping, scroll-scrubbed in the hero |
 | Core poster, 2 sizes × 3 formats | ✅ shipping |
 | **All seven industry stills**, 2 widths × AVIF/WebP | ✅ shipping — generated 24 Sep to the §4.1 prompts, 2400×1350 each |
+| **All seven industry films**, 60 WebP frames each | ✅ shipping — generated 25 Sep to the §4.7 prompts, 1050×590, 13.4MB total |
 
 **The site is now built: 33 routes, all statically generated.** Every page
 exists, every route returns 200, and every missing asset has a slot waiting for
@@ -626,6 +627,27 @@ its brief printed on the plate. Filling one in is a one-line change in
 ---
 
 ### 4.7 Seven industry films · **Google Flow** · one per industry page
+### ✅ DELIVERED 25 Sep — all seven live and scrubbing
+
+> Shipped as `public/industries/films/<slug>/000…059.webp`, 1050×590, 13.4MB
+> total. Wired through `industryFilm()` in `content/industries.ts`.
+>
+> **How they were processed**, for whoever does the next batch:
+> - **60 frames each, never a `<video>`.** Scrubbing compressed video forces a
+>   keyframe decode per scroll event — the judder flagged on
+>   terminal-industries.com.
+> - **No ffmpeg on the build machine.** Chrome's decoder did it: served over
+>   loopback (a `file://` page taints the canvas), seeked, drawn, exported.
+>   Await **`requestVideoFrameCallback`**, not `seeked` — `seeked` fires before
+>   the new frame is painted, which yields 60 identical frames.
+> - **PNG out of the browser, WebP via sharp.** Chrome's WebP encoder is much
+>   worse per byte, and re-compressing its output stacks two lossy passes.
+> - **The films carry the same corner watermark as the stills** (X 0.888–0.923,
+>   found by averaging all 60 frames). Each frame is cropped to the left 87.5%
+>   and re-trimmed to 16:9 — so **keep the subject and the hardware prop out of
+>   the right-hand eighth**, exactly as for the stills.
+>
+> The prompts below stay for regenerating or extending the set.
 
 These drive the scroll-scrubbed block partway down each `/industries/<slug>`
 page. **The staging and all the copy are already live** — each page runs the
@@ -661,6 +683,28 @@ is overlaid there in white. Busy or bright content behind it makes it unreadable
 a `<video>` — scrubbing a compressed video forces a keyframe decode per scroll
 event, which is the 1–5fps juddering the client flagged on
 terminal-industries.com.
+
+#### Generating these image-to-video
+
+Every prompt below is written as a camera move, so it works either way — but
+**start each film from that industry's still**, the one already shipping in
+`public/industries/`. Do not generate a fresh image first.
+
+Two reasons. The stills already carry the register the whole set is built on —
+the vantage, the haze, the amber-against-blue, the single white sensor — so
+starting from one inherits all of it for free, and a newly generated image
+would have to re-earn it. And the film sits on the same page as its still, so a
+different building, field or corridor in the video reads as two different
+places.
+
+The workflow is: **that industry's still as the first frame → the prompt below
+as the motion.** The prompts are written to start where the still already is,
+so the first frame is the picture the visitor has just scrolled past.
+
+If a particular still refuses to animate well, generating a fresh first frame
+from that industry's §4.1 prompt is fine — same prompt, same register, and it
+will still belong to the family. What must not happen is a first frame from
+somewhere outside the register.
 
 ---
 

@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# NOTE: assets-inbox/ is ignored by the REPOSITORY-ROOT .gitignore, not here,
+# so the rule covers it from wherever it is referenced. Do not add a second
+# rule for it in this file — two rules for one path drift apart.

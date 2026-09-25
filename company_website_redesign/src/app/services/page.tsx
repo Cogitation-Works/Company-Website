@@ -38,7 +38,11 @@ export default function ServicesPage() {
             a pulse travelling on it. The route is the argument: four layers,
             one stack. */}
         <DrawPath
-          className="pointer-events-none absolute left-[calc(var(--spacing-gutter)+0.5rem)] top-0 hidden h-full w-16 text-ink lg:block"
+          /* z-20 clears the stacked cards, which carry z-index 1…6. Without it
+             the spine was painted underneath them and only showed in the gaps,
+             so the line it draws read as broken rather than continuous. It is
+             pointer-events-none, so sitting on top costs no interaction. */
+          className="pointer-events-none absolute left-[calc(var(--spacing-gutter)+0.5rem)] top-0 z-20 hidden h-full w-16 text-ink lg:block"
           viewBox="0 0 40 1000"
           d="M 20 0 C 4 120, 36 240, 20 360 C 4 480, 36 600, 20 720 C 4 840, 30 930, 20 1000"
           accent="var(--color-signal)"

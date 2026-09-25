@@ -1,7 +1,7 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
 import { Magnetic } from "@/components/ui/Interactions";
+import { useSharedState } from "@/lib/sharedState";
 
 /**
  * The four owned platforms, as an interactive index rather than a card grid.
@@ -52,44 +52,14 @@ const PRODUCTS = [
   },
 ];
 
-/**
- * Which row is open, held OUTSIDE React.
- *
- * The magnifier renders the whole page a second time, which means this
- * component is mounted twice. With `useState` the two copies each had their
- * own value: the real page opened HRMS Pro, the copy stayed on the default
- * CRM row, and magnifying an expanded row showed the collapsed version of it.
- * A module-level store is read by both mounts, so the duplicate always shows
- * what is actually on screen.
- *
- * The rule this is an instance of: any component whose state changes what is
- * PAINTED has to keep that state outside React, or the magnifier will show a
- * stale copy of it.
- */
-let openId: string | null = PRODUCTS[0].id;
-const listeners = new Set<() => void>();
-const openStore = {
-  subscribe(fn: () => void) {
-    listeners.add(fn);
-    return () => {
-      listeners.delete(fn);
-    };
-  },
-  get: () => openId,
-  set(v: string | null) {
-    if (v === openId) return;
-    openId = v;
-    listeners.forEach((l) => l());
-  },
-};
-
 export default function Products() {
-  const active = useSyncExternalStore(
-    openStore.subscribe,
-    openStore.get,
-    openStore.get,
+  /* Shared, not useState: the magnifier mounts this component a second time
+     and the copy would otherwise stay on the default row, so magnifying an
+     expanded row showed the collapsed version. See lib/sharedState.ts. */
+  const [active, setActive] = useSharedState<string | null>(
+    "home-products-open",
+    PRODUCTS[0].id,
   );
-  const setActive = openStore.set;
 
   return (
     <section className="relative border-t border-line bg-surface py-24 lg:py-32">

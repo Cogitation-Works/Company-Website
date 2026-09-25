@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import PageHero from "@/components/layout/PageHero";
 import { Section, NextLink } from "@/components/layout/Blocks";
 import ScrollStory from "@/components/scroll/ScrollStory";
-import { INDUSTRIES, getIndustry } from "@/content/industries";
+import { INDUSTRIES, getIndustry, industryFilm } from "@/content/industries";
 import { WORK } from "@/content/work";
 
 export function generateStaticParams() {
@@ -199,6 +199,7 @@ export default async function IndustryPage({
           stages={ind.story}
           accent={ind.accent}
           note={ind.storyNote}
+          frames={industryFilm(ind.slug)}
         />
       ) : null}
 

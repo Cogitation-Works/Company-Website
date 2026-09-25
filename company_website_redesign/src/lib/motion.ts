@@ -1,8 +1,117 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type RefObject } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+/**
+ * Keeps a pinned (`position: sticky`) section correct inside the magnifier.
+ *
+ * ──────────────────────────────────────────────────────────────────────────
+ * ⚠️ WHY THIS EXISTS. The magnifier renders the page a second time inside a
+ * 128px box with `overflow: hidden`. `position: sticky` resolves against the
+ * nearest scroll container, and inside the lens that box IS the nearest one —
+ * so every pinned section in the copy sticks to the lens instead of to the
+ * page. The duplicate then shows the pinned panel somewhere completely
+ * different from where it really is, which is why magnifying the middle of a
+ * scroll-pinned section showed blank space or the wrong content.
+ *
+ * The real instance publishes how far its pinned child is currently pushed
+ * down inside its tall wrapper; CSS hands that number to the copy, which
+ * places its duplicate absolutely at the same offset. The copy never
+ * publishes — it would be measuring its own position inside the lens box.
+ * ──────────────────────────────────────────────────────────────────────────
+ *
+ * Add `data-pin="<name>"` to the tall wrapper and a matching rule in
+ * globals.css under "Pinned sections inside the magnifier".
+ */
+export function useStickyPin(
+  name: string,
+  wrapRef: RefObject<HTMLElement | null>,
+  enabled = true,
+) {
+  usePinProgress(name, wrapRef, enabled);
+}
+
+/* One store per pinned section, shared by the real page and the magnifier's
+   duplicate. Both render the same component, so without this they each run
+   their own measurement — and the copy is measuring its own position inside
+   the 128px lens box, which is meaningless. The result was the duplicate
+   showing a different stage of the same pinned panel than the one actually on
+   screen. Only the real instance writes; the copy subscribes. */
+const pinStores = new Map<string, { p: number; subs: Set<() => void> }>();
+const pinStore = (name: string) => {
+  let s = pinStores.get(name);
+  if (!s) {
+    s = { p: 0, subs: new Set() };
+    pinStores.set(name, s);
+  }
+  return s;
+};
+
+/**
+ * Scroll progress (0→1) through a tall pinned wrapper, safe under the
+ * magnifier. Also publishes the pinned child's current offset as
+ * `--lens-pin-<name>` so the duplicate can be placed correctly — see
+ * useStickyPin's note and the CSS under "Pinned sections inside the
+ * magnifier".
+ */
+export function usePinProgress(
+  name: string,
+  wrapRef: RefObject<HTMLElement | null>,
+  enabled = true,
+) {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const store = pinStore(name);
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+
+    /* Read straight from the DOM rather than from state. Deciding this via a
+       `useState` set in an effect meant the duplicate spent its first frame
+       believing it was the real one: it measured its own position inside the
+       128px lens box and wrote that into the shared store. On a page nobody
+       was actively scrolling, the real instance had nothing new to publish,
+       so the bad value stuck and the copy kept showing the wrong stage. */
+    if (wrap.closest(".lens-zoom")) {
+      const sync = () => setProgress(store.p);
+      store.subs.add(sync);
+      sync();
+      return () => {
+        store.subs.delete(sync);
+      };
+    }
+
+    if (!enabled) return;
+
+    const prop = `--lens-pin-${name}`;
+    let raf = 0;
+    let last = -1;
+
+    const tick = () => {
+      raf = requestAnimationFrame(tick);
+      const r = wrap.getBoundingClientRect();
+      const travel = r.height - window.innerHeight;
+      if (travel <= 0) return;
+      const p = Math.min(1, Math.max(0, -r.top / travel));
+      if (Math.abs(p - last) < 0.0015) return; // idle costs nothing
+      last = p;
+      store.p = p;
+      setProgress(p);
+      document.documentElement.style.setProperty(
+        prop,
+        `${Math.round(p * travel)}px`,
+      );
+      store.subs.forEach((fn) => fn());
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [name, wrapRef, enabled]);
+
+  return progress;
+}
 
 /**
  * Register GSAP plugins once, on the client only.

@@ -126,11 +126,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               inner cursor circle IS the lens, so a page where it magnifies
               nothing reads as broken. Hero guards itself against being mounted
               twice; see the `inLensCopy` check there. */}
+          {/* The footer is INSIDE the lens on purpose. It only magnifies what
+              it wraps, so with the footer outside, scrolling to the bottom of
+              any page left the cursor with nothing to magnify — which reads as
+              the lens being broken there. The header stays outside: it is
+              fixed, so a duplicate of it would be pinned to the lens box
+              rather than to the page, and it is the one place the client
+              asked for the lens not to apply. */}
           <Lens zoomFactor={1.75}>
             <main id="main">{children}</main>
+            <Footer />
           </Lens>
           <SoundToggle />
-          <Footer />
         </SmoothScroll>
       </body>
     </html>

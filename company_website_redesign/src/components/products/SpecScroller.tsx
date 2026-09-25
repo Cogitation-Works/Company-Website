@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import { usePrefersReducedMotion, useMediaQuery } from "@/lib/motion";
+import { usePrefersReducedMotion, useMediaQuery, usePinProgress } from "@/lib/motion";
 import { Tbc } from "@/components/layout/Blocks";
 
 /* Three.js never enters the main bundle — it loads only for the viewers who
@@ -39,7 +39,6 @@ export default function SpecScroller({
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const objectRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
   const reduced = usePrefersReducedMotion();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const [inLensCopy, setInLensCopy] = useState(false);
@@ -52,45 +51,29 @@ export default function SpecScroller({
 
   const render3D = isDesktop && !reduced && !inLensCopy;
 
+  /* Shared with the magnifier's duplicate: the copy mirrors this rather than
+     measuring its own position inside the lens box, which would leave it
+     showing a different spec than the one actually on screen. It also
+     publishes the pinned child's offset for the copy to position against. */
+  const scrollProgress = usePinProgress("spec", wrapRef, !reduced);
+  const progress = reduced ? 1 : scrollProgress;
+
   useEffect(() => {
-    if (reduced) {
-      setProgress(1);
-      return;
+    if (objectRef.current) {
+      objectRef.current.style.transform = `rotate(${progress * 360}deg)`;
     }
-    const wrap = wrapRef.current;
-    if (!wrap) return;
-
-    let raf = 0;
-    let last = -1;
-
-    const tick = () => {
-      raf = requestAnimationFrame(tick);
-      const rect = wrap.getBoundingClientRect();
-      const total = rect.height - window.innerHeight;
-      if (total <= 0) return;
-
-      // 0 when the section top hits the viewport top, 1 when its bottom does.
-      const p = Math.min(1, Math.max(0, -rect.top / total));
-      if (Math.abs(p - last) < 0.0015) return; // idle costs nothing
-      last = p;
-
-      // Rotation is written straight to the node. Keeping it out of React
-      // state means the 60fps path never triggers a re-render.
-      if (objectRef.current) {
-        objectRef.current.style.transform = `rotate(${p * 360}deg)`;
-      }
-      setProgress(p);
-    };
-
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [reduced]);
+  }, [progress]);
 
   /* Each spec claims an equal slice of the scroll and reveals when crossed. */
   const revealed = (i: number) => progress >= (i + 0.5) / (specs.length + 0.5);
 
   return (
-    <div ref={wrapRef} className="relative bg-deep text-on-deep" style={{ height: "280vh" }}>
+    <div
+      ref={wrapRef}
+      data-pin="spec"
+      className="relative bg-deep text-on-deep"
+      style={{ height: "280vh" }}
+    >
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         {/* Fixed diagonal accent band — the BMW M-stripe idea: the graphic stays
             put while the object moves against it, which is what sells the

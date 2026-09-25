@@ -130,23 +130,34 @@ export default function CoreSequence({
         pinTravel = r.height - window.innerHeight;
       }
       lastDrawn = -1;
+      dest = { x: 0, y: 0, w: 0, h: 0 }; // recompute the fit at the new size
     };
 
-    const paint = (frame: Frame, alpha: number) => {
+    /* Destination rectangle is computed ONCE per resize, not per frame, and
+       rounded to whole device pixels. Every frame is the same size, so any
+       per-frame recomputation could only introduce sub-pixel differences —
+       and a destination that shifts by a fraction of a pixel between frames
+       resamples the edges slightly differently each time, which reads as the
+       object's outline crawling. Fixed integers keep the silhouette still. */
+    let dest = { x: 0, y: 0, w: 0, h: 0 };
+    const fitTo = (frame: Frame) => {
       const scale = Math.min(
         canvas.width / frame.width,
         canvas.height / frame.height,
       );
-      const dw = frame.width * scale;
-      const dh = frame.height * scale;
-      ctx.globalAlpha = alpha;
-      ctx.drawImage(
-        frame,
-        (canvas.width - dw) / 2,
-        (canvas.height - dh) / 2,
-        dw,
-        dh,
-      );
+      const w = Math.round(frame.width * scale);
+      const h = Math.round(frame.height * scale);
+      dest = {
+        x: Math.round((canvas.width - w) / 2),
+        y: Math.round((canvas.height - h) / 2),
+        w,
+        h,
+      };
+    };
+
+    const paint = (frame: Frame) => {
+      if (!dest.w) fitTo(frame);
+      ctx.drawImage(frame, dest.x, dest.y, dest.w, dest.h);
     };
 
     /** Nearest decoded frame, so gaps during loading never blank the canvas. */
@@ -159,31 +170,25 @@ export default function CoreSequence({
       return -1;
     };
 
-    /* Cross-fade WHILE MOVING, snap crisp AT REST.
-       Fading frame N into N+1 fills the gaps between only 60 frames, which is
-       what keeps fast scrolling continuous. But holding that fade once the
-       page stops leaves two different renders superimposed on screen — a
-       permanent double exposure that reads as a blurry, stalled video. So the
-       blend is used only while the sequence is actually advancing, and the
-       moment it settles the nearest single frame is drawn on its own. */
+    /* ONE frame at a time. Never two.
+       ⚠️ Do not reintroduce a cross-fade here. Blending frame N into N+1 puts
+       two different renders of a ROTATING object on screen at once, so its
+       silhouette doubles — the rim of the sphere appears to vibrate and tear
+       while you scroll, which is exactly the glitching the client reported.
+       There is no blend that hides it, because the two edges genuinely are in
+       different places. Snapping is the fix.
+
+       It costs nothing in smoothness at this frame density: 60 frames across
+       60svh of scroll is about 9px per frame, so consecutive frames are close
+       enough that stepping is not visible. If PIN_TRAVEL is ever lengthened a
+       lot, add frames — do not add a blend. */
     const clamp = (i: number) => Math.max(0, Math.min(FRAME_COUNT - 1, i));
 
-    const draw = (index: number, blend: boolean) => {
-      if (!blend) {
-        const i = nearest(clamp(Math.round(index)));
-        if (i < 0) return;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        paint(cache[i]!, 1);
-        return;
-      }
-      const i0 = nearest(clamp(Math.floor(index)));
-      if (i0 < 0) return;
+    const draw = (index: number) => {
+      const i = nearest(clamp(Math.round(index)));
+      if (i < 0) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      paint(cache[i0]!, 1);
-      const i1 = clamp(i0 + 1);
-      const mix = index - Math.floor(index);
-      if (i1 !== i0 && cache[i1] && mix > 0.01) paint(cache[i1]!, mix);
-      ctx.globalAlpha = 1;
+      paint(cache[i]!);
     };
 
     const progressNow = () => {
@@ -206,47 +211,21 @@ export default function CoreSequence({
        page had stopped. Mapping straight from scroll position means the frame
        on screen always matches where the page actually is, and everything
        stops the moment scrolling does. */
-    let lastIndex = 0;
-    let stillFor = 0;
-
-    let lastPinPx = -1;
-
     const tick = () => {
       raf = requestAnimationFrame(tick);
       const p = progressNow();
       const index = p * (FRAME_COUNT - 1);
+      // (The pinned offset the magnifier's copy needs is published by
+      // useStickyPin("hero") in Hero.tsx — not from here, so that it keeps
+      // working when the sequence itself is not mounted.)
 
-      /* Publish where the sticky hero currently sits. The magnifier renders
-         the page a second time inside a clipping box, where `sticky` resolves
-         against that box instead of the window; the copy reads this to place
-         the hero at the same offset as the real one. See `.lens-zoom
-         .hero-pin > section` in globals.css. */
-      if (pinRef?.current && pinTravel > 0) {
-        const px = Math.round(p * pinTravel);
-        if (px !== lastPinPx) {
-          lastPinPx = px;
-          document.documentElement.style.setProperty(
-            "--hero-pin-offset",
-            `${px}px`,
-          );
-        }
-      }
-
-      // "Moving" means the sequence advanced by a meaningful fraction of a
-      // frame this tick. A couple of quiet ticks in a row counts as stopped,
-      // so a single dropped frame cannot flicker it between the two modes.
-      const moved = Math.abs(index - lastIndex) > 0.01;
-      stillFor = moved ? 0 : stillFor + 1;
-      lastIndex = index;
-      const blend = stillFor < 2;
-
-      // Redraw only when what would be ON SCREEN changes: while blending that
-      // is any small move, at rest it is a change of whole frame. An idle page
-      // draws nothing at all.
-      const key = blend ? Math.round(index * 20) : Math.round(index) * 20;
-      if (key === lastDrawn) return;
-      lastDrawn = key;
-      draw(index, blend);
+      // Redraw only when the WHOLE FRAME changes. An idle page, and a scroll
+      // that has not yet moved far enough to reach the next frame, both cost
+      // nothing at all.
+      const frame = Math.round(index);
+      if (frame === lastDrawn) return;
+      lastDrawn = frame;
+      draw(index);
       onProgress?.(p);
     };
 

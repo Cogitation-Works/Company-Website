@@ -88,6 +88,10 @@ export function ParallaxCards({
  * layout recalculation per frame, which is where GSAP-pinned versions of this
  * usually go wrong.
  */
+/* Per-card state the real instance publishes for the magnifier's duplicate.
+   Module level so both mounts of the component see the same array. */
+const stackState: { stuck: number; scale: number; bright: number }[] = [];
+
 export function StackCards({
   items,
   accentOf,
@@ -98,24 +102,66 @@ export function StackCards({
   const wrapRef = useRef<HTMLDivElement>(null);
   const reduced = usePrefersReducedMotion();
 
+  /* ⚠️ These cards are `position: sticky`, and the magnifier renders the page
+     a second time inside a clipping box where sticky resolves against that box
+     rather than the page. Left alone, the duplicated cards sit at their
+     unstuck flow positions — so magnifying the card you are actually looking
+     at showed a card from further down the stack instead.
+
+     Sticky cannot be made to work in there, so the real instance publishes
+     each card's current displacement and appearance, and the duplicate simply
+     applies them. The copy never measures: inside the lens its own
+     measurements are meaningless. */
   useEffect(() => {
     if (reduced) return;
     const wrap = wrapRef.current;
     if (!wrap) return;
     const cards = Array.from(wrap.querySelectorAll<HTMLElement>("[data-stack]"));
+    const inCopy = !!wrap.closest(".lens-zoom");
 
     let raf = 0;
     const tick = () => {
       raf = requestAnimationFrame(tick);
+
+      if (inCopy) {
+        cards.forEach((c, i) => {
+          const s = stackState[i];
+          if (!s) return;
+          /* The duplicate's cards are forced to `position: relative` by the
+             lens CSS, so THEIR `offsetTop` is the honest unstuck flow offset —
+             which the real card's is not, because Chrome folds the sticky
+             shift into it. So each side measures the one it can: the real card
+             publishes where it is actually painted inside the wrapper, and the
+             copy makes up the difference from its own flow position. */
+          c.style.transform =
+            `translateY(${s.stuck - c.offsetTop}px) scale(${s.scale})`;
+          c.style.filter = `brightness(${s.bright})`;
+        });
+        return;
+      }
+
       const vh = window.innerHeight;
+      const wrapTop = wrap.getBoundingClientRect().top;
       cards.forEach((c, i) => {
-        if (i === cards.length - 1) return; // top card never shrinks
-        const next = cards[i + 1];
-        const nr = next.getBoundingClientRect();
-        // How far the NEXT card has covered this one, 0 → 1.
-        const p = Math.min(1, Math.max(0, (vh - nr.top) / vh));
-        c.style.transform = `scale(${(1 - p * 0.07).toFixed(4)})`;
-        c.style.filter = `brightness(${(1 - p * 0.22).toFixed(3)})`;
+        const last = i === cards.length - 1;
+        let scale = 1;
+        let bright = 1;
+        if (!last) {
+          const nr = cards[i + 1].getBoundingClientRect();
+          // How far the NEXT card has covered this one, 0 → 1.
+          const p = Math.min(1, Math.max(0, (vh - nr.top) / vh));
+          scale = 1 - p * 0.07;
+          bright = 1 - p * 0.22;
+          c.style.transform = `scale(${scale.toFixed(4)})`;
+          c.style.filter = `brightness(${bright.toFixed(3)})`;
+        }
+        // Where this card is actually painted, measured from the wrapper's
+        // top. The duplicate turns that into a shift off its own flow spot.
+        stackState[i] = {
+          stuck: Math.round(c.getBoundingClientRect().top - wrapTop),
+          scale: Number(scale.toFixed(4)),
+          bright: Number(bright.toFixed(3)),
+        };
       });
     };
     raf = requestAnimationFrame(tick);

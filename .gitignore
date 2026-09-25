@@ -8,9 +8,14 @@ not for project/
 *.webm
 *.mp4.download
 
-# Raw asset drop-off — source PNGs/videos before processing.
-# These are large originals; only the optimised output in public/ is tracked.
-company website redesign/assets-inbox/
+# Raw asset drop-off — source PNGs and videos before processing. Masters land
+# here and are processed into public/ (cropped, resized, sliced to frames);
+# only that optimised output is tracked. The originals run to hundreds of MB
+# and nothing at build or run time reads them.
+#
+# ⚠️ Because this is ignored, NOTHING IN IT IS RECOVERABLE FROM GIT. Keep your
+# own copy of anything here you cannot regenerate — generators do not return
+# the same image twice.
 assets-inbox/
 
 # Dependencies

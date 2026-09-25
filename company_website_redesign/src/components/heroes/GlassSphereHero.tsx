@@ -109,16 +109,40 @@ export default function GlassSphereHero({
       <HeroTheme value="light" />
 
       {/* The real headline, for search engines and screen readers. When the
-          3D wordmark is live this is visually hidden, not removed. */}
+          3D wordmark is live this is visually hidden, not removed.
+
+          The magnifier's copy takes the hidden form too. It cannot mount the
+          sphere, but painting the fallback headline across the whole hero
+          instead would put a full-bleed block of type over the section — so
+          magnifying anything in this hero showed that headline rather than
+          what was actually under the pointer. */}
       <h1
         className={
-          live
+          live || inLensCopy
             ? "sr-only"
             : "absolute inset-0 flex items-center justify-center px-[var(--spacing-gutter)] text-center font-[560] uppercase leading-[0.86] tracking-[-0.04em] text-[clamp(3.5rem,14vw,11rem)]"
         }
       >
         {word}
       </h1>
+
+      {/* Static chrome, drawn in the copy as well so the text the magnifier
+          shows sits where the real text sits. */}
+      {inLensCopy ? (
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] px-[var(--spacing-gutter)] pb-7">
+          <div className="container-page !px-0">
+            <div className="flex items-end justify-between gap-6 pb-3">
+              <span className="font-[560] uppercase tracking-[-0.01em] text-[clamp(0.9rem,1.3vw,1.15rem)] text-ink">
+                {prompt}
+              </span>
+              <span className="font-[560] uppercase tracking-[-0.01em] text-[clamp(0.9rem,1.3vw,1.15rem)] text-ink">
+                Click and hold
+              </span>
+            </div>
+            <div className="h-[2px] w-full bg-ink/15" />
+          </div>
+        </div>
+      ) : null}
 
       {live ? (
         <>

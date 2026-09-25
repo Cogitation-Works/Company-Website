@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import { useMediaQuery, usePrefersReducedMotion } from "@/lib/motion";
+import { useMediaQuery, usePrefersReducedMotion, useStickyPin } from "@/lib/motion";
 import { Magnetic } from "@/components/ui/Interactions";
 import { useHeroVariant, HeroSwitcher } from "@/components/hero/HeroCanvas";
 import HeroTheme from "@/components/layout/HeroTheme";
@@ -91,7 +91,19 @@ export default function Hero() {
     setInLensCopy(!!rootRef.current?.closest(".lens-zoom"));
   }, []);
 
-  const render3D = isDesktop && !reduced && !inLensCopy;
+  /* TWO SEPARATE GATES, and keeping them separate is load-bearing.
+
+     `pinned` decides LAYOUT — how tall this section is. It must NOT depend on
+     `inLensCopy`, because the magnifier's duplicate has to occupy exactly the
+     same space as the real page or everything below it lands at the wrong
+     offset. That was a real bug: the height was gated on `render3D`, so in the
+     copy the hero was 120svh shorter and the magnifier showed content from
+     about 1080px further down the page than the spot being pointed at.
+
+     `render3D` decides MOUNTING — the WebGL context and the 60-frame sequence,
+     the two most expensive things on the site, which the duplicate skips. */
+  const pinned = isDesktop && !reduced;
+  const render3D = pinned && !inLensCopy;
 
   /* PINNING.
      Where the sequence runs, the hero is stuck to the viewport for a tall
@@ -103,20 +115,25 @@ export default function Hero() {
      behaving normally.
 
      PIN_TRAVEL is the scroll spent on the sequence, on top of the one
-     viewport the hero itself occupies. */
-  const PIN_TRAVEL = "120svh";
+     viewport the hero itself occupies. It is the ONLY thing that sets how
+     fast the sequence plays: the same 60 frames over half the distance runs
+     twice as fast. Dropping frames would not speed it up, it would only make
+     it choppier. */
+  const PIN_TRAVEL = "60svh";
   const pinRef = useRef<HTMLDivElement>(null);
+  useStickyPin("hero", pinRef, pinned);
 
   return (
     <div
       ref={pinRef}
-      className="hero-pin relative"
-      style={render3D ? { height: `calc(100svh + ${PIN_TRAVEL})` } : undefined}
+      data-pin="hero"
+      className="relative"
+      style={pinned ? { height: `calc(100svh + ${PIN_TRAVEL})` } : undefined}
     >
     <section
       ref={rootRef}
       className={`relative isolate overflow-hidden bg-deep pt-24 pb-16 text-on-deep lg:pt-28 ${
-        render3D ? "sticky top-0 h-[100svh]" : "lg:min-h-[100svh]"
+        pinned ? "sticky top-0 h-[100svh]" : "lg:min-h-[100svh]"
       }`}
     >
       {/* The home hero is dark. Claimed explicitly so arriving from a light

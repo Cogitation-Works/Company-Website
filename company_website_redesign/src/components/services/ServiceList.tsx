@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import CapabilityVisual from "./CapabilityVisual";
+import { useSharedState } from "@/lib/sharedState";
 
 /**
  * The capability list on a pillar page. Each row expands in place to show what
@@ -24,7 +24,10 @@ export default function ServiceList({
   services: { name: string; detail: string }[];
   accent: string;
 }) {
-  const [open, setOpen] = useState<number | null>(0);
+  /* Shared, not useState: the magnifier mounts this component a second time
+     and the copy would otherwise stay on row 0 forever, so magnifying an open
+     row showed a different one open. See lib/sharedState.ts. */
+  const [open, setOpen] = useSharedState<number | null>("service-list-open", 0);
 
   return (
     <ul className="border-t border-line">
