@@ -83,29 +83,98 @@ export function useCanRender3D() {
  * Reveal-on-scroll primitive. Adds data-revealed="true" the first time an
  * element with [data-reveal] enters the viewport. CSS does the animation,
  * so this stays cheap and works without JS re-renders.
+ *
+ * ──────────────────────────────────────────────────────────────────────────
+ * ⚠️ THIS USED TO BLANK WHOLE PAGES, and the reason is worth keeping written
+ * down, because the shape of the mistake matters more than the fix.
+ *
+ * It ran ONCE, on mount, over whatever `[data-reveal]` nodes existed at that
+ * instant. It is called from SmoothScroll, which lives in the root layout and
+ * never remounts. So on a client-side navigation the new page's elements were
+ * never observed, never got `data-revealed`, and sat at `opacity: 0` forever —
+ * a fully rendered page that was completely invisible. Hard-reloading the same
+ * URL worked, which is exactly why it read as "sometimes the page is blank".
+ *
+ * Two changes, and the second is the one that matters:
+ *
+ *   1. New nodes are picked up as they arrive (MutationObserver), so route
+ *      changes work.
+ *   2. The CSS only hides anything while `<html data-reveal-armed>` is set,
+ *      which this hook sets and removes. **If this hook never runs, fails, or
+ *      throws, nothing is hidden and the page is simply visible.** A
+ *      decorative animation must never be able to hide the site; the default
+ *      has to be "shown", with hiding as the thing that needs to be earned.
+ *
+ * There is also a sweep that reveals anything left unrevealed while sitting in
+ * the viewport, as a net under both.
+ * ──────────────────────────────────────────────────────────────────────────
  */
 export function useRevealObserver() {
   useEffect(() => {
-    const nodes = document.querySelectorAll<HTMLElement>("[data-reveal]");
-    if (!nodes.length) return;
+    const root = document.documentElement;
+    const reveal = (n: Element) => n.setAttribute("data-revealed", "true");
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      nodes.forEach((n) => n.setAttribute("data-revealed", "true"));
+      document.querySelectorAll("[data-reveal]").forEach(reveal);
       return;
     }
+
+    // Only now that the observer is actually running may anything be hidden.
+    root.setAttribute("data-reveal-armed", "");
 
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          entry.target.setAttribute("data-revealed", "true");
+          reveal(entry.target);
           io.unobserve(entry.target);
         });
       },
       { rootMargin: "0px 0px -12% 0px", threshold: 0.1 },
     );
 
-    nodes.forEach((n) => io.observe(n));
-    return () => io.disconnect();
+    const seen = new WeakSet<Element>();
+    const observe = (n: Element) => {
+      if (seen.has(n)) return;
+      seen.add(n);
+      io.observe(n);
+    };
+    const scan = (r: ParentNode) =>
+      r.querySelectorAll?.("[data-reveal]").forEach(observe);
+
+    scan(document);
+
+    // Route changes and any other late-rendered content.
+    const mo = new MutationObserver((records) => {
+      for (const r of records) {
+        for (const node of r.addedNodes) {
+          if (!(node instanceof Element)) continue;
+          if (node.matches("[data-reveal]")) observe(node);
+          scan(node);
+        }
+      }
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    /* Net: anything unrevealed that is already on screen gets revealed anyway.
+       Runs for a few seconds after mount and after each navigation, which is
+       when the observers could plausibly miss something. */
+    const sweep = () => {
+      const vh = window.innerHeight;
+      document
+        .querySelectorAll("[data-reveal]:not([data-revealed])")
+        .forEach((n) => {
+          const r = n.getBoundingClientRect();
+          if (r.top < vh && r.bottom > 0) reveal(n);
+        });
+    };
+    const timer = window.setInterval(sweep, 1200);
+
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+      window.clearInterval(timer);
+      root.removeAttribute("data-reveal-armed");
+    };
   }, []);
 }

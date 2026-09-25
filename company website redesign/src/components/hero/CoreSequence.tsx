@@ -209,10 +209,28 @@ export default function CoreSequence({
     let lastIndex = 0;
     let stillFor = 0;
 
+    let lastPinPx = -1;
+
     const tick = () => {
       raf = requestAnimationFrame(tick);
       const p = progressNow();
       const index = p * (FRAME_COUNT - 1);
+
+      /* Publish where the sticky hero currently sits. The magnifier renders
+         the page a second time inside a clipping box, where `sticky` resolves
+         against that box instead of the window; the copy reads this to place
+         the hero at the same offset as the real one. See `.lens-zoom
+         .hero-pin > section` in globals.css. */
+      if (pinRef?.current && pinTravel > 0) {
+        const px = Math.round(p * pinTravel);
+        if (px !== lastPinPx) {
+          lastPinPx = px;
+          document.documentElement.style.setProperty(
+            "--hero-pin-offset",
+            `${px}px`,
+          );
+        }
+      }
 
       // "Moving" means the sequence advanced by a meaningful fraction of a
       // frame this tick. A couple of quiet ticks in a row counts as stopped,

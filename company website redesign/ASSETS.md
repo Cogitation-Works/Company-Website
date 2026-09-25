@@ -625,6 +625,132 @@ its brief printed on the plate. Filling one in is a one-line change in
 
 ---
 
+### 4.7 Seven industry films · **Google Flow** · one per industry page
+
+These drive the scroll-scrubbed block partway down each `/industries/<slug>`
+page. **The staging and all the copy are already live** — each page runs the
+block in placeholder mode with its brief printed on the plate, so only the
+footage is missing. Dropping one in is a one-line change in
+`src/content/industries.ts` (`frames: { path, count }`).
+
+**Each film has three beats**, and they are the same three stages the copy steps
+through on that page, in order. Roughly four seconds each, but **as one
+continuous move** — the beats are places the camera passes through, not cuts.
+
+> **Append this block to all seven, unchanged:**
+> ```
+> Camera: one single continuous take at a perfectly constant speed. No cuts, no
+> transitions, no speed ramps, no handheld shake. Lighting is identical from the
+> first frame to the last. Minimal motion blur. Style: photoreal cinematic
+> documentary, shot on anamorphic glass, rich film-grade colour, high dynamic
+> range, visible atmospheric haze carrying the light, warm amber key against
+> cool blue shadow. Keep the lower-left third of the frame visually quiet and
+> uncluttered. Audio: none, silent. 1080p, 16:9, 12 seconds, 30fps. No people's
+> faces, no text, no signage, no logos, no watermark.
+> ```
+
+⚠️ **Why "no cuts" is not a style note.** These are scrubbed against scroll, not
+played. A cut becomes a jump the visitor controls the speed of, and it reads as
+a broken video every time. Same for speed ramps: the scroll is the clock, so the
+footage must not have one of its own.
+
+⚠️ **Keep the lower-left quiet.** The stage copy — kicker, headline, two lines —
+is overlaid there in white. Busy or bright content behind it makes it unreadable.
+
+**Delivery:** one `.mp4` per industry. They ship as **60 WebP frames**, never as
+a `<video>` — scrubbing a compressed video forces a keyframe decode per scroll
+event, which is the 1–5fps juddering the client flagged on
+terminal-industries.com.
+
+---
+
+**① MANUFACTURING** — *intake → the floor → the answer*
+
+```
+A slow continuous dolly down the centre aisle of a modern manufacturing hall at
+early morning. The move begins tight on a steel pallet of raw stock and a small
+unbranded white terminal at the head of the line, pulls steadily back and up to
+reveal long parallel rows of CNC cells working either side of the aisle, and
+ends high and wide looking down the full length of the hall to a distant open
+dispatch door filled with warm daylight. Low sun through clerestory windows
+throws long readable shafts across airborne dust. Amber light against cool
+blue-grey machine shadow, polished concrete reflecting it in long streaks.
+```
+
+**② HEALTHCARE** — *capture → matching → compliance*
+
+```
+A slow continuous forward glide down a spotless modern hospital corridor at
+sunrise. The move begins close on a small unbranded white wall-mounted terminal
+with one calm amber indicator, drifts forward past rows of recessed ceiling
+coves and glass partitions that converge ahead, and finishes facing a tall glass
+end wall flooded with warm morning light. Thin haze turns the light into visible
+shafts across the polished floor. Everything white, pale blue-grey and brushed
+stainless, lit warm amber against cool blue shadow.
+```
+
+**③ FINTECH** — *one record → in flight → status*
+
+```
+A slow continuous tracking shot down the cold aisle of a modern data centre. The
+move begins tight on a single rack door where one status LED pulses warm amber,
+pulls back between two unbroken walls of racks whose LEDs read as two receding
+lines of tiny amber points, and ends wide at the far end of the aisle where a
+low sun enters through a window and cuts through the cold air shimmer above the
+floor vents. Deep blue-black steel and graphite, lit only by the amber points
+and that distant sun.
+```
+
+**④ TELECOM** — *first contact → translation → qualified*
+
+```
+A slow continuous aerial push along a rooftop ridge high above a hazy city at
+sunrise. The move begins close on a small unbranded white equipment cabinet at
+the base of the nearest mast, rises and tracks forward along a receding line of
+slim antenna masts and microwave dishes, and ends looking out over a thick layer
+of morning haze filling the streets far below, the mast silhouettes rimmed in
+warm amber. Warm amber sky against cool blue haze and deep blue-grey steel.
+```
+
+**⑤ ENERGY** — *production → dispatch → parts*
+
+```
+A slow continuous aerial glide along a vast solar tracker farm at dusk, minutes
+after sunset. The move begins low and close on a small unbranded white inverter
+cabinet at the end of the nearest row, lifts and tracks along the rows as they
+converge toward the horizon, and ends high and wide with the whole array reading
+as dark blue-grey silhouettes under a low band of intense amber and rose light.
+Thick ground haze between the rows so the furthest fade into it. A thin amber
+rim along every panel's leading edge.
+```
+
+**⑥ ELEVATORS & IoT** — *sensors → reading → response*
+
+```
+A slow continuous vertical rise inside a tall glass and brushed-steel elevator
+shaft in a contemporary office atrium. The move begins close on a small
+unbranded white sensor module clamped to a guide rail, climbs steadily past a
+glass elevator car whose underside catches warm amber light, and ends looking up
+at the skylight far above where low sun enters and blooms. Guide rails and floor
+edges converge dramatically toward that bright point. Faint atrium haze turns
+the light into visible shafts. Warm amber from above against cool blue-grey
+steel and glass below.
+```
+
+**⑦ AGRICULTURE** — *the field → decisions → logistics*
+
+```
+A slow continuous aerial rise over a vast cultivated field at sunrise. The move
+begins low and close on a small unbranded white field sensor station on a slim
+mast standing among the crop, lifts steadily to reveal long parallel crop rows
+converging toward a distant vanishing point, and ends high and wide with a low
+sun just above the tree line backlighting a thick layer of ground mist lying
+between the rows. Warm amber sunlight against cool blue-green shadow in the
+crop, deep blue sky above.
+```
+
+---
+
 ## 5. TIER 2 — after the pages exist
 
 ### 5.1 The Descent · **Flow** · the Peachweb transition

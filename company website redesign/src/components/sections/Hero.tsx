@@ -110,7 +110,7 @@ export default function Hero() {
   return (
     <div
       ref={pinRef}
-      className="relative"
+      className="hero-pin relative"
       style={render3D ? { height: `calc(100svh + ${PIN_TRAVEL})` } : undefined}
     >
     <section

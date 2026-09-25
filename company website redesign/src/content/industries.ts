@@ -25,6 +25,16 @@ export type Industry = {
   imageWidths?: number[];
   isNew?: boolean;
   accent: string;
+  /**
+   * The scroll-scrubbed sequence on the industry page: three stages of copy
+   * that the footage advances through. Runs in placeholder mode until the
+   * film lands, so the timing and the words can be judged now. The prompt for
+   * each film is in ASSETS.md §4.7, one per industry, and its three beats are
+   * these three stages in order.
+   */
+  story?: { kicker: string; title: string; body?: string }[];
+  /** What footage belongs here — printed on the placeholder plate. */
+  storyNote?: string;
 };
 
 export const INDUSTRIES: Industry[] = [
@@ -45,6 +55,24 @@ export const INDUSTRIES: Industry[] = [
     image: "manufacturing",
     imageWidths: [1600, 2400],
     accent: "#ea580c",
+    storyNote: "Plant film — order intake to dispatch, 12s",
+    story: [
+      {
+        kicker: "Intake",
+        title: "The order arrives as data, once",
+        body: "Bill of materials, routing and procurement are entered a single time and referenced by every stage that follows.",
+      },
+      {
+        kicker: "The floor",
+        title: "Each stage reports as it closes",
+        body: "Fabrication checks in against the order, so inventory reflects what has actually been consumed rather than what was counted last.",
+      },
+      {
+        kicker: "The answer",
+        title: "Where the order is, right now",
+        body: "The state of a job stops being a phone call to the floor and becomes something the system can be asked.",
+      },
+    ],
   },
   {
     slug: "healthcare",
@@ -63,6 +91,24 @@ export const INDUSTRIES: Industry[] = [
     image: "healthcare",
     imageWidths: [1600, 2400],
     accent: "#0d9488",
+    storyNote: "Clinic film — one transaction through to reconciliation, 12s",
+    story: [
+      {
+        kicker: "Capture",
+        title: "Every transaction lands in one ledger",
+        body: "Clinical accounts, B2B portals and billing write to the same record instead of to systems that have to be compared later.",
+      },
+      {
+        kicker: "Matching",
+        title: "Invoices reconcile against it",
+        body: "The monthly exercise of matching by hand becomes a rule that runs as the transactions arrive.",
+      },
+      {
+        kicker: "Compliance",
+        title: "Checked at the transaction, not at filing",
+        body: "Rules apply when the record is written, so the filing deadline stops being the moment problems are discovered.",
+      },
+    ],
   },
   {
     slug: "fintech",
@@ -81,6 +127,24 @@ export const INDUSTRIES: Industry[] = [
     image: "fintech",
     imageWidths: [1600, 2400],
     accent: "#2563eb",
+    storyNote: "Operations film — one customer across sales and service, 12s",
+    story: [
+      {
+        kicker: "One record",
+        title: "Sales and service read the same customer",
+        body: "Two teams stop holding two versions of the same account, because there is only one for them to hold.",
+      },
+      {
+        kicker: "In flight",
+        title: "Turnaround becomes visible end to end",
+        body: "Each hand-off is a timestamp, so the time a case actually takes can be seen rather than estimated.",
+      },
+      {
+        kicker: "Status",
+        title: "Anyone who needs the state can see it",
+        body: "Real-time status stops living inside one team's tooling and becomes something the whole operation can read.",
+      },
+    ],
   },
   {
     slug: "telecom",
@@ -99,6 +163,24 @@ export const INDUSTRIES: Industry[] = [
     image: "telecom",
     imageWidths: [1600, 2400],
     accent: "#7c3aed",
+    storyNote: "Network film — masts at dawn into the platform loading, 12s",
+    story: [
+      {
+        kicker: "First contact",
+        title: "The platform loads before the pitch does",
+        body: "Enterprise buyers judge credibility in the first seconds. Performance is the first thing the site says about the engineering behind it.",
+      },
+      {
+        kicker: "Translation",
+        title: "Capability in the buyer's language",
+        body: "Connectivity and channel services described in the terms the buyer already uses, rather than in the terms the network team uses.",
+      },
+      {
+        kicker: "Qualified",
+        title: "The technical conversation starts warmer",
+        body: "By the time someone makes contact, the technical ground has been covered, so the first call starts further along.",
+      },
+    ],
   },
   {
     slug: "energy",
@@ -117,6 +199,24 @@ export const INDUSTRIES: Industry[] = [
     image: "energy",
     imageWidths: [1600, 2400],
     accent: "#ca8a04",
+    storyNote: "Production film — a milestone dispatching a technician, 12s",
+    story: [
+      {
+        kicker: "Production",
+        title: "Every site reports into one plan",
+        body: "Production tracked across multiple sites in one place, instead of separately and then reconciled.",
+      },
+      {
+        kicker: "Dispatch",
+        title: "A milestone assigns the work",
+        body: "Reaching a production stage is what schedules the technician, so scheduling stops being coordinated by hand between locations.",
+      },
+      {
+        kicker: "Parts",
+        title: "Telemetry meets the production order",
+        body: "Parts data and the order it belongs to stop being two separate records that somebody has to join.",
+      },
+    ],
   },
   {
     slug: "elevators-iot",
@@ -135,6 +235,24 @@ export const INDUSTRIES: Industry[] = [
     image: "elevators-iot",
     imageWidths: [1600, 2400],
     accent: "#0891b2",
+    storyNote: "Building film — sensor to shaft to a read-out, 12s",
+    story: [
+      {
+        kicker: "Sensors",
+        title: "The building reports continuously",
+        body: "Vertical transport and connected hardware producing a stream rather than a monthly inspection note.",
+      },
+      {
+        kicker: "Reading",
+        title: "Telemetry has to become a decision",
+        body: "Sophisticated data presented as a spec sheet is unreadable. The interface's job is to turn the stream into the one thing worth acting on.",
+      },
+      {
+        kicker: "Response",
+        title: "Engineering that survives the web",
+        body: "The technical capability reaches the buyer intact, so the path from interest to a technical conversation is short.",
+      },
+    ],
   },
   {
     slug: "agriculture",
@@ -154,6 +272,24 @@ export const INDUSTRIES: Industry[] = [
     imageWidths: [1600, 2400],
     isNew: true,
     accent: "#16a34a",
+    storyNote: "Field film — sunrise over the rows, sensor to decision, 12s",
+    story: [
+      {
+        kicker: "The field",
+        title: "Conditions are measured, not driven out to",
+        body: "Field sensors report continuously, so the state of a block is known without somebody going to look at it.",
+      },
+      {
+        kicker: "Decisions",
+        title: "Irrigation and inputs follow the measurement",
+        body: "The decision is made against what was recorded rather than against what is remembered from last season.",
+      },
+      {
+        kicker: "Logistics",
+        title: "Harvest planning reads the same data",
+        body: "The movement of the crop is planned from the measurements that produced it. Drone logistics is in development, not deployed.",
+      },
+    ],
   },
 ];
 

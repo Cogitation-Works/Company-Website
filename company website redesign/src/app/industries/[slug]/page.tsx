@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageHero from "@/components/layout/PageHero";
-import { Section, NumberedList, NextLink } from "@/components/layout/Blocks";
+import { Section, NextLink } from "@/components/layout/Blocks";
+import ScrollStory from "@/components/scroll/ScrollStory";
 import { INDUSTRIES, getIndustry } from "@/content/industries";
 import { WORK } from "@/content/work";
 
@@ -75,26 +76,131 @@ export default async function IndustryPage({
         </figure>
       ) : null}
 
-      <Section
-        label="The problem"
-        heading={`What we usually find in ${ind.noun}`}
-      >
-        <NumberedList items={ind.problems} />
-      </Section>
+      {/* Two columns from here down.
+          The section headings used to sit in a 46ch block with the whole
+          right-hand side of the page empty beside them. Now the left is a rail
+          that stays with you — what the sector is, which platforms are
+          involved, where the proof is and how to start — and the sections run
+          down the right. Nothing in the rail is new copy: it is the same facts
+          the page already states, put where the space was. */}
+      <div className="container-page py-20 lg:py-28">
+        <div className="grid gap-14 lg:grid-cols-12 lg:gap-12">
+          <aside className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <span
+                className="inline-flex items-center gap-2 text-[0.75rem] font-medium uppercase tracking-[0.12em]"
+                style={{ color: ind.accent }}
+              >
+                <span
+                  className="h-1.5 w-1.5 rounded-full"
+                  style={{ background: ind.accent }}
+                />
+                {ind.name}
+              </span>
 
-      <Section tone="surface" label="The answer" heading="What we bring to it">
-        <ul className="flex flex-wrap gap-3">
-          {ind.systems.map((s) => (
-            <li
-              key={s}
-              className="rounded-pill border border-line-strong px-5 py-2.5 text-[0.9375rem] text-ink-soft"
+              <p className="mt-6 text-[1.0625rem] leading-[1.5] tracking-[-0.012em] text-ink-soft">
+                {ind.summary}
+              </p>
+
+              <dl className="mt-10 space-y-7 border-t border-line pt-7">
+                <div>
+                  <dt className="label-mono">What we bring</dt>
+                  <dd className="mt-3 flex flex-wrap gap-2">
+                    {ind.systems.map((s) => (
+                      <span
+                        key={s}
+                        className="rounded-pill border border-line-strong px-4 py-1.5 text-[0.8125rem] text-ink-soft"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="label-mono">Delivered here</dt>
+                  <dd className="mt-3 text-[0.9375rem] text-ink-soft">
+                    {cases.length ? (
+                      <ul className="space-y-1.5">
+                        {cases.map((c) => (
+                          <li key={c.slug}>
+                            <Link
+                              href={`/work/${c.slug}`}
+                              className="link-wipe"
+                              data-cursor
+                            >
+                              {c.client}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      // Honest: agriculture has no delivered case yet.
+                      <span className="text-muted">
+                        No case study in this sector yet — this is capability,
+                        not a claim.
+                      </span>
+                    )}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="label-mono">Start here</dt>
+                  <dd className="mt-3">
+                    <Link
+                      href="/contact"
+                      className="inline-flex h-11 items-center rounded-pill bg-ink px-6 text-[0.875rem]
+                                 font-medium text-white transition-colors hover:bg-signal"
+                      data-cursor
+                    >
+                      Book an architecture call
+                    </Link>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </aside>
+
+          <div className="lg:col-span-7 lg:col-start-6">
+            <p className="label-mono mb-4" data-reveal>
+              The problem
+            </p>
+            <h2
+              className="mb-10 text-[clamp(1.875rem,3.4vw,2.5rem)] font-[560] leading-[1.06] tracking-[-0.03em]"
               data-reveal
+              style={{ "--reveal-delay": "70ms" } as React.CSSProperties}
             >
-              {s}
-            </li>
-          ))}
-        </ul>
-      </Section>
+              What we usually find in {ind.noun}
+            </h2>
+            <ol className="space-y-px overflow-hidden rounded-card border border-line bg-line">
+              {ind.problems.map((p, i) => (
+                <li
+                  key={p}
+                  className="bg-surface p-7"
+                  data-reveal
+                  style={{ "--reveal-delay": `${i * 90}ms` } as React.CSSProperties}
+                >
+                  <span className="label-mono">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <p className="mt-3 text-[1.0625rem] leading-[1.45] tracking-[-0.012em] text-ink-soft">
+                    {p}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      {/* Video + stepped copy. Placeholder until the film lands — the prompt
+          for each sector's film is ASSETS.md §4.7. */}
+      {ind.story ? (
+        <ScrollStory
+          label={`${ind.name} — how it runs`}
+          stages={ind.story}
+          accent={ind.accent}
+          note={ind.storyNote}
+        />
+      ) : null}
 
       {cases.length > 0 ? (
         <Section label="Proof" heading="Delivered in this sector">

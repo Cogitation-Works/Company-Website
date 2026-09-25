@@ -195,7 +195,11 @@ html.lenis body {
    Elements opt in with data-reveal; the observer sets data-revealed.
    Stagger via --reveal-delay. Pure CSS so it costs nothing.               */
 
-[data-reveal] {
+/* NOTE the `html[data-reveal-armed]` gate. Elements are only allowed to be
+   hidden while the observer that reveals them is actually running — see the
+   comment on useRevealObserver. Without the gate, any failure of that hook
+   left a fully rendered page at opacity 0, which is to say blank. */
+html[data-reveal-armed] [data-reveal] {
   opacity: 0;
   transform: translate3d(0, 18px, 0);
   transition:
@@ -209,23 +213,28 @@ html.lenis body {
      mid-range phone that memory pressure is the stutter. These elements
      animate once and then never again, so a layer buys nothing. */
 }
-[data-reveal][data-revealed="true"] {
+/* These MUST carry the same `html[data-reveal-armed]` prefix as the rule that
+   hides them. Without it the hiding rule wins on specificity — one type
+   selector more — and an element stays invisible even after the observer has
+   marked it revealed. That is a blank page whose DOM looks perfectly correct,
+   which is the hardest kind to see. */
+html[data-reveal-armed] [data-reveal][data-revealed="true"] {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 /* Drop the transform once revealed so the element returns to normal flow
    painting and stops being a compositing candidate at all. */
-[data-reveal][data-revealed="true"]:not([data-reveal="blur"]) {
+html[data-reveal-armed] [data-reveal][data-revealed="true"]:not([data-reveal="blur"]) {
   transform: none;
 }
-[data-reveal="blur"] {
+html[data-reveal-armed] [data-reveal="blur"] {
   filter: blur(8px);
   transition:
     opacity var(--duration-slow) var(--ease-out-expo),
     transform var(--duration-slow) var(--ease-out-expo),
     filter var(--duration-slow) var(--ease-out-expo);
 }
-[data-reveal="blur"][data-revealed="true"] {
+html[data-reveal-armed] [data-reveal="blur"][data-revealed="true"] {
   filter: blur(0);
 }
 
@@ -242,6 +251,21 @@ html.lenis body {
      appear at once. Sections with their own background (bg-surface) paint over
      this in the duplicate; transparent sections fall back to the page colour. */
   background: var(--color-canvas);
+}
+
+/* The pinned hero, inside the magnifier's copy.
+   `position: sticky` resolves against the nearest scroll container. In the
+   real page that is the window; inside the lens it is the 128px window itself,
+   because that clips. So the duplicated hero stuck to the top of the lens
+   instead of to the page, and the magnified copy showed the headline at a
+   different offset from the real one — a ghost of the text, sliding upward as
+   you scrolled. Here the copy is placed explicitly at the same offset the real
+   sticky element is currently resolved to, which CoreSequence publishes. */
+.lens-zoom .hero-pin > section {
+  position: absolute !important;
+  top: var(--hero-pin-offset, 0px) !important;
+  left: 0;
+  right: 0;
 }
 
 .lens-zoom [data-reveal] {
