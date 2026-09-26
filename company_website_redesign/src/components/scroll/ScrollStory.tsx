@@ -176,11 +176,18 @@ export default function ScrollStory({
 
             <div className="absolute inset-x-0 bottom-0 p-7 lg:p-12">
               <p className="label-mono !text-on-deep-muted">{label}</p>
-              <div className="relative mt-5 min-h-[9.5rem] sm:min-h-[8rem]">
+              {/* A GRID STACK, not absolute children inside a guessed
+                  min-height. Every stage occupies the same cell, so the block
+                  is as tall as the TALLEST of them and nothing can overflow.
+                  With a fixed min-height, a two-line title pushed its body
+                  past the plate's edge and `overflow-hidden` cut the last line
+                  off — which is what "Telemetry meets the production order"
+                  did on /industries/energy. */}
+              <div className="mt-5 grid">
                 {stages.map((s, i) => (
                   <div
                     key={s.title}
-                    className="absolute inset-0 transition-[opacity,transform] duration-[620ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    className="[grid-area:1/1] transition-[opacity,transform] duration-[620ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                     style={{
                       opacity: i === active ? 1 : 0,
                       transform:

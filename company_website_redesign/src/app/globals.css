@@ -295,6 +295,27 @@ html[data-reveal-armed] [data-reveal="blur"][data-revealed="true"] {
   filter: none !important;
   transition: none !important;
 }
+/* `position: fixed` inside the copy resolves against the scaled wrapper
+   rather than the viewport, so a fixed element lands hundreds of pixels from
+   where the real one is — the blog's cursor-following preview was measured
+   2400px out. They are all cursor-followers and overlays, already drawn on
+   the real page and meaningless magnified, so the copy simply omits them.
+   The geometry corrector cannot rescue these: it finds its work with
+   elementsFromPoint, which by definition never returns a
+   pointer-events:none element. */
+.lens-zoom .fixed {
+  display: none !important;
+}
+
+/* A CSS animation in the copy runs on its own clock, started when the lens
+   opened rather than when the page loaded — so the duplicated marquee sat at a
+   completely different point in its loop (measured 343px out). The animation
+   is switched off here and the real track's current transform is mirrored onto
+   it every frame by the lens, which is the only way to share a phase. */
+.lens-zoom .marquee-track {
+  animation: none !important;
+}
+
 /* The copy is decorative; keep it out of the accessibility tree and stop it
    from stealing pointer events from the real content underneath. */
 .lens-zoom,
